@@ -1,0 +1,36 @@
+package net.htjs.pt4.cms.dao;
+
+import net.htjs.pt4.cms.entity.Site;
+import net.htjs.pt4.core.Mapper;
+
+/**
+ * 站点持久化接口
+ * 
+ * @author xieshiyu
+ *
+ */
+public interface SiteMapper extends Mapper<Site> {
+
+	/**
+	 * 以站点ID查询站点信息
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findById(String siteId);
+
+	/**
+	 * 更新站点信息
+	 * 
+	 * @param site
+	 */
+	public void updateSiteById(Site site);
+
+	/**
+	 * 以组织机构查询站点信息
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findByZzjgDm(String zzjgDm);
+}

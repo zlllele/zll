@@ -1,0 +1,66 @@
+/*------分页样式----*/
+.fpage {
+    margin-top: 20px;
+    clear: both;
+    float: right;
+    text-align: right;
+}
+
+.count {
+    font-family: "宋体";
+    display: block;
+    float: left;
+    font-size: 12px;
++ height : 16 px;
+    padding: 2px 3px 4px 3px;
++ padding : 0 px 3 px 0 px 3 px;
+    color: #bbb;
+    border: 1px solid #bbb;
+    margin-right: 3px;
+}
+
+.number span {
+    font-family: "宋体";
+    display: block;
+    float: left;
+    font-size: 12px;
++ height : 16 px;
+    padding: 2px 5px 3px 5px;
++ padding : 2 px 5 px 0 px 5 px;
+    color: #bbb;
+    text-decoration: none;
+    border: 1px solid #bbb;
+    margin-right: 3px;
+}
+
+.number .span_select {
+    font-family: "宋体";
+    display: block;
+    float: left;
+    font-size: 12px;
+    background-color: #DDFFED;
++ height : 16 px;
+    padding: 2px 5px 2px 5px;
++ padding : 2 px 5 px 0 px 5 px;
+    color: #0099cc;
+    text-decoration: none;
+    border: 1px solid #0099cc;
+    margin-right: 3px;
+}
+
+.fpage a {
+    font-family: "宋体";
+    font-size: 12px;
+    margin: -3px 0px -3px 0px;
++ margin : - 2 px 0 px - 2 px 0 px;
+    padding-top: 3px;
+    display: block;
+    color: #0099cc;
+    text-decoration: none;
+}
+
+.fpage a:hover {
+    text-decoration: none;
+}
+
+/*------分页样式结束----*/

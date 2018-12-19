@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>模板修改</title>
+<script type="text/javascript" src="../../../../commons/js/include_ui.js?dm=102127"></script>
+<script type="text/javascript" src="../../../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	template.onLoad();
+});
+var template = (function() {
+	// 私有属性
+	var curSeg, formSave = "formSave", formSave_, winObj, winParam, anum=2,cc=0,psnum=4;
+	var isCzryDmEditAble = false;
+	// 是否是添加
+	var bAdd = true;
+	// 私有方法
+	var setVal = function(tagID, val) {
+		baseTools.byId(formSave_ + tagID).value = val;
+	};
+
+	var initLayout = function() {
+		// 初始化页面UI
+		formSave_ = formSave + "_";
+		baseTools.setIdByName([ formSave ]);
+		winObj = frameElement.api;
+		winParam = winObj.data;
+		bAdd = winParam.other.msg == '添加';
+		$("#" + formSave_ + "channel_id").append('<option value ="'+winParam.other.upperchannel+'">'+winParam.other.upperchannelname+'</option>')
+		if(winParam.other.leaf=="false"||(!winParam.other.leaf)){
+			winObj.button({
+				name : '保存',
+				focus : true,
+				callback : function() {
+					curSeg.onSave();
+					return false;
+				}
+			}, {
+				name : '关闭'
+			});
+		}
+	};
+	// 公有方法
+	return {
+		onLoad : function() {
+			curSeg = template;
+			initLayout();
+			curSeg.onQuery();
+			// 删除组件释放内存
+			$(window).unload(function() {
+			});
+		},
+		// 查询数据
+		onQuery : function() {
+			baseTools.xhrAjax({
+				url : "/template/getFileDetail/",
+				params : {
+					path:winParam.other.path
+				},
+				type : "GET",
+				callback : [ curSeg.pageFlowControl ]
+			});
+		},
+		// 保存数据
+		onSave : function() {
+			var url = "/template/fileSave";
+			var params = {
+				path:winParam.other.path,
+				content:$('textarea').val()
+			};
+			params._method = "POST";
+			baseTools.xhrAjax({
+				url : url,
+				params : params,
+				callback : [ curSeg.onCloseWin ]
+			});
+		},
+		
+
+		// 绑定数据
+		onBindData : function(jsonObj, xhrArgs) {
+			$('textarea').val(jsonObj.data);
+		},
+		// 关闭窗口
+		checkMedia : function(mname) {
+			alert(cc+"  "+mname);
+			cc+=1;
+		},
+		onCloseWin : function() {
+			winObj.opener.siteList.loadPath(winParam.other.path);
+			setTimeout(function() {
+				winObj.close();
+			},100)
+		},
+		/**
+		 * 工具栏按钮操作
+		 * 
+		 * @param cmd
+		 *            操作代码
+		 */
+		onToolbarClick : function(cmd) {
+			switch (cmd) {
+			case 1: // 添加类型
+				curSeg.onSave();
+				break;
+			case -1:
+				curSeg.onCloseWin();
+				break;
+			default:
+				alert("未知的操作命令!");
+			}
+		},
+		/**
+		 * 需要的时候可以覆盖该方法 在ajax调用中，在得到数据时调用该方法
+		 */
+		pageFlowControl : function(jsonObj, xhrArgs) {
+			switch (parseInt(jsonObj.code)) {
+			// 查询操作返回标志
+			case 0:
+				curSeg.onBindData(jsonObj, xhrArgs);
+				break;
+			default:
+			}
+		}
+	};
+})();
+</script>
+</head>
+<body>
+	<form action="" name="formSave" id="formSave">
+		<table id="tbSave" class="table_add" cellpadding="0" cellspacing="0">
+			<caption>模板修改</caption>
+			<tr>
+				<td><textarea id="fileText" name="fileText" style="width: 963px; height: 385px; margin: 0px;"></textarea></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

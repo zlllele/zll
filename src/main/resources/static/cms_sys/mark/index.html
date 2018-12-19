@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>水印管理</title>
+<script type="text/javascript" src="../../commons/js/include_ui.js?dm=10212527"></script>
+<script type="text/javascript" src="../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript" src="index.js?'+Math.random();+'"></script>
+</head>
+<body>
+	<form action="" name="formSave" id="formSave">
+		<table id="tbSave" class="table_add" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="tdclass_view" nowrap><font style="color:red;">*</font>开启水印：</td>
+				<td class="tdclass_edit">
+					<input type="radio" name="mark_on" id="radio1" value="1" validatorrules="Require">是
+					<input type="radio" name="mark_on" id="radio0" value="0" checked="checked">否
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view" nowrap><font style="color:red;">*</font>水印文字：</td>
+				<td class="tdclass_edit">
+					<input type="text" class="textInput" name="mark_content" id="mark_content" value="" maxlength="200" validatorrules="Require" msg0="请填写水印文字"/>
+					<span>使用中文有可能出现乱码</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view" nowrap><font style="color:red;">*</font>水印文字属性：</td>
+				<td class="tdclass_edit">
+					<span>字体大小：</span>
+					<input type="text" class="textInput" name="mark_size" id="mark_size" value="" maxlength="3" validatorrules="Require,Number" msg0="请填写字体大小">
+					<span>颜色：</span>
+					<input type="text" class="textInput" name="mark_color" id="mark_color" value="" maxlength="10" validatorrules="Require" msg0="请填写颜色"><span>例如：#000000</span>
+					<br/>
+					<span>透&nbsp;明&nbsp;度：</span>
+					<input type="text" class="textInput" name="mark_alpha" id="mark_alpha" value="" maxlength="3" validatorrules="Require,Number" msg0="请填写透明度">
+					<span>0-100，越小越透明</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view" nowrap><font style="color:red;">*</font>位置：</td>
+				<td class="tdclass_edit">
+					<select name="mark_position" id="mark_position" class="">
+						<option value="0">随机</option>
+						<option value="1">左上</option>
+						<option value="2">右上</option>
+						<option value="3">左下</option>
+						<option value="4">右下</option>
+						<option value="5">中央</option>
+					</select>
+					<span>水平偏移量：</span>
+					<input type="text" class="textInput" name="mark_offset_x" id="mark_offset_x" value="" maxlength="3" validatorrules="Require,Number" msg0="请填写水平偏移量">
+					<span>垂直偏移量：</span>
+					<input type="text" class="textInput" name="mark_offset_y" id="mark_offset_y" value="" maxlength="3" validatorrules="Require,Number" msg0="请填写垂直偏移量">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="padding:0px;text-align:center;">
+					<a class="button" id="search_dg" onclick="index.saveMark();"> 
+						<span> 
+							<input accesskey="q" type="button" value="保存" class="searchbtn"></input>
+						</span>
+					</a>
+					<a class="button" id="search_dg"> 
+						<span> 
+							<input accesskey="q" type="reset" value="重置" class="searchbtn"></input>
+						</span>
+					</a>
+					<!-- <input type="button" value="保存" class="ui_state_highlight" onclick="index.saveMark();">
+					<input type="reset" value="重置"> -->
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

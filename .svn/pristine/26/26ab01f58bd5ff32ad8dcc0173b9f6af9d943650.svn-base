@@ -1,0 +1,27 @@
+package net.htjs.pt4.cms.service;
+
+import net.htjs.pt4.cms.entity.Site;
+
+/**
+ * 站点业务处理接口
+ * 
+ * @author xieshiyu
+ *
+ */
+public interface ISiteService {
+
+	/**
+	 * 以站点ID查询站点对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findById(String siteId) throws Exception;
+
+	/**
+	 * 站点流量统计
+	 * 
+	 * @param siteId
+	 */
+	public Integer flow(String siteId) throws Exception;
+}

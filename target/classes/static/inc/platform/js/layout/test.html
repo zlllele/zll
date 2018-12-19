@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>tree test</title>
+<script type="text/javascript" src="../jQuery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="base-min.js"></script>
+<script type="text/javascript" src="ligerLayout-min.js"></script>
+<link type="text/css" rel="StyleSheet" href="ligerui-layout.css"/>
+</head>
+<body>
+<div id="layout1" style="margin:0 auto;width:100%"> 
+       <div position="top"  title="主要菜单"> 
+		  <div class="headerNav">			
+			
+		  </div>
+       </div>
+       <div position="left"  title="主要菜单1" id="accordion1"> 
+		
+       </div>
+       
+       <div position="center" title="主要菜单2" id="framecenter">
+       	
+       </div>
+       
+       <div position="right" id="framecenter">
+       	
+       </div>
+       <div position="bottom" id="framecenter">
+       	
+       </div>
+   </div>	
+
+<script type="text/javascript">
+	$(function() {
+		var layout = $("#layout1");
+		layout.ligerLayout({allowTopResize:false, leftWidth: 200,topHeight:50, height: '100%',heightDiff:-20,space:4 });
+	})
+</script>
+
+</body>
+</html>

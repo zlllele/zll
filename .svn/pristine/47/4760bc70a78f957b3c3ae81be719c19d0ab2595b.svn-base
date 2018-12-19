@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>模板管理</title>
+<script type="text/javascript" src="../../../commons/js/include_ui.js?dm=102021222425"></script>
+<script type="text/javascript" src="../../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript" src="../../commons/js/jquery-treeview-master/jquery.treeview.js"></script>
+<script type="text/javascript" src="../../commons/js/jquery-treeview-master/jquery.treeview.edit.js"></script>
+<script type="text/javascript" src="../../commons/js/jquery-treeview-master/jquery.treeview.async.js"></script>
+<link rel="stylesheet" href="../../commons/js/jquery-treeview-master/jquery.treeview.css" type="text/css" />
+<script type="text/javascript">
+$(function () {
+	siteList.onLoad();
+});
+var siteList = (function() {
+	// 私有属性
+	var rylb = "", curSeg, tbList, formSearch = "formSearch", gridObj, winParam = {};
+	// 私有方法
+	var initLayout = function() {
+		// 初始化页面UI
+		tbList = $("#tbList");
+		var cols = [{
+			title : 'ID',
+			name : 'path',
+			width : 10,
+			hidden : true,
+			align : 'center'
+		},{
+			title : '文件名',
+			name : 'name',
+			width : 40,
+			align : 'center'
+		},{
+			title : '大小',
+			name : 'size',
+			width : 40,
+			align : 'center'
+		},{
+			title : '最后修改时间',
+			name : 'updTime',
+			width : 40,
+			align : 'center'
+		},{
+			title : '操作',
+			name : 'is_disable',
+			width : 80,
+			align : 'center',
+			renderer : function(val, item) {
+        		return '<a href="javascript:siteList.onEdit()">编辑 </a>  <a href="javascript:siteList.onDelete()">删除 </a>';
+			}
+		},{
+			title : '',
+			name : '',
+			width : 80,
+			align : 'center',
+		}];
+
+		gridObj = tbList.mmGrid({
+			height : jdglTools.getMmGridHeight(tbList),
+			fullWidthRows : true,
+			indexCol : false,
+			checkCol : true,
+			showBackboard : false,
+			autoLoad : false,
+			nowrap : true,
+			cols : cols,
+			plugins : [ $('#tbListPg').htjsPaginator({
+				limitList : [ 10, 20, 30, 50 ]
+				//loadFunction : [ curSeg.onQuery ]
+			}) ]
+		});
+
+	};
+	// 公有方法
+	return {
+		onLoad : function() {
+			curSeg = siteList;
+			initLayout();
+			$("#navigation").treeview({         
+			    url: "/template/tree",
+			    collapsed: true
+			});
+			// 初始化页面UI
+		    curJsonObj = null;
+		    $("#divSplitter").splitter({
+		        type: "v",
+		        splitVertical: true,
+		        outline: true, /* sizeLeft: true, */
+		        resizeTo: window, /* resizeTo: "divPageBody", resizeToWidth: true, */
+		        // resizeToWidth: true,
+		        sizeLeft: 200,
+		        minLeft: 200,
+		        minRight: 200, /* dock: "left", */
+		        dockSpeed: 100,
+		        accessKey: "I"
+		    });
+		},
+		// 修改
+		onEdit : function() {
+			var ids = gridObj.selectedRows();
+			if (ids.length == 0 || ids.length > 1) {
+				alert("请选择一条记录!");
+				return false;
+			}
+			curSeg.onOpenSaveWin("修改", ids[0].path);
+		},
+		// 删除记录
+		onDelete : function() {
+			var ids = gridObj.selectedRows();
+			if (ids.length == 0 || ids.length > 1) {
+				alert("请选择一条记录!");
+				return false;
+			}
+			if (!confirm("确认要删除『" + ids[0].name + "』吗?")) {
+				return;
+			}
+			baseTools.xhrAjax({
+				url : "/template/fileDel",
+				params : {
+					path:ids[0].path
+				},
+				callback : [ curSeg.pageDel ]
+			});
+
+		},
+		// 使用json格式的业务数据填充表格
+		fillGridByJson : function(jsonObj, xhrArgs) {
+			// 绑定数据
+			gridObj.load(jsonObj.data);
+		},
+		/**
+		 * 需要的时候可以覆盖该方法 在ajax调用中，在得到数据时调用该方法
+		 */
+		pageFlowControl : function(jsonObj, xhrArgs) {
+			curJsonObj = jsonObj;
+			switch (parseInt(jsonObj.code)) {
+			// 查询操作返回标志
+			case 0:
+				curSeg.fillGridByJson(jsonObj, xhrArgs);
+				break;
+			case -1:// 其它错误返回标志
+				alert(jsonObj.msg);
+				break;
+			default:
+			}
+		},
+		pageDel:function(){
+			/* var pathF = '';
+			var path = $("#path").text();
+			var indexF = path.lastIndexOf("\/");  
+			pathF = path.substring(0,indexF);
+			alert(pathF);
+			curSeg.loadPath(pathF); */
+			window.location.reload();
+		},
+		loadPath:function(path){
+			$("#path").text(path);
+		    baseTools.xhrAjax({
+				type: "GET",
+				params : {
+					path:path
+				},
+				url : "/template/getFile",
+				callback : [ curSeg.pageFlowControl ]
+			});
+		},
+		loadPathClear:function(){
+			$("#path").text("");
+		},
+		// 打开保存(新增、修改)窗口
+		onOpenSaveWin : function(msg,path) {
+			var myDate = new Date();
+			var str = myDate.toLocaleDateString()+ myDate.toLocaleTimeString();
+			msg = msg == "添加" ? "添加" : "修改";
+			winParam = {
+				id : 'win_module',
+				title : msg,
+				height : '500px',
+				width : '980px',
+				url : "/cms_sys/template/templateEdit.html?dc="+Date.parse(new Date()),		
+				other : {
+					msg : msg,
+					path : path
+				}
+			};
+			baseTools.showWinExt(winParam);
+		},
+		showPath:function(path){
+			$("#path").text(path);
+		},
+		loadPathClear:function(){
+			$("#path").text("");
+		},
+		attachmentAdd : function() {
+			var path = $("#path").text();
+			if(path==''){
+				alert("请先选择路径或者需要覆盖的文件！");
+				return;
+			}else{
+				var myDate = new Date();
+				var str = myDate.toLocaleDateString()+ myDate.toLocaleTimeString();
+				winParam = {
+					id : 'win_module',
+					title : '上传',
+					height : '200px',
+					width : '400px',
+					url : "/cms_sys/resource/upload.html",		
+					other : {
+						path : path
+					}
+				};
+				baseTools.showWinExt(winParam);
+			}
+		}
+	};
+})();
+/* function loadPath(path) {  
+    $("#path").text(path);
+    baseTools.xhrAjax({
+		type: "GET",
+		params : {
+			path:path
+		},
+		url : "/template/getFile",
+		callback : [ curSeg.pageFlowControl ]
+	});
+}
+function loadPathClear() {  
+    $("#path").text("");
+} */
+</script>
+</head>
+<body>
+	<!-- 分割开始-->
+	<div id="divSplitter" class="divSplitter">
+		<div id="leftPane" class="leftPane">
+			<div class="treeTitle">模板管理</div>
+			<ul id="navigation" class="filetree"></ul>
+		</div>
+		<div id="rigthPane" class="rigthPane">
+			<div class="panelBar">
+				<ul class="toolBar">
+					<li id="path"></li>
+					<li class="">
+						<a class="add">
+							<span>
+								<input type="button" value="上传" onclick="siteList.attachmentAdd();"/>
+							</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<table id="tbList" class="tbClass"></table>
+			<div id="tbListPg" style="text-align: center;"></div>
+		</div>
+	</div>
+</body>
+</html>

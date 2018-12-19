@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.htjs.pt4.cms.dao.ContentCountMapper">
+
+	<resultMap id="contentCountMap" type="net.htjs.pt4.cms.entity.ContentCount">
+		<id column="content_id" jdbcType="VARCHAR" property="contentId" />
+		<result column="site_id" jdbcType="VARCHAR" property="siteId" />
+		<result column="views" jdbcType="INTEGER" property="views" />
+		<result column="views_month" jdbcType="INTEGER" property="viewsMonth" />
+		<result column="views_week" jdbcType="INTEGER" property="viewsWeek" />
+		<result column="views_day" jdbcType="INTEGER" property="viewsDay" />
+	</resultMap>
+
+	<!-- 以内容ID查询浏览量 -->
+	<select id="getCountById" resultMap="contentCountMap" parameterType="String">
+		select * from hj_content_count where content_id=#{contentId}
+	</select>
+	<!-- 新增内容流量 -->
+	<insert id="insertCount" parameterType="net.htjs.pt4.cms.entity.ContentCount">
+		insert into hj_content_count(content_id,site_id,views,views_month,views_week,views_day) values(#{contentId},#{siteId},#{views},#{viewsMonth},#{viewsWeek},#{viewsDay})
+	</insert>
+	<!-- 更新内容流量 -->
+	<update id="updateCount" parameterType="net.htjs.pt4.cms.entity.ContentCount">
+		update hj_content_count set views=#{views},views_month=#{viewsMonth},views_week=#{viewsWeek},views_day=#{viewsDay} where content_id = #{contentId}
+	</update>
+
+</mapper>

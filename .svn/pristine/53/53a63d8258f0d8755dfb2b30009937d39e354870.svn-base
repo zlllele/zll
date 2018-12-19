@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>用户管理-演示</title>
+</head>
+<body>
+	<div>
+	对象：<br/>
+	[@hj_user siteId='1' id='172']
+		我的姓名叫：${tag_bean.username }，我的ID是：${tag_bean.id}
+	[/@hj_user]
+	<br/>
+	列表：<br/>
+	[@hj_user_list siteId='1' count='10']
+		[#list tag_list as user]
+		我的姓名叫：${user.username }，我的ID是：${user.id}<br/>
+		[/#list]
+	[/@hj_user_list]
+	<br/>
+	分页：<br/>
+	[@hj_user_page siteId='1' count='10']
+		[#list tag_pagination.list as user]
+		我的姓名叫：${user.username }，我的ID是：${user.id}<br/>
+		[/#list]
+		<br/>
+		[@cms_pagination sysPage='0'/]
+	[/@hj_user_page]
+	</div>
+</body>
+</html>

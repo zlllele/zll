@@ -1,0 +1,97 @@
+package net.htjs.pt4.cms.service;
+
+import java.util.List;
+import java.util.Map;
+
+import net.htjs.pt4.cms.entity.Content;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.SaveException;
+
+/**
+ * 内容业务接口
+ * 
+ * @author wupeng
+ *
+ */
+public interface IContentService {
+
+	/**
+	 * 查询下级栏目内容
+	 * 
+	 * @param map,pageNum,pageSize
+	 * @return Datagrid
+	 */
+	Datagrid selectContentsByChannel(Map<String, Object> map, int pageNum, int pageSize) throws Exception;
+
+	/**
+	 * 插入内容
+	 * 
+	 * @param map,aList,pcsList
+	 * @return int
+	 */
+	int insertContent(Map<String, Object> map, List<Map<String, Object>> aList, List<Map<String, Object>> pcsList)
+			throws SaveException;
+
+	/**
+	 * 查询指定id内容
+	 * 
+	 * @param id
+	 * @return Map
+	 */
+	Map<String, Object> findById(String id) throws Exception;
+
+	/**
+	 * 删除内容
+	 * 
+	 * @param id
+	 * @return int
+	 */
+	int deleteById(String id) throws Exception;
+
+	/**
+	 * 以栏目ID查询其下内容
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelId(String channelId) throws Exception;
+
+	/**
+	 * 以栏目ID查询内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelId(String channelId) throws Exception;
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容列表
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelParentId(String channelId, String typeId) throws Exception;
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelParentId(String channelId) throws Exception;
+
+	/**
+	 * 以内容ID更新附件下载次数
+	 * 
+	 * @param contentId
+	 */
+	public void downloadCount(String contentId) throws Exception;
+	
+	/**
+	 * 以内容ID查询内容对象
+	 * 
+	 * @param contentId
+	 * @return
+	 */
+	public Content getContentById(String contentId) throws Exception;
+}

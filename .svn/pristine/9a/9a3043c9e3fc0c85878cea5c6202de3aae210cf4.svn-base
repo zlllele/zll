@@ -1,0 +1,238 @@
+package net.htjs.pt4.cms.service.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import net.htjs.pt4.cms.dao.ContentMapper;
+import net.htjs.pt4.cms.dao.SiteMapper;
+import net.htjs.pt4.cms.entity.Content;
+import net.htjs.pt4.cms.entity.ContentFile;
+import net.htjs.pt4.cms.service.IContentService;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.DaoException;
+import net.htjs.pt4.core.entity.SaveException;
+
+/**
+ * 内容业务处理类
+ * 
+ * @author wupeng
+ *
+ */
+@Service
+@Transactional
+public class ContentService implements IContentService {
+
+	private final Logger logger = LoggerFactory.getLogger(ContentService.class);
+
+	@Resource
+	private ContentMapper contentMapper;
+
+	@Resource
+	private SiteMapper siteMapper;
+
+	/**
+	 * 查询下级栏目内容
+	 * 
+	 * @param map,pageNum,pageSize
+	 * @return Datagrid
+	 */
+	@Override
+	public Datagrid selectContentsByChannel(Map<String, Object> map, int pageNum, int pageSize) throws Exception {
+		PageHelper.startPage(pageNum, pageSize);
+		List<Map<String, Object>> list = contentMapper.selectContentsByChannel(map);
+		List<Content> list2 = new ArrayList<Content>();
+		if (map.get("channel_id") == null) {
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("channelId", map.get("pid"));
+			param.put("typeId", null);
+			list2 = contentMapper.getContentsByChannelParentId(param);
+		}
+		if (map.get("pid") == null) {
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("channelId", map.get("channel_id"));
+			param.put("typeId", null);
+			list2 = contentMapper.getContentsByChannelParentId(param);
+		}
+		String domainName = siteMapper.findByZzjgDm((String) map.get("zzjgid")).getDomain();
+		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
+		for (Map<String, Object> u : list) {
+			u.put("TOTAL", pageInfo.getTotal());
+			for (Content content : list2) {
+				if (content.getContentId().equals((String) u.get("content_id"))) {
+					if (content.getUrl().startsWith("/") || content.getUrl().startsWith("\\")) {
+						u.put("browseAdd", domainName + content.getUrl());
+					} else {
+						u.put("browseAdd", "http://" + content.getUrl() + "/");
+					}
+				}
+			}
+		}
+
+		Datagrid datagrid = new Datagrid(pageInfo.getTotal(), pageInfo.getList());
+
+		return datagrid;
+	}
+
+	/**
+	 * 插入内容
+	 * 
+	 * @param map,aList,pcsList
+	 * @return int
+	 */
+	@Override
+	public int insertContent(Map<String, Object> map, List<Map<String, Object>> aList,
+			List<Map<String, Object>> pcsList) throws SaveException {
+		try {
+			if (((String) map.get("updateFlag")) == null) {
+				contentMapper.insertContent(map);
+				contentMapper.insertContentCount(map);
+				contentMapper.insertContentTxt(map);
+			} else {
+				contentMapper.updateContentById(map);
+				contentMapper.updateContentTxtById(map);
+				contentMapper.deleteFilesById((String) map.get("content_id"));
+				contentMapper.deletePicsById((String) map.get("content_id"));
+			}
+
+			if (aList.size() > 0) {
+				contentMapper.insertContentFiles(map);
+			}
+			if (pcsList.size() > 0) {
+				contentMapper.insertContentPics(map);
+			}
+		} catch (DaoException e) {
+			if (((String) map.get("updateFlag")) == null) {
+				logger.error("添加出错", e);
+			} else {
+				logger.error("修改出错", e);
+			}
+		}
+		return 1;
+	}
+
+	/**
+	 * 查询指定id内容
+	 * 
+	 * @param id
+	 * @return Map
+	 */
+	@Override
+	public Map<String, Object> findById(String id) throws Exception {
+		Map<String, Object> map = contentMapper.selectContentById(id);
+		List<Map<String, Object>> attmentList = contentMapper.selectContentAttachmentsById(id);
+		if (attmentList != null && attmentList.size() > 0) {
+			map.put("attmentList", attmentList);
+		}
+		List<Map<String, Object>> picList = contentMapper.selectContentPcsById(id);
+		if (picList != null && picList.size() > 0) {
+			map.put("picList", picList);
+		}
+		return map;
+	}
+
+	/**
+	 * 删除内容到回收站
+	 * 
+	 * @param id
+	 * @return int
+	 */
+	@Override
+	public void deleteById(String id) throws Exception {
+		contentMapper.deleteById(id);
+	}
+
+	/**
+	 * 删除内容
+	 * 
+	 * @param id
+	 * @return int
+	 */
+	public void deleteTrueById(String id) throws Exception {
+		contentMapper.deleteCountById(id);
+		contentMapper.deleteFilesById(id);
+		contentMapper.deletePicsById(id);
+		contentMapper.deleteTxtById(id);
+		contentMapper.deleteTrueById(id);
+	}
+
+	/**
+	 * 以栏目ID查询其下内容
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelId(String channelId) throws Exception {
+		return contentMapper.getContentsByChannelId(channelId);
+	}
+
+	/**
+	 * 以栏目ID查询内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelId(String channelId) throws Exception {
+		return contentMapper.getCountByChannelId(channelId);
+	}
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容列表
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelParentId(String siteId, String channelId, String typeId) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("siteId", siteId);
+		param.put("channelId", channelId);
+		param.put("typeId", typeId);
+		return contentMapper.getContentsByChannelParentId(param);
+	}
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelParentId(String channelId) throws Exception {
+		return contentMapper.getCountByChannelParentId(channelId);
+	}
+
+	/**
+	 * 以内容ID更新附件下载次数
+	 * 
+	 * @param contentId
+	 */
+	public void downloadCount(String contentId) throws Exception {
+		List<ContentFile> list = contentMapper.getContentFileById(contentId);
+		if (!list.isEmpty()) {
+			ContentFile cf = list.get(0);
+			int count = cf.getDownload() + 1;
+			cf.setDownload(count);
+			contentMapper.updateContentFile(cf);
+		}
+	}
+
+	/**
+	 * 以内容ID查询内容对象
+	 * 
+	 * @param contentId
+	 */
+	@Override
+	public Content getContentById(String contentId) throws Exception {
+		return contentMapper.getContentById(contentId);
+	}
+}

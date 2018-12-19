@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>站点管理</title>
+<script type="text/javascript" src="../../../../commons/js/include_ui.js?dm=102127"></script>
+<script type="text/javascript" src="../../../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript" src="siteManager.js"></script>
+<style type="text/css">
+.ui_buttons {
+    white-space: nowrap;
+    padding: 4px 8px;
+    text-align: center;
+    background-color: #F6F6F6;
+    border-top: solid 1px #DADEE5;
+}
+input.ui_state_highlight{ color:#FFF;border:solid 1px #1c6a9e;text-shadow:0 -1px 1px #1c6a9e;background:#2288cc;
+background:linear-gradient(top,#33bbee,#2288cc);
+background:-moz-linear-gradient(top,#33bbee,#2288cc);
+background:-webkit-gradient(linear,0% 0%,0% 100%,from(#33bbee),to(#2288cc));
+background:-o-linear-gradient(top,#33bbee,#2288cc);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bbee',endColorstr='#2288cc'); }
+</style>
+</head>
+<body>
+	<form action="" name="formSave" id="formSave">
+		<table id="tbSave" class="table_add" cellpadding="0" cellspacing="0">
+			<caption>站点管理</caption>
+			<tr>
+				<td class="tdclass_view">站点名称：</td>
+				<td class="tdclass_edit">
+					<input type="hidden" id="siteId" name="siteId" value="">
+					<input type="text" id="site_name" name="site_name" value="" maxlength="30" validatorrules="Require" msg0="站点名称不能为空" /> 
+				</td>
+				<td class="tdclass_view">站点简称：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="short_name" name="short_name" value="" maxlength="30" validatorrules="Require" msg0="站点简称不能为空" /> 
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view">系统模板：</td>
+				<td class="tdclass_edit">
+					<select id="sys_tpl_solution" name="sys_tpl_solution">
+						<option value="red">red</option>
+						<option value="default">default</option>
+					</select>
+				</td>
+				<td class="tdclass_view">启用模板名称：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="tpl_solution" name="tpl_solution" value="" validatorrules="Require" msg0="模板名称不能为空" maxlength="100" /> 
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view">模板路径：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="tpl_path" name="tpl_path" value="" validatorrules="Require" msg0="模板路径不能为空" maxlength="100" /> 
+
+				</td>
+				<td class="tdclass_view">静态资源路径：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="static_path" name="static_path" value="" validatorrules="Require" msg0="静态资源路径不能为空" maxlength="100" />
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view">静态页目录：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="static_dir" name="static_dir" value="" validatorrules="Require" msg0="静态页目录不能为空" maxlength="100"/> 
+				</td>
+				<td class="tdclass_view">组织机构代码：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="zzjgDm" name="zzjgDm" value="" readonly="readonly" maxlength="30" />
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view">开启回收站：</td>
+				<td class="tdclass_edit">
+					<input id="is_recycle_on_0" type="radio" value="0" name="is_recycle_on">否</input>  
+					<input id="is_recycle_on_1" type="radio" value="1" name="is_recycle_on" checked="checked">是</input>
+				</td>
+				<td class="tdclass_view">根目录：</td>
+				<td class="tdclass_edit">
+					<input id="is_root_1" type="radio" value="1" name="is_root">是</input>
+					<input id="is_root_0" type="radio" value="0" name="is_root">否</input>  
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view">域名：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="domain" name="domain" value="" validatorrules="Require" msg0="域名不能为空" maxlength="30" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<div class="ui_buttons">
+						<input type="button" value="保存" class="ui_state_highlight" onclick="site_save.onSave()">
+						<input type="button" value="关闭">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

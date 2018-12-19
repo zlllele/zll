@@ -1,0 +1,12 @@
+﻿
+
+
+<input id="d11" type="text" onClick="alert(WdatePicker);"/>
+<script type="text/javascript" src="WdatePicker.js"></script>
+起：<input id="qsrq" class="Wdate" type="text" onClick="WdatePicker({maxDate:'#F{$dp.$D(\'zzrq\')}',readOnly:true});"/>
+止：<input id="zzrq" class="Wdate" type="text" onClick="WdatePicker({minDate:'#F{$dp.$D(\'qsrq\')}',readOnly:true});"/>
+
+
+<input type="text" id="ND" size="5"/> 年
+<input type="text" id="YF" size="3"/> 月
+年月：<input size="10"  class="Wdate" onClick="WdatePicker({dateFmt:'yyyyMM',readOnly:true,onpicked:function(){$dp.$('ND').value=$dp.cal.getP('y','yyyy');$dp.$('YF').value=$dp.cal.getP('M','MM');}})">

@@ -1,0 +1,195 @@
+package net.htjs.pt4.cms.controller;
+
+import net.htjs.pt4.cms.entity.Mark;
+import net.htjs.pt4.cms.markUtil.FileRepository;
+import net.htjs.pt4.cms.markUtil.ImageScale;
+import net.htjs.pt4.cms.service.IMarkService;
+import net.htjs.pt4.core.BaseController;
+
+import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import java.awt.Color;
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * 水印管理类
+ * @author caojian
+ */
+@Controller
+@RequestMapping("/mark")
+public class MarkController extends BaseController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(MarkController.class);
+
+	@Resource
+	private IMarkService markService;
+	@Resource
+	private ImageScale imageScale;
+	@Resource
+	private FileRepository fileRepository;
+	
+	/**
+	 * 查询站点的水印信息
+	 * @param site_id
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = "/list.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object list(String site_id,String callback) {
+		int code=0;
+		String msg="";
+		Map<String, Object> mapModel=new HashMap<String, Object>();
+		try {
+			List<Map<String, Object>> list=markService.queryMark(site_id);
+			if(list==null||list.size()==0){
+				code=-2;
+			}else{
+				mapModel.put("data", list.get(0));
+			}
+		} catch (Exception e) {
+			msg="获取水印信息异常："+e.getMessage();
+			LOGGER.error(msg);
+			code=-1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+	
+	/**
+	 * 保存和修改水印，因为参数都一样，所以合并成一个方法
+	 * @param site_id
+	 * @param mark_on
+	 * @param mark_content
+	 * @param mark_size
+	 * @param mark_color
+	 * @param mark_alpha
+	 * @param mark_position
+	 * @param mark_offset_x
+	 * @param mark_offset_y
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = "/add.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object add(String site_id,Integer mark_on,String mark_content,Integer mark_size,String mark_color,Integer mark_alpha,Integer mark_position,Integer mark_offset_x,Integer mark_offset_y,String callback) {
+		int code=0;
+		String msg="";
+		Map<String, Object> mapModel=new HashMap<String, Object>();
+		try {
+			Mark mark=new Mark();
+			mark.setSite_id(site_id);
+			mark.setMark_on(mark_on);
+			mark.setMark_content(mark_content);
+			mark.setMark_size(mark_size);
+			mark.setMark_color(mark_color);
+			mark.setMark_alpha(mark_alpha);
+			mark.setMark_position(mark_position);
+			mark.setMark_offset_x(mark_offset_x);
+			mark.setMark_offset_y(mark_offset_y);
+			markService.saveMark(mark);;
+		} catch (Exception e) {
+			msg="水印保存或修改异常："+e.getMessage();
+			LOGGER.error(msg);
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg,callback);
+		return obj;
+	}
+	
+	/**
+	 * 为图片添加水印的方法
+	 * @param filename
+	 * @param uploadNum
+	 * @param mark
+	 * @param file
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	/*==========添加水印测试开始==============*/
+	@RequestMapping("/upload_image.do")
+	@ResponseBody
+	public Object upload_image( String filename, Integer uploadNum, Boolean mark, @RequestParam(value = "uploadFile", required = false) MultipartFile file, HttpServletRequest request, ModelMap model) throws Exception {
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		int code=0;
+		String msg="";
+		String callback="";
+		String site_id=request.getParameter("site_id");
+		Mark conf=new Mark();
+		if (mark == null||mark==false) {
+			mark = false;
+		}else{
+			Map<String,Object> map_mark=new HashMap<String,Object>();
+			List<Map<String, Object>> list=markService.queryMark(site_id);
+			if(list==null||list.size()==0){
+				mark=false;
+			}else{
+				map_mark=(Map<String, Object>) list.get(0);
+				conf.setMark_alpha(Integer.parseInt(map_mark.get("mark_alpha")+""));
+				conf.setMark_color(map_mark.get("mark_color")+"");
+				conf.setMark_content(map_mark.get("mark_content")+"");
+				conf.setMark_offset_x(Integer.parseInt(map_mark.get("mark_offset_x")+""));
+				conf.setMark_offset_y(Integer.parseInt(map_mark.get("mark_offset_y")+""));
+				conf.setMark_on((map_mark.get("mark_on")+"").equals("false")?0:1);
+				conf.setMark_position(Integer.parseInt(map_mark.get("mark_position")+""));
+				conf.setMark_size(Integer.parseInt(map_mark.get("mark_size")+""));
+				conf.setSite_id(map_mark.get("site_id")+"");
+				if(map_mark.get("mark_on").equals("0")){
+					mark=false;
+				}else{
+					mark=true;
+				}
+			}
+		}
+		String origName = file.getOriginalFilename();
+		String ext = FilenameUtils.getExtension(origName).toLowerCase(Locale.ENGLISH);
+		String arryext="jpg,jpeg,JPEG,png,PNG,";
+		if(arryext.indexOf(ext)==-1){
+			code=-1;
+		}else{
+			String fileUrl = null;
+			String path=request.getServletContext().getRealPath("/");
+			if (mark) {
+				File tempFile = mark(file, conf);
+				fileUrl = fileRepository.storeByExt(path , ext, tempFile);
+				tempFile.delete();
+			} else {
+				fileUrl = fileRepository.storeByExt(path, ext, file);
+			}
+			// 加上部署路径
+			//fileMng.saveFileByPath(fileUrl, origName, false);
+			System.out.println("fileUrl====="+fileUrl);
+			System.out.println("origName===="+origName);
+			System.out.println("uploadNum===="+uploadNum);
+			mapModel.put("fileUrl", fileUrl);
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+	private File mark(MultipartFile file, Mark conf) throws Exception {
+		String path = "C://";
+		File tempFile = new File(path, String.valueOf(System.currentTimeMillis()));
+		file.transferTo(tempFile);
+		imageScale.imageMark(tempFile, tempFile, /*conf.getMinWidth()*/10, /*conf.getMinHeight()*/10, 
+				conf.getMark_position(), conf.getMark_offset_x(), conf.getMark_offset_y(), 
+				conf.getMark_content(), Color.decode(conf.getMark_color()), conf.getMark_size(), conf.getMark_alpha());
+		return tempFile;
+	}
+	/*==========添加水印测试结束==============*/
+
+}

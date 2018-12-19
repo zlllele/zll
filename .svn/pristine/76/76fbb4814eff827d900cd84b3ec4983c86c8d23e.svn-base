@@ -1,0 +1,92 @@
+package net.htjs.pt4.cms.service.impl;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import net.htjs.pt4.cms.dao.LogMapper;
+import net.htjs.pt4.cms.service.ILogService;
+import net.htjs.pt4.cms.utils.IpUtil;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+/**
+ * 日志操作实现类
+ * @author caojian
+ *
+ */
+@Service
+public class LogService implements ILogService {
+
+	@Autowired
+	private LogMapper logMapper;
+
+	/**
+	 * 保存日志
+	 */
+	@Override
+	public void addLog(HttpServletRequest request,String site_id,String user_id,String user_name,String title,String content) {
+		Map<String ,Object> map=new HashMap<String ,Object>();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String create_time=sdf.format(new Date());
+		map.put("site_id", site_id);
+		map.put("user_id", user_id);
+		map.put("user_name", user_name);
+		map.put("ip", IpUtil.getIpAddr(request));
+		map.put("title", title);
+		map.put("content", content);
+		map.put("create_time", create_time);
+		map.put("log_id", UUIDUtils.getUUID());
+		logMapper.addLog(map);
+	}
+
+	/**
+	 * 获取日志
+	 */
+	@Override
+	public Datagrid getLogs(String user_name, String title, String ip, Integer page, Integer pageSize) {
+		PageHelper.startPage(page, pageSize);
+		Map<String ,Object> map=new HashMap<String ,Object>();
+		map.put("user_name", user_name);
+		map.put("title", title);
+		map.put("ip", ip);
+		List<Map<String, Object>> list = logMapper.getLogs(map);
+		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
+		for (Map<String, Object> u : list) {
+			u.put("TOTAL", pageInfo.getTotal());
+		}
+		Datagrid datagrid = new Datagrid(pageInfo.getTotal(), pageInfo.getList());
+		return datagrid;
+	}
+
+	/**
+	 * 删除日志
+	 */
+	@Override
+	public void deleteLog(String log_id) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("log_id", log_id);
+		logMapper.deleteLog(map);
+	}
+
+	/**
+	 * 批量删除日志
+	 */
+	@Override
+	public void deleteBatch(String deleteType) {
+		Map<String,Object> map=new HashMap<String ,Object>();
+		map.put("deleteType", deleteType);
+		logMapper.deleteBatch(map);
+	}
+	
+}

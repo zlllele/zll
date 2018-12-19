@@ -1,0 +1,243 @@
+.clearleft {
+	clear: left;
+}
+.clearright {
+	clear: right;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.clear {
+	clear: both;
+}
+p {
+	list-style: none;
+}
+ul {
+	list-style: none;
+}
+li {
+	list-style: none;
+}
+dl {
+	list-style: none;
+}
+dd {
+	list-style: none;
+}
+dt {
+	list-style: none;
+}
+form {
+	list-style: none;
+}
+h1 {
+	list-style: none;
+}
+h2 {
+	list-style: none;
+}
+h3 {
+	list-style: none;
+}
+h4 {
+	list-style: none;
+}
+h5 {
+	list-style: none;
+}
+h6 {
+	list-style: none;
+}
+img {
+	border: currentColor; border-image: none;
+}
+.clearborderright {
+	border-right-color: currentColor !important; border-right-width: medium !important; border-right-style: none !important;
+}
+.none {
+	display: none;
+}
+.margintop20 {
+	margin-top: 20px; background-image: inherit;
+}
+.color1 {
+	color: white;
+}
+.color2 {
+	color: rgb(51, 51, 51);
+}
+.piccontext {
+	margin: 0px auto; width: 1200px; box-sizing: border-box;
+}
+.piccontext h2 {
+	width: 100%; color: rgb(29, 29, 29); line-height: 30px; overflow: hidden; font-size: 24px; font-weight: normal;
+}
+.support {
+	height: 20px; color: rgb(102, 102, 102); overflow: hidden; float: left;
+}
+.support img {
+	padding: 0px 5px;
+}
+.picshow {
+	width: 100%; overflow: hidden; margin-top: 30px;
+}
+.picshowtop {
+	margin: 0px auto; width: 950px; text-align: center; position: relative; z-index: 1;
+}
+#pic1 {
+	max-height: 630px; max-width: 950px;
+}
+#preArrow {
+	left: -100px;
+}
+#nextArrow {
+	right: -100px;
+}
+.contextDiv {
+	background: url("blank"); top: 0px; width: 50%; height: 100%; position: absolute; z-index: 5; cursor: pointer;
+}
+.contextDiv span {
+	top: 50%; width: 46px; height: 80px; margin-top: -10%; position: absolute;
+}
+#preArrow_A {
+	background: url("content_tubiao.png") no-repeat -37px -231px; left: 0px; display: none;
+}
+#nextArrow_A {
+	background: url("content_tubiao.png") no-repeat -37px -134px; right: 0px; display: none;
+}
+.picshowtxt {
+	margin: 20px auto 0px; width: 950px; min-height: 40px; _height: 40px;
+}
+.picshowtxt_left {
+	width: 50px; height: 50px; line-height: 30px; font-family: Georgia, "Times New Roman", Times, serif; float: left;
+}
+.picshowtxt_left span {
+	color: rgb(239, 56, 56); font-size: 30px;
+}
+.picshowtxt_left i {
+	color: rgb(102, 102, 102); font-size: 20px;
+}
+.picshowtxt_right {
+	width: 880px; color: rgb(102, 102, 102); line-height: 23px; font-family: "ËÎÌו"; font-size: 14px; margin-left: 10px; float: left; display: inline;
+}
+.picshowlist {
+	margin: 20px auto 0px; width: 950px; overflow: hidden; padding-bottom: 20px;
+}
+.picshowlist_left {
+	width: 120px; overflow: hidden; float: left;
+}
+.picleftimg {
+	background: url("../images/photo.jpg") no-repeat; width: 120px; height: 80px; overflow: hidden; padding-top: 9px; padding-left: 5px;
+}
+.picleftimg img {
+	width: 106px; height: 66px;
+}
+.piclefttxt {
+	width: 120px; line-height: 20px; font-family: "ËÎÌו";
+}
+.piclefttxt a {
+	color: rgb(68, 68, 68);
+}
+.piclefttxt a:hover {
+	color: rgb(239, 56, 56); text-decoration: underline;
+}
+.picshowlist_mid {
+	width: 680px; height: 76px; overflow: hidden; margin-left: 15px; float: left; display: inline;
+}
+.picmidleft {
+	width: 24px; height: 76px; overflow: hidden; float: left;
+}
+.picmidleft a {
+	width: 24px; height: 76px; display: block;
+}
+.picmidmid {
+	width: 630px; height: 76px; overflow: hidden; padding-left: 2px; float: left;
+}
+.picmidmid ul {
+	width: 630px; height: 76px; overflow: hidden; position: relative;
+}
+.picmidmid ul li {
+	width: 116px; height: 76px; text-align: center; overflow: hidden; margin-left: 8px; float: left; display: inline; position: relative;
+}
+.picmidmid ul li img {
+	height: 76px; max-width: 106px;
+}
+.selectpic {
+	border: 5px solid rgb(153, 153, 153); border-image: none; height: 66px !important;
+}
+.picmidright {
+	width: 24px; height: 76px; overflow: hidden; float: left;
+}
+.picmidright a {
+	width: 24px; height: 76px; display: block;
+}
+.picshowlist_right {
+	width: 120px; overflow: hidden; float: right;
+}
+.bodymodal {
+	background: rgb(0, 0, 0); left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden; display: none; position: fixed; z-index: 1100; opacity: 0.5; -moz-opacity: 0.5; -khtml-opacity: 0.5;
+}
+.firsttop_left {
+	width: 300px; height: 250px; overflow: hidden; margin-right: 30px; float: left;
+}
+.firsttop_right {
+	width: 270px; overflow: hidden; float: left;
+}
+.close2 {
+	height: 17px;
+}
+.close2 a {
+	background: url("../images/close.jpg") no-repeat 0px 0px; width: 15px; height: 15px; float: right; display: block;
+}
+.replay {
+	height: 24px; overflow: hidden; margin-top: 20px;
+}
+.replay h2 {
+	font-size: 16px; float: left;
+}
+.replay p {
+	background: url("../images/replay.png") no-repeat right; line-height: 24px; padding-right: 25px; margin-left: 15px; float: left; display: inline;
+}
+.replay p a {
+	color: white; font-size: 14px;
+}
+.replay p a:hover {
+	color: rgb(255, 112, 45); text-decoration: underline;
+}
+.pictwo {
+	width: 270px; height: 88px; overflow: hidden; margin-top: 20px;
+}
+.pictwo ul li {
+	width: 120px; height: 88px; overflow: hidden; margin-right: 15px; float: left; position: relative;
+}
+.pictwo ul li img {
+	width: 120px; height: 88px;
+}
+.imgdivtext {
+	background: rgba(0, 0, 0, 0.6); left: 0px; width: 120px; height: 25px; text-align: center; bottom: 0px; line-height: 25px; position: absolute; z-index: 4;
+}
+.imgdivtext a {
+	color: white; font-size: 14px; font-weight: bold;
+}
+.imgdivtext a:hover {
+	color: rgb(255, 112, 45); text-decoration: underline;
+}
+.returnbtn {
+	margin-top: 35px; margin-left: 50px;
+}
+.returnbtn a {
+	padding: 5px 15px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 115px; height: 22px; text-align: center; color: white; line-height: 22px; font-size: 16px; display: block;
+}
+.returnbtn a:hover {
+	border: 1px solid rgb(141, 90, 0); border-image: none; color: rgb(255, 112, 45); text-decoration: underline;
+}
+.firsttop {
+	background: rgb(28, 28, 28); padding: 20px; left: 0px; top: 170px; width: 270px; color: white; display: none; position: fixed; z-index: 1200;
+}
+.endtop {
+	background: rgb(28, 28, 28); padding: 20px; left: 0px; top: 170px; width: 270px; color: white; display: none; position: fixed; z-index: 1200;
+}

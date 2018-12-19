@@ -1,0 +1,169 @@
+package net.htjs.pt4.cms.controller;
+
+
+import net.htjs.pt4.cms.service.IContentTypeService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@RestController
+@RequestMapping("/contenttype")
+public class ContentTypeController extends BaseController {
+	
+
+private final Logger logger = LoggerFactory.getLogger(ContentTypeController.class);
+private static final String MSG_SUCCESS = "操作成功！";
+
+@Resource  
+private IContentTypeService contentTypeService;
+@Resource 
+private ISiteService siteService;
+
+
+@GetMapping(value="/list", produces = "application/json;charset=UTF-8")
+public Object list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer pageSize, String callback, 
+		@RequestParam Map<String, String> contentTypeMap,HttpServletRequest request) {
+	
+    int code;
+    String msg = MSG_SUCCESS;
+    Map mapModel = new HashMap();
+
+    try {
+        Datagrid datagrid = contentTypeService.selectContentType(contentTypeMap, Integer.parseInt(contentTypeMap.get("page")),
+                Integer.parseInt(contentTypeMap.get("pageSize")));
+        mapModel.put("data", datagrid.getRows());
+        code = 0;
+    } catch (Exception e) {
+        msg = e.getMessage();
+        logger.error(msg);
+        e.printStackTrace();
+        code = -1;
+    }
+
+    return getResult(mapModel, code, msg, callback);
+
+}
+
+@PostMapping
+public Object add(@RequestParam Map<String, String> contentTypeMap, String callback, HttpServletRequest request) {
+int code;
+String msg = MSG_SUCCESS;
+Map mapModel = new HashMap();
+
+try {
+	contentTypeMap.put("type_id", UUIDUtils.getUUID());
+	contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+	contentTypeService.insertContentType(contentTypeMap);
+  code = 1;
+} catch (Exception e) {
+  msg = e.getMessage();
+  logger.error(msg);
+  e.printStackTrace();
+  code = -1;
+}
+
+return getResult(mapModel, code, msg, callback);
+}
+
+@PutMapping
+public Object update(@RequestParam Map<String, String> qyxxglMap, String callback) {
+	
+	int code;
+	String msg = MSG_SUCCESS;
+	Map mapModel = new HashMap();
+
+	try {
+		contentTypeService.updateContentTypeById(qyxxglMap);
+	    code = 1;
+	} catch (Exception e) {
+	    msg = e.getMessage();
+	    logger.error(msg);
+	    e.printStackTrace();
+	    code = -1;
+	}
+
+	return getResult(mapModel, code, msg, callback);
+	
+}
+
+@GetMapping("/{id}")
+public Object detail(@PathVariable String id, @RequestParam Map<String, String> qyxxglMap, String callback) {
+	
+	int code;
+  String msg = MSG_SUCCESS;
+  Map mapModel = new HashMap();
+
+  try {
+      Map datagrid = contentTypeService.findById(id);
+      mapModel.put("data", datagrid);
+      code = 0;
+  } catch (Exception e) {
+      msg = e.getMessage();
+      logger.error(msg);
+      e.printStackTrace();
+      code = -1;
+  }
+
+  return getResult(mapModel, code, msg, callback);
+
+}
+
+@GetMapping("/queryNames")
+public Object queryNames(@RequestParam Map<String, String> qyxxglMap, String callback) {
+	
+	int code;
+  String msg = MSG_SUCCESS;
+  Map mapModel = new HashMap();
+
+  try {
+      Map datagrid = contentTypeService.queryNames();
+      mapModel.put("data", datagrid);
+      code = 0;
+  } catch (Exception e) {
+      msg = e.getMessage();
+      logger.error(msg);
+      e.printStackTrace();
+      code = -1;
+  }
+
+  return getResult(mapModel, code, msg, callback);
+
+}
+
+@DeleteMapping("/{id}")
+public Object delete(@PathVariable String id, String callback) {
+
+int code;
+String msg = MSG_SUCCESS;
+Map mapModel = new HashMap();
+
+try {
+	contentTypeService.deleteById(id);
+    code = 1;
+} catch (Exception e) {
+    msg = e.getMessage();
+    logger.error(msg);
+    e.printStackTrace();
+    code = -1;
+}
+
+return getResult(mapModel, code, msg, callback);
+
+}
+
+}

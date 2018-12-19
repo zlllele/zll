@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/www/css/css.css" type="text/css" rel="stylesheet" />
+<title>首页</title>
+
+</head>
+<body>
+	<div class="main">
+		[#include "../include/top.html"/]
+		
+		<div class="mid">
+			<div class="midleft">
+				<img src="/www/img/index_69.jpg" width="219" height="148" class="js_img" />
+				<span class="js_pro_name">无烟式烯烧嘴</span>
+			</div>
+			<div class="middle">
+				<div class="tabbox">
+					<div class="tabmenu">
+						<ul>
+							<li>新闻中心</li>
+						</ul>
+					</div>
+					<div id="tabcontent">
+						<ul class="cli">
+							<li><a href="#">·郑州光威高科有限公司原有限公司</a> 2010-01-05</li>
+							<li><a href="#">·郑州光威高科有限公司原有限公司</a> 2010-01-05</li>
+							<li><a href="#">·郑州光威高科有限公司原有限公司</a> 2010-01-05</li>
+							<li><a href="#">·郑州光威高科有限公司原有限公司</a> 2010-01-05</li>
+							<li><a href="#">·郑州光威高科有限公司原有限公司</a> 2010-01-05</li>
+							<li><a href="#">·郑州光威高科有限公司原原有限公司</a> 2010-01-05</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="midright">
+				<img src="/www/img/index_68.jpg" width="198" height="214" border="0"
+					usemap="#Map" />
+				<map name="Map" id="Map">
+					<area shape="rect" coords="8,4,185,45" href="#" />
+					<area shape="rect" coords="12,6,185,42" href="#" />
+					<area shape="rect" coords="11,61,186,99" href="#" />
+					<area shape="rect" coords="11,119,189,156" href="#" />
+					<area shape="rect" coords="14,175,178,209" href="#" />
+				</map>
+			</div>
+		</div>
+		<div class="main_pro">
+			<img src="/www/img/index_72.jpg" width="975" height="38" border="0"
+				usemap="#Map2" />
+			<map name="Map2" id="Map2">
+				<area shape="rect" coords="895,4,965,31" href="#" />
+			</map>
+			<div class="scroll_product">
+				<div id=demo
+					style="overflow: hidden; width: 945px; padding: 5px 10px 0px 5px; margin-left: 5px; color: #606060;"
+					align=center>
+					<table border=0 align=center cellpadding=0 cellspacing=0
+						cellspace=0>
+						<tr>
+							<td valign=top bgcolor=ffffff id=marquePic1>
+								<table width='100%' border='0' cellspacing='0'>
+									<tr>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" border="0" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+										<td align=center valign="top">
+											<div
+												style="background: url(/www/img/index_73.jpg) top center no-repeat; width: 190px; height: 125px; padding-top: 4px;">
+												<a href="#"><img src="/www/img/index_74.jpg" width="170"
+													height="115" /></a>
+											</div> <span style="display: block; width: 150px;"><a
+												href="#">产品名称</a></span>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td id=marquePic2 valign=top></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		[#include "../include/footer.html"/]
+	</div>
+</body>
+</html>

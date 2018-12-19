@@ -1,0 +1,784 @@
+@charset
+"utf-8"
+;
+body {
+    font-family: "宋体";
+    font-size: 12px;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+div, form, img, ul, ol, li, dl, dt, dd {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    color: #333;
+    text-decoration: none
+}
+
+a:hover {
+    color: #ff0101;
+    text-decoration: underline;
+}
+
+.align {
+    text-align: center
+}
+
+h1, h2, h3, h4, h5, h6, p, input, select, td {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4 {
+    font-size: 14px;
+}
+
+h5, h6 {
+    font-weight: normal;
+    line-height: 22px;
+    height: 22px;
+    font-size: 12px
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+.clear {
+    clear: both;
+    overflow: hidden;
+    zoom: 1;
+    height: 0
+}
+
+img {
+    vertical-align: middle;
+}
+
+.center {
+    text-align: center
+}
+
+.bord {
+    border-bottom: 1px #c6c6c6 dotted
+}
+
+.img {
+    text-align: center
+}
+
+/**************************table 类**************************/
+TABLE {
++ border-collapse : collapse;
+}
+
+/*定义表格的添加、查询、列表的显示样式*/
+.table_add, .table_list, .table_search {
++ border-collapse : collapse;
+    width: 100%;
+    padding: 0;
+    margin: 0px 0px 0px 0px;
+    line-height: 22px;
+    border-top: #e1e1e1 1px solid;
+    border-left: #e1e1e1 1px solid;
+}
+
+/*定义添加类型表格的单元显示样式*/
+.table_add caption {
+    text-align: left;
+    font-weight: 800;
+    text-indent: 15px;
+    line-height: 24px;
+    background: #f0eff0 url(images/table/tableth.png) repeat-x;
+}
+
+.table_add thead th {
+    text-align: center;
+    font-weight: 800;
+    line-height: 22px;
+    border-bottom: #e1e1e1 1px solid;
+    border-right: #e1e1e1 1px solid;
+}
+
+.table_add tbody td {
+    border-right: #e1e1e1 1px solid;
+    border-bottom: #e1e1e1 1px solid;
+    font-size: 12px;
+    padding: 2px 4px 2px 4px;
+}
+
+.table_add tfoot td {
+    border-right: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 12px;
+    padding: 0 4px 0px 4px;
+    margin: 0;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+/*定义添加类型表格TD样式*/
+.table_add .tdclass_view {
+    background: #f9f9f9;
+    text-align: right;
+}
+
+.table_add .tdclass_edit {
+    background: #fff;
+}
+
+.table_fixed {
+    table-layout: fixed;
+}
+
+.table_add .tdhh {
+    word-wrap: break-word;
+}
+
+/*列表表格单元格样式*/
+.table_list thead th {
+    text-align: center;
+    font-weight: 800;
+    line-height: 22px;
+    border-bottom: #e1e1e1 1px solid;
+    border-right: #e1e1e1 1px solid;
+    background: #f0eff0 url(images/table/tableth.png) repeat-x;
+}
+
+.table_list tbody td {
+    border-right: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 12px;
+    padding: 0 4px 0px 4px;
+    margin: 0;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+.table_list tfoot td {
+    border-right: 1px solid #e1e1e1;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 12px;
+    padding: 0 4px 0px 4px;
+    margin: 0;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+/*查询表格单元格样式*/
+.table_search td {
+    border: 1px solid #EDEDED;
+    font-size: 12px;
+    padding: 0px 4px 0px 4px;
+}
+
+.input_error {
+    background-image: url(../../js/validator/invalid_line.gif);
+    background-repeat: repeat-x;
+    background-position: bottom;
+}
+
+.searchbtn {
+    border: 0px;
+    overflow: hidden;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+    text-align: center;
+    BACKGROUND-COLOR: Transparent;
+    cursor: pointer;
+}
+
+.treeTitle {
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px 0px 5px 0px;
+	background: url(images/table/grid.png) no-repeat;
+	border-color: #b8d0d6;
+	background-color: #efefef;
+	background: url(images/table/grid.png) no-repeat;
+}
+
+/*Panel面板样式*/
+.panel {
+    display: block;
+    background-position: 0 100%;
+    background-repeat: repeat-x;
+    font-size: 12px;
+}
+
+.panel .panelHeader {
+    display: block;
+    height: 28px;
+    padding-left: 5px;
+    background-position: 0 0;
+}
+
+.panel .panelHeaderContent {
+    display: block;
+    height: 28px;
+    padding-right: 5px;
+    background-position: 100% -50px;
+    position: relative;
+}
+
+.panel .panelHeaderContent h1 {
+    display: block;
+    overflow: hidden;
+    height: 28px;
+    padding: 0 5px;
+    line-height: 28px;
+    background-position: 0 -100px;
+    background-repeat: repeat-x;
+}
+
+.panel .panelContent {
+    display: block;
+    overflow: auto;
+    padding: 5px 5px 1px 5px;
+    border-style: solid;
+    border-width: 0 1px;
+}
+
+.panel .panelFooter {
+    display: block;
+    overflow: hidden;
+    height: 5px;
+    padding-left: 5px;
+    background-position: 0 -150px;
+}
+
+.panel .panelFooterContent {
+    display: block;
+    overflow: hidden;
+    height: 5px;
+    padding-right: 5px;
+    background-position: 100% -200px;
+}
+
+.panel .collapsable, .panel .expandable {
+    display: block;
+    overflow: hidden;
+    width: 20px;
+    height: 21px;
+    text-indent: -1000px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+.panel .collapsable:hover {
+    background-position: 0 -50px;
+}
+
+.panel .expandable {
+    background-position: 0 -100px;
+}
+
+.panel .expandable:hover {
+    background-position: 0 -150px;
+}
+
+.panel .grid {
+    border-style: solid;
+    border-width: 0 1px;
+}
+
+.panel .panelBar {
+    border-width: 1px;
+}
+
+.panelBar {
+    display: block;
+    overflow: hidden;
+    height: 25px;
+    border-style: solid;
+    border-width: 1px 0;
+    background-repeat: repeat-x;
+}
+
+.panelBar ul {
+    padding: 1px;
+}
+
+.panelBar li {
+    float: left;
+    display: block;
+    overflow: hidden;
+    height: 23px;
+    padding: 0 0 0 5px;
+}
+
+.panelBar li.hover {
+    background-position: 0 -100px;
+}
+
+.panelBar li.hover a {
+    background-position: 100% -150px;
+}
+
+.panelBar .toolBar li, .panelBar .toolBar li.hover {
+    padding: 0 0 0 5px;
+    background-position: 0 -100px;
+}
+
+.panelBar .toolBar a, .panelBar .toolBar li.hover a {
+    float: left;
+    display: block;
+    overflow: hidden;
+    padding: 0 5px 0 0;
+    text-decoration: none;
+    background-position: 100% -150px;
+}
+
+.panelBar .toolBar span, .panelBar .toolBar li.hover span {
+    float: left;
+    display: block;
+    overflow: hidden;
+    height: 23px;
+    padding: 0 0 0 20px;
+    line-height: 23px;
+    cursor: pointer;
+}
+
+.panelBar .toolBar input {
+    border: 0px;
+    overflow: visible;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+    text-align: center;
+    BACKGROUND-COLOR: Transparent;
+    cursor: pointer;
+}
+
+.panelBar .toolBar a.add span {
+    background-position: 0 -696px;
+}
+
+.panelBar .toolBar a.delete span {
+    background-position: 0 -746px;
+}
+
+.panelBar .toolBar a.edit span {
+    background-position: 0 -796px;
+}
+
+.panelBar .toolBar a.query span {
+    background-position: -170px -696px;
+}
+
+.panelBar .toolBar a.able span {
+    background-position: -170px -746px;
+}
+
+.panelBar .toolBar a.disable span {
+    background-position: -170px -796px;
+}
+
+.panelBar .toolBar a.save span {
+    background-position: -170px -846px;
+}
+
+.panelBar .toolBar a.source span {
+    background-position: -340px -696px;
+}
+
+.panelBar .toolBar a.role span {
+    background-position: -340px -746px;
+}
+
+.panelBar .toolBar a.publish span {
+    background-position: -340px -796px;
+}
+
+.panelBar .toolBar a.cancel span {
+    background-position: -340px -846px;
+}
+
+.panelBar .toolBar a.date span {
+    background-position: -510px -696px;
+}
+
+.panelBar .toolBar a.resetpwd span {
+    background-position: -510px -746px;
+}
+
+.panelBar .toolBar a.reset span {
+    background-position: -510px -796px;
+}
+
+.panelBar .toolBar a.icon span {
+    background-position: 0 -846px;
+}
+
+.panelBar .toolBar li.line {
+    display: block;
+    overflow: hidden;
+    width: 12px;
+    padding: 0;
+    text-indent: -1000px;
+    background-position: 5px -200px;
+}
+
+.panelBar .pages {
+    float: left;
+    overflow: hidden;
+    height: 21px;
+    padding: 2px 5px;
+}
+
+.panelBar .pages span {
+    float: left;
+    line-height: 21px;
+}
+
+.panelBar .pages select {
+    float: left;
+    margin: 0 3px;
+    font-size: 12px;
+}
+
+.panelBar,
+.toolBar li.hover, .toolBar li.hover a, .toolBar li.hover span, .toolBar span,
+.pagination, .pagination li.hover, .pagination li.hover a, .pagination li span,
+.pagination li.disabled span span,
+.panelBar .line, .pagination li.jumpto, .pagination li.jumpto .goto {
+    background: url(images/table/grid.png) no-repeat;
+}
+
+.panelBar {
+    border-color: #b8d0d6;
+    background-color: #efefef;
+}
+
+/*分割线样式*/
+.divider {
+    border-color: #b8d0d6;
+}
+
+.divider {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    background: #fff;
+    text-indent: -1000px;
+    width: auto;
+    font-size: 1px;
+    padding: 4px 0 0 0;
+    margin-bottom: 5px;
+    border-style: dotted;
+    border-width: 0 0 1px 0;
+}
+
+/*表单样式定义*/
+FORM {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* TextInput */
+.textInput, input.focus, input.required, input.error, input.readonly, input.disabled,
+textarea.focus, textarea.required, textarea.error, textarea.readonly, textarea.disabled {
+    padding: 2px;
+    margin: 0;
+    line-height: 15px;
+    font-size: 12px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.noLine {
+    border: none;
+}
+
+.textInputNoline {
+    padding: 2px;
+    margin: 0;
+    line-height: 15px;
+    font-size: 12px;
+    border-style: solid;
+    border-width: 0px;
+}
+
+input.required, textarea.required {
+    background-position: 100% 0;
+}
+
+input.gray, textarea.gray {
+    color: gray;
+}
+
+select {
+    border: 1px solid;
+    border-color: #A2BAC0 #B8D0D6 #B8D0D6 #A2BAC0
+}
+
+.inputButton {
+    float: left;
+    display: block;
+    overflow: hidden;
+    text-indent: -1000px;
+    width: 16px;
+    height: 21px;
+}
+
+.inputButton:hover {
+    background-position: 0 -50px;
+}
+
+.inputDateButton {
+    float: left;
+    display: block;
+    overflow: hidden;
+    text-indent: -1000px;
+    width: 16px;
+    height: 21px;
+    background-position: 0 -100px;
+}
+
+.inputDateButton:hover {
+    background-position: 0 -150px;
+}
+
+span.error {
+    display: block;
+    overflow: hidden;
+    width: 165px;
+    height: 21px;
+    padding: 0 3px;
+    line-height: 21px;
+    background: #F00;
+    color: #FFF;
+    position: absolute;
+    top: 5px;
+    left: 318px;
+}
+
+label.alt {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    line-height: 20px
+}
+
+/* Button按钮样式 */
+.button, .button span,
+.buttonDisabled, .buttonDisabled span,
+.buttonActive, .buttonActive span,
+.button .buttonContent, .buttonHover, .buttonHover .buttonContent,
+.buttonActive .buttonContent, .buttonActiveHover, .buttonActiveHover .buttonContent,
+.buttonDisabled .buttonContent {
+    background: url(images/button/button_s.png) no-repeat;
+}
+
+.button span, .buttonDisabled span, .buttonActive span,
+.button .buttonContent, .buttonHover, .buttonHover .buttonContent,
+.buttonActive .buttonContent, .buttonDisabled .buttonContent,
+.button button, .buttonHover button,
+.buttonActive button, .buttonDisabled button {
+    color: #183152;
+}
+
+.buttonDisabled span, .buttonDisabled:hover span,
+.buttonDisabled button {
+    color: #999;
+}
+
+.button, .buttonActive, .buttonDisabled {
+    margin-left: 4px;
+    float: left;
+    display: block;
+    overflow: hidden;
+    height: 25px;
+    padding-left: 5px;
+}
+
+.button span, .buttonDisabled span, .buttonActive span,
+.button .buttonContent, .buttonHover, .buttonHover .buttonContent,
+.buttonActive .buttonContent, .buttonDisabled .buttonContent {
+    float: left;
+    display: block;
+    overflow: hidden;
+    height: 25px;
+    line-height: 25px;
+    font-weight: bold;
+}
+
+.button {
+    background-position: 0 0;
+}
+
+.button .buttonContent {
+    padding: 0 5px 0 0;
+    background-position: 100% -50px;
+}
+
+.button span {
+    padding: 0 10px 0 5px;
+    background-position: 100% -50px;
+    cursor: pointer;
+}
+
+.button:hover {
+    text-decoration: none;
+    background-position: 0 -100px;
+}
+
+.button:hover span {
+    background-position: 100% -150px;
+}
+
+.buttonHover {
+    padding-left: 5px;
+    background-position: 0 -100px;
+}
+
+.buttonHover .buttonContent {
+    padding: 0 5px 0 0;
+    background-position: 100% -150px;
+}
+
+.buttonActive {
+    background-position: 0 -200px;
+}
+
+.buttonActive .buttonContent {
+    padding: 0 5px 0 0;
+    background-position: 100% -250px;
+}
+
+.buttonActive span {
+    padding: 0 10px 0 5px;
+    background-position: 100% -250px;
+    cursor: pointer;
+}
+
+.buttonActive:hover {
+    text-decoration: none;
+    background-position: 0 -300px;
+}
+
+.buttonActive:hover span {
+    background-position: 100% -350px;
+}
+
+.buttonActiveHover {
+    background-position: 0 -300px;
+}
+
+.buttonActiveHover .buttonContent {
+    padding: 0 5px 0 0;
+    background-position: 100% -350px;
+}
+
+.buttonDisabled, .buttonDisabled:hover {
+    text-decoration: none;
+    background-position: 0 -400px;
+}
+
+.buttonDisabled span, .buttonDisabled:hover span {
+    padding: 0 10px 0 5px;
+    background-position: 100% -450px;
+    cursor: default;
+}
+
+.buttonDisabled .buttonContent {
+    padding: 0 5px 0 0;
+    background-position: 100% -450px;
+}
+
+.button button, .buttonHover button,
+.buttonActive button, .buttonDisabled button {
+    width: auto;
+    height: 25px;
+    margin: 0;
+    padding: 0 0 5px 0;
+    border: 0;
+    font-size: 12px;
+    font-weight: bold;
+    background: none;
+    cursor: pointer;
+}
+
+.buttonDisabled button {
+    cursor: default;
+}
+
+input.focus, input.required, input.error, input.readonly, input.disabled,
+textarea.focus, textarea.required, textarea.error, textarea.readonly, textarea.disabled {
+    background: url(images/form/input_bg.png) no-repeat scroll;
+}
+
+.textInput, .textArea {
+    border: #e4e4e4 1px solid;
+/*     background-color: #FFF; */
+}
+
+.textInput {
+    border: #e4e4e4 1px solid;
+/*     background-color: #FFF; */
+/*     background: url(../../images/button/input_text_bg.gif); */
+}
+
+input.required, textarea.required {
+    border-color: #a2bac0 #b8d0d6 #b8d0d6 #a2bac0;
+    background-color: #FFF;
+}
+
+input.error, textarea.error {
+    border-color: #F80C11 #FB7E81 #FB7E81 #F80C11;
+}
+
+input.focus, textarea.focus {
+    border-color: #64aabc #a9d7e3 #a9d7e3 #64aabc;
+    background-color: #f8fafc;
+}
+
+input.readonly, textarea.readonly {
+    border-color: #9eabb3 #d5dbdf #d5dbdf #9eabb3;
+    background-color: #F6F6F6;
+}
+
+input.disabled, textarea.disabled {
+    border-color: #9eabb3 #d5dbdf #d5dbdf #9eabb3;
+    background-color: #F6F6F6;
+}
+
+.inputButton, .inputDateButton {
+    background: url(images/form/input_bt.png) no-repeat;
+}
+
+/*2011.12.9 yanghongjian 自定义grid使用到的样式*/
+.alternation {
+    background: #D7F0D7;
+}
+
+.mouseOver {
+    background-color: #ffcccc;
+}
+
+.selected {
+    background: #66ccff;
+}
+
+
+

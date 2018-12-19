@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.htjs.pt4.cms.dao.AttachmentMapper">
+
+    <select id="getListSite" parameterType="map" resultType="hashMap">
+        select 
+        	'site' type,
+        	site_id,
+			site_name,
+			site_name file_name,
+			short_name,
+			tpl_path,
+			static_path,
+			domain,
+			static_dir,
+			tpl_solution,
+			is_recycle_on,
+			is_root,
+			views
+         from hj_site 
+	</select>
+
+    <select id="getListTime" parameterType="map" resultType="hashMap">
+    	select 'time' type,a.site_id,a.file_name from (
+    		select 
+	    		left(substring_index(file_path, '/', -2),6) file_name,
+	        	content_id,
+				site_id,
+				priority,
+				file_path,
+				download
+	        from hj_content_file
+	    	where site_id=#{site_id}
+    	) a group by a.site_id,a.file_name
+	</select>
+
+    <select id="getListFile" parameterType="map" resultType="hashMap">
+    	select  
+    		'file' type,
+    		content_id,
+			site_id,
+			priority,
+			file_path,
+			file_name,
+			download
+    	from hj_content_file 
+    	where 
+			left(substring_index(file_path, '/', -2),6)=#{file_time} and 
+			site_id=#{site_id}
+	</select>
+	
+	<delete id="deleteAttachment" parameterType="map">
+        delete from hj_content_file where content_id=#{content_id} and file_name=#{file_name}
+    </delete>
+</mapper>

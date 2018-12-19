@@ -1,0 +1,28 @@
+Cms = {};
+
+Cms.url = "http://localhost:8080";
+/**
+ * 浏览次数
+ */
+Cms.viewCount = function(contentId,siteId) {
+	$.getJSON(Cms.url + "/view/content_view.do", {
+		contentId : contentId,
+		siteId : siteId
+	}, function(data) {
+		if (data.length > 0) {
+			$("#views").text(data[0]);
+		}
+	});
+}
+/**
+ * 站点流量统计
+ */
+Cms.siteCount = function(siteId) {
+	$.getJSON(Cms.url + "/view/site_view.do", {
+		siteId : siteId
+	}, function(data) {
+		if (data.length > 0) {
+			$("#siteViews").text(data[0]);
+		}
+	});
+}

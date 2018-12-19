@@ -1,0 +1,33 @@
+/**
+ * <ol>
+ * date:12-3-5 editor:yanghongjian
+ * <li>创建文档</li>
+ * <li>基础组合下拉框的样式</li>
+ * </ol>
+ */
+@charset
+"utf-8"
+;
+.baseCombo {
+    border: #c3c3c3 1px solid;
+    cursor: hand;
+    background: url(down.gif) no-repeat right;
+}
+
+.divCombo {
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    border: 1px solid #c3c3c3;
+    background: #ffffff;
+    width: 200px;
+    height: 160px;
+    /*FILTER: alpha(opacity = 100);*/
+}
+.qbtn{
+
+}
+.watermark{
+    border: #c3c3c3 1px solid;
+    background: url(search.gif) no-repeat right;
+}

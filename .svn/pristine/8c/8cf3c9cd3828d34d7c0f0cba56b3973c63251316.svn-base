@@ -1,0 +1,25 @@
+<div class="top">
+	<a href="#">中文版</a> | <a href="#">英文版</a>
+</div>
+<div class="name">
+	<img src="/www/img/index_05.jpg" width="484" height="89" />
+</div>
+<div class="nav1">
+	<img src="/www/img/index_10.jpg" width="14" height="44" class="img1" />
+	<ul class="nav">
+		<li><a href="#">首页</a></li>
+		<li><a href="#">公司简介</a></li>
+		<li><a href="#">新闻中心</a></li>
+		<li><a href="#">工程案例</a></li>
+		<li><a href="#">产品展示</a></li>
+		<li><a href="#">技术常识</a></li>
+		<li><a href="#">资质证书</a></li>
+		<li><a href="#">留言板</a></li>
+		<li><a href="#">招贤纳士</a></li>
+		<li class="last"><a href="#">联系我们</a></li>
+	</ul>
+	<img src="/www/img/index_19.jpg" width="14" height="44" class="img2" />
+</div>
+<div class="banner">
+	<img src="/www/img/index_26.jpg" width="974" height="301" />
+</div>

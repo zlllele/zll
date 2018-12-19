@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.htjs.pt4.cms.dao.MarkMapper">
+	<resultMap id="BaseMarkMap" type="net.htjs.pt4.cms.entity.Mark">
+		<id column="site_id" jdbcType="VARCHAR" property="site_id" />
+		<result column="mark_on" jdbcType="INTEGER" property="mark_on" />
+		<result column="mark_content" jdbcType="VARCHAR" property="mark_content" />
+		<result column="mark_size" jdbcType="INTEGER" property="mark_size" />
+		<result column="mark_color" jdbcType="VARCHAR" property="mark_color" />
+		<result column="mark_alpha" jdbcType="INTEGER" property="mark_alpha" />
+		<result column="mark_position" jdbcType="INTEGER" property="mark_position" />
+		<result column="mark_offset_x" jdbcType="INTEGER" property="mark_offset_x" />
+		<result column="mark_offset_y" jdbcType="INTEGER" property="mark_offset_y" />
+	</resultMap>
+	
+	<!-- 根据站点id查询水印信息 -->
+    <select id="queryMark" resultType="hashMap" parameterType="map">
+		select * from hj_mark where site_id=${site_id}
+	</select>
+   
+   	<!-- 增加水印信息 -->
+	<insert id="saveMark" parameterType="map">
+		insert into hj_mark(
+			site_id,
+			mark_on,
+			mark_content,
+			mark_size,
+			mark_color,
+			mark_alpha,
+			mark_position,
+			mark_offset_x,
+			mark_offset_y
+		) values (
+			#{site_id},
+			#{mark_on},
+			#{mark_content},
+			#{mark_size},
+			#{mark_color},
+			#{mark_alpha},
+			#{mark_position},
+			#{mark_offset_x},
+			#{mark_offset_y}
+		)
+	</insert>
+    
+    <!-- 修改水印信息 -->
+	<update id="updateMark" parameterType="map">
+        update hj_mark set 
+			mark_on=#{mark_on},
+			mark_content=#{mark_content},
+			mark_size=#{mark_size},
+			mark_color=#{mark_color},
+			mark_alpha=#{mark_alpha},
+			mark_position=#{mark_position},
+			mark_offset_x=#{mark_offset_x},
+			mark_offset_y=#{mark_offset_y}
+		where site_id=#{site_id}
+	</update>
+   
+</mapper>

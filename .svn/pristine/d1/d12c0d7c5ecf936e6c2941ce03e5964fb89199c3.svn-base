@@ -1,0 +1,161 @@
+package net.htjs.pt4.cms.dao;
+
+import java.util.List;
+
+import java.util.Map;
+
+import net.htjs.pt4.cms.entity.Content;
+import net.htjs.pt4.cms.entity.ContentFile;
+/**
+ * 内容持久化接口
+ * 
+ * @author wupeng
+ *
+ */
+public interface ContentMapper {
+	/**
+	 * 以栏目ID查询其下内容
+	 * 
+	 * @param map
+	 * @return List
+	 */
+	List<Map<String,Object>> selectContentsByChannel(Map<String,Object> map);
+	/**
+	 * 以栏目ID查询其下内容附件
+	 * 
+	 * @param id
+	 * @return List
+	 */
+	List<Map<String,Object>> selectContentAttachmentsById(String id);
+	/**
+	 * 以栏目ID查询其下内容图片集
+	 * 
+	 * @param id
+	 * @return List
+	 */
+	List<Map<String,Object>> selectContentPcsById(String id);
+	/**
+	 * 插入内容记录
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int insertContent(Map<String,Object> map);
+	/**
+	 * 插入内容浏览量记录
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int insertContentCount(Map<String,Object> map); 
+	/**
+	 * 插入内容文本附件记录
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int insertContentFiles(Map<String,Object> map);
+	/**
+	 * 插入内容文本图片集记录
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int insertContentPics(Map<String,Object> map);
+	/**
+	 * 插入内容文本记录
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int insertContentTxt(Map<String,Object> map);
+	/**
+	 * 以栏目ID查询其下内容
+	 * 
+	 * @param id
+	 * @return Map
+	 */ 
+	Map<String,Object> selectContentById(String id);
+	/**
+	 * 更新内容记录
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int updateContentById(Map<String,Object> map);
+	/**
+	 * 更新内容文本记录
+	 * 
+	 * @param map
+	 * @return int
+	 */  
+	int updateContentTxtById(Map<String,Object> map);
+	/**
+	 * 删除内容附件
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int deleteFilesById(String id);
+	/**
+	 * 删除内容图片集
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int deletePicsById(String id);
+	/**
+	 * 删除内容
+	 * 
+	 * @param map
+	 * @return int
+	 */ 
+	int deleteById(String id);
+
+	/**
+	 * 以栏目ID查询其下内容
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelId(String channelId);
+
+	/**
+	 * 以栏目ID查询内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelId(String channelId);
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容列表
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelParentId(String channelId);
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelParentId(String channelId);
+
+	/**
+	 * 以内容ID查询附件集合
+	 * 
+	 * @param contentId
+	 * @return
+	 */
+	public List<ContentFile> getContentFileById(String contentId);
+
+	/**
+	 * 更新内容附件
+	 * 
+	 * @param contentFile
+	 */
+	public void updateContentFile(ContentFile contentFile);
+}

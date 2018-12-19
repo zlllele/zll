@@ -1,0 +1,159 @@
+package net.htjs.pt4.cms.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import net.htjs.pt4.cms.dao.ContentCountMapper;
+import net.htjs.pt4.cms.dao.ContentMapper;
+import net.htjs.pt4.cms.entity.Content;
+import net.htjs.pt4.cms.entity.ContentFile;
+import net.htjs.pt4.cms.service.IContentService;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.DaoException;
+import net.htjs.pt4.core.entity.SaveException;
+
+/**
+ * Description: author wangpengqi date 2017/09/14
+ */
+@Service
+@Transactional
+public class ContentService implements IContentService {
+
+	private final Logger logger = LoggerFactory.getLogger(ContentService.class);
+
+	@Resource
+	private ContentMapper contentMapper;
+
+	//
+	@Override
+	public Datagrid selectContentsByChannel(Map map, int pageNum, int pageSize) throws Exception {
+		PageHelper.startPage(pageNum, pageSize);
+		List<Map> list = contentMapper.selectContentsByChannel(map);
+		PageInfo pageInfo = new PageInfo(list);
+		for (Map u : list) {
+			u.put("TOTAL", pageInfo.getTotal());
+		}
+
+		Datagrid datagrid = new Datagrid(pageInfo.getTotal(), pageInfo.getList());
+
+		return datagrid;
+	}
+
+	 @Override
+	 public int insertContent(Map map,List aList, List pcsList) throws SaveException{
+	 try {
+		 contentMapper.insertContent(map);
+		 contentMapper.insertContentCount(map);
+		 contentMapper.insertContentTxt(map);
+		 if(aList.size()>0){
+			 contentMapper.insertContentFiles(map);
+		 }
+		 if(pcsList.size()>0){
+			 contentMapper.insertContentPics(map);
+		 }
+	 } catch (DaoException e) {
+	 logger.error("添加出错", e);
+
+	 }
+	 return 1;
+	 }
+	////
+	// @Override
+	// public Map findById(String id) throws Exception {
+	// Map<String,Object> map = channelMapper.selectChannelById(id);
+	// return map;
+	// }
+	////
+	// @SuppressWarnings("unchecked")
+	// @Override
+	// public int updateChannelById(Map map) throws SaveException {
+	// try {
+	// channelMapper.updateChannelById(map);
+	// if (((String)map.get("is_display")).equals("0")){
+	// map.put("areaId", (String)map.get("channel_id"));
+	// channelMapper.selectLowerChannelsForDelete(map);
+	// }
+	// } catch (DaoException e) {
+	// logger.error("添加出错", e);
+	// throw new SaveException(e);
+	// }
+	// return 1;
+	// }
+	//
+	// @Override
+	// public int deleteById(String id) throws Exception {
+	// try {
+	// Map<String,Object> userMap = new HashMap<String,Object>();
+	// channelMapper.deleteById(id);
+	// } catch (DaoException e) {
+	// logger.error("删除出错", e);
+	// throw new SaveException(e);
+	// }
+	// return 1;
+	// }
+
+	/**
+	 * 以栏目ID查询其下内容
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelId(String channelId) throws Exception {
+		return contentMapper.getContentsByChannelId(channelId);
+	}
+
+	/**
+	 * 以栏目ID查询内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelId(String channelId) throws Exception {
+		return contentMapper.getCountByChannelId(channelId);
+	}
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容列表
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelParentId(String channelId) throws Exception {
+		return contentMapper.getContentsByChannelParentId(channelId);
+	}
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelParentId(String channelId) throws Exception {
+		return contentMapper.getCountByChannelParentId(channelId);
+	}
+
+	/**
+	 * 以内容ID更新附件下载次数
+	 * 
+	 * @param contentId
+	 */
+	public void downloadCount(String contentId) throws Exception {
+		List<ContentFile> list = contentMapper.getContentFileById(contentId);
+		if (!list.isEmpty()) {
+			ContentFile cf = list.get(0);
+			int count = cf.getDownload() + 1;
+			cf.setDownload(count);
+			contentMapper.updateContentFile(cf);
+		}
+	}
+}

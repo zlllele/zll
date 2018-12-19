@@ -1,0 +1,294 @@
+package net.htjs.pt4.cms.entity;
+
+import static net.htjs.pt4.cms.freemarker.FrontUtils.SPT;
+import static net.htjs.pt4.cms.freemarker.FrontUtils.INDEX_NAME;
+import static net.htjs.pt4.cms.freemarker.FrontUtils.INDEX;
+import static net.htjs.pt4.cms.freemarker.FrontUtils.TPL_SUFFIX;
+
+import java.io.Serializable;
+
+import org.apache.commons.lang.StringUtils;
+
+/**
+ * 栏目实体
+ * 
+ * @author xieshiyu
+ *
+ */
+public class Channel implements Serializable {
+
+	private static final long serialVersionUID = -7242535507907005366L;
+
+	// 栏目ID
+	private String channelId;
+	// 站点ID
+	private Site site;
+	// 父栏目ID
+	private String parentId;
+	// 栏目目录
+	private String channelPath;
+	// 栏目名称
+	private String channelName;
+	// 内容目录
+	private String contentPath;
+	// meta标题
+	private String title;
+	// meta关键字
+	private String keywords;
+	// meta描述
+	private String description;
+	// 栏目页模板，相对路径
+	private String tplChannel;
+	// 内容页模板，相对路径
+	private String tplContent;
+	// 排列顺序，值越小越靠前
+	private Integer priority;
+	// 是否显示，1是，0否
+	private boolean display;
+	// 是否新窗口打开，0否，1是
+	private boolean blank;
+	// 外部链接
+	private String link;
+	// 每页多少条记录
+	private Integer pageSize;
+	// 栏目左侧范围值
+	private Integer lft;
+	// 栏目右侧范围值
+	private Integer rft;
+
+	/**
+	 * 获取URL地址
+	 * 
+	 * @return
+	 */
+	public String getUrl() {
+		if (StringUtils.isNotBlank(getLink())) {
+			return getLink();
+		} else {
+			return getUrlStatic();
+		}
+	}
+
+	// 获取静态页路径
+	private String getUrlStatic() {
+		StringBuilder url = new StringBuilder(getSite().getContextPath());
+		url.append(SPT).append(getChannelPath()).append(SPT);
+		url.append(INDEX_NAME);
+		return url.toString();
+	}
+
+	// 内容分页用
+	public String getHrefFormer() {
+		StringBuilder url = new StringBuilder(getSite().getContextPath());
+		url.append(SPT).append(getChannelPath()).append(SPT);
+		url.append(INDEX);
+		return url.toString();
+	}
+
+	// 内容分页用
+	public String getHrefLatter() {
+		return TPL_SUFFIX;
+	}
+
+	/**
+	 * 获取名称
+	 * 
+	 * @return
+	 */
+	public String getName() {
+		return getChannelName();
+	}
+
+	/**
+	 * 获取栏目静态页名称
+	 * 
+	 * @param pageNo
+	 * @return
+	 */
+	public String getStaticFileName(int totalPage, int pageNo) {
+		StringBuilder sb = new StringBuilder(SPT);
+		sb.append(getChannelPath()).append(SPT);
+		if (totalPage > 1) {
+			sb.append(INDEX);
+			if (pageNo > 1) {
+				sb.append("_").append(pageNo);
+			}
+			sb.append(TPL_SUFFIX);
+		} else {
+			sb.append(INDEX).append(TPL_SUFFIX);
+		}
+		return sb.toString();
+	}
+
+	public String getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(String channelId) {
+		this.channelId = channelId;
+	}
+
+	public Site getSite() {
+		return site;
+	}
+
+	public void setSite(Site site) {
+		this.site = site;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getChannelPath() {
+		return channelPath;
+	}
+
+	public void setChannelPath(String channelPath) {
+		this.channelPath = channelPath;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public String getContentPath() {
+		if (StringUtils.isNotBlank(contentPath)) {
+			return contentPath;
+		} else {
+			return "";
+		}
+	}
+
+	public void setContentPath(String contentPath) {
+		this.contentPath = contentPath;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getTplChannel() {
+		if (StringUtils.isNotBlank(tplChannel)) {
+			return tplChannel;
+		} else {
+			return "channel.html";
+		}
+	}
+
+	public void setTplChannel(String tplChannel) {
+		this.tplChannel = tplChannel;
+	}
+
+	public String getTplContent() {
+		if (StringUtils.isNotBlank(tplContent)) {
+			return tplContent;
+		} else {
+			return "content.html";
+		}
+	}
+
+	public void setTplContent(String tplContent) {
+		this.tplContent = tplContent;
+	}
+
+	public Integer getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
+
+	public boolean isDisplay() {
+		return display;
+	}
+
+	public void setDisplay(boolean display) {
+		this.display = display;
+	}
+
+	public boolean isBlank() {
+		return blank;
+	}
+
+	public void setBlank(boolean blank) {
+		this.blank = blank;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public Integer getPageSize() {
+		if (pageSize != null) {
+			return pageSize;
+		} else {
+			return 20;
+		}
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	// true有子栏目,false没子栏目
+	private boolean hasChildChannel = false;
+
+	public boolean hasChildChannel() {
+		return hasChildChannel;
+	}
+
+	public void setHasChildChannel(boolean hasChildChannel) {
+		this.hasChildChannel = hasChildChannel;
+	}
+
+	public Integer getLft() {
+		return lft;
+	}
+
+	public void setLft(Integer lft) {
+		this.lft = lft;
+	}
+
+	public Integer getRft() {
+		return rft;
+	}
+
+	public void setRft(Integer rft) {
+		this.rft = rft;
+	}
+
+}

@@ -1,0 +1,299 @@
+package net.htjs.pt4.cms.service.impl;
+
+import net.htjs.pt4.cms.dao.ChannelMapper;
+import net.htjs.pt4.cms.entity.Channel;
+import net.htjs.pt4.cms.service.IChannelService;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.DaoException;
+import net.htjs.pt4.core.entity.SaveException;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+import org.springframework.stereotype.Service;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Resource;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * 栏目业务处理类
+ * 
+ * @author wupeng
+ *
+ */
+@Service
+public class ChannelService implements IChannelService {
+
+	private final Logger logger = LoggerFactory.getLogger(ChannelService.class);
+
+	@Resource
+	private ChannelMapper channelMapper;
+
+	/**
+	 * 查询栏目树
+	 * 
+	 * @param map
+	 * @return List
+	 */
+	public List<Map<String, Object>> selectChannelTree(Map<String, Object> map) {
+		List<Map<String, Object>> zzjgList = null;
+		try {
+			zzjgList = channelMapper.selectChannelTree(map);
+		} catch (Exception e) {
+			logger.error(e.toString(), e);
+		}
+		return zzjgList;
+	}
+
+	/**
+	 * 查询下级栏目
+	 * 
+	 * @param map,pageNum,pageSize
+	 * @return Datagrid
+	 */
+	@Override
+	public Datagrid selectLowerChannels(Map<String, Object> map, int pageNum, int pageSize) throws Exception {
+		PageHelper.startPage(pageNum, pageSize);
+		List<Map<String, Object>> list = channelMapper.selectLowerChannels(map);
+		PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
+		for (Map<String, Object> u : list) {
+			u.put("TOTAL", pageInfo.getTotal());
+		}
+
+		Datagrid datagrid = new Datagrid(pageInfo.getTotal(), pageInfo.getList());
+
+		return datagrid;
+	}
+
+	/**
+	 * 插入栏目
+	 * 
+	 * @param map
+	 * @return int
+	 */
+	@Override
+	public int insertChannel(Map<String, Object> map) throws SaveException {
+		try {
+			channelMapper.insertChannel(map);
+			initLftRft((String) map.get("site_id"), (String) map.get("channel_id"), (String) map.get("parent_id"));
+		} catch (Exception e) {
+			logger.error("添加出错", e);
+			throw new SaveException(e);
+		}
+		return 1;
+	}
+
+	/**
+	 * 插入根栏目
+	 * 
+	 * @param map
+	 * @return int
+	 */
+	@Override
+	public int insertRootChannel(Map<String, Object> map) throws SaveException {
+		try {
+			map.put("channel_id", UUIDUtils.getUUID());
+			map.put("channel_name", "根节点");
+			map.put("tpl_channel", "channel.html");
+			map.put("tpl_content", "content.html");
+			map.put("priority", 10);
+			map.put("is_display", 1);
+			map.put("is_blank", 1);
+			channelMapper.insertRootChannel(map);
+			initLftRft((String) map.get("site_id"), (String) map.get("channel_id"), null);
+		} catch (Exception e) {
+			logger.error("添加出错", e);
+			throw new SaveException(e);
+		}
+		return 1;
+	}
+
+	/**
+	 * 根据id查询栏目
+	 * 
+	 * @param id
+	 * @return Map
+	 */
+	@Override
+	public Map<String, Object> findById(String id) throws Exception {
+		Map<String, Object> map = channelMapper.selectChannelById(id);
+		return map;
+	}
+
+	/**
+	 * 栏目目录重复性校验
+	 * 
+	 * @param id
+	 * @return Map
+	 */
+	@Override
+	public List<Map<String, Object>> pathCheck(Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> mapres = channelMapper.selectChannelByChannelPath(map);
+		return mapres;
+	}
+
+	/**
+	 * 更新栏目
+	 * 
+	 * @param map
+	 * @return int
+	 */
+	@Override
+	public int updateChannelById(Map<String, Object> map) throws SaveException {
+		try {
+			channelMapper.updateChannelById(map);
+		} catch (DaoException e) {
+			logger.error("添加出错", e);
+			throw new SaveException(e);
+		}
+		return 1;
+	}
+
+	/**
+	 * 删除栏目
+	 * 
+	 * @param map
+	 * @return int
+	 */
+	@Override
+	public int deleteById(String id) throws Exception {
+		try {
+			channelMapper.deleteById(id);
+		} catch (DaoException e) {
+			logger.error("删除出错", e);
+			throw new SaveException(e);
+		}
+		return 1;
+	}
+
+	/**
+	 * 以栏目父节点ID查询子栏目列表
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public List<Channel> getChannelByParentId(String parentId) throws Exception {
+		return channelMapper.getChannelByParentId(parentId);
+	}
+
+	/**
+	 * 以站点ID查询根栏目对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Channel getRootChannelBySiteId(String siteId) throws Exception {
+		return channelMapper.getRootChannelBySiteId(siteId);
+	}
+
+	/**
+	 * 以组织机构代码查询根栏目对象
+	 * 
+	 * @param zzjgDm
+	 * @return
+	 */
+	public Channel getRootChannelByZzjgDm(String zzjgDm) throws Exception {
+		return channelMapper.getRootChannelByZzjgDm(zzjgDm);
+	}
+
+	/**
+	 * 以栏目ID查询栏目对象
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Channel getChannelById(String channelId) throws Exception {
+		return channelMapper.getChannelById(channelId);
+	}
+
+	/**
+	 * 初始化栏目的左右范围值,假如当前栏目为根节点,则parentId值为null或空
+	 * 
+	 * @param siteId
+	 * @param channelId
+	 * @param parentId
+	 * @throws Exception
+	 */
+	public void initLftRft(String siteId, String channelId, String parentId) throws Exception {
+		if (StringUtils.isBlank(parentId)) {// 根节点的左右范围值都设置成0
+			int lft = 1, rft = 2;
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("channelId", channelId);
+			map.put("lft", lft);
+			map.put("rft", rft);
+			channelMapper.updateLftRft(map);
+		} else {
+			int lft = 0, rft = 0;
+			Channel parent = channelMapper.getChannelById(parentId);
+			int t_lft = parent.getLft();
+			int t_rft = parent.getRft();
+			List<Channel> channels = channelMapper.getChannelOrderByRft(parentId);
+			if (channels.isEmpty()) {
+				lft = t_rft;
+				rft = lft + 1;
+			} else {
+				Channel channel = channels.get(0);
+				lft = channel.getRft() + 1;
+				rft = lft + 1;
+			}
+			List<Channel> list = channelMapper.getChannelByRft(t_rft);
+			if (!list.isEmpty()) {
+				for (int i = 0; i < list.size(); i++) {
+					Channel c = list.get(i);
+					Map<String, Object> c_map = new HashMap<String, Object>();
+					c_map.put("channelId", c.getChannelId());
+					c_map.put("rft", c.getRft() + 2);
+					if (t_lft < c.getLft()) {
+						c_map.put("lft", c.getLft() + 2);
+					} else {
+						c_map.put("lft", c.getLft());
+					}
+					channelMapper.updateLftRft(c_map);
+				}
+			}
+			Map<String, Object> c_map = new HashMap<String, Object>();
+			c_map.put("channelId", channelId);
+			c_map.put("lft", lft);
+			c_map.put("rft", rft);
+			channelMapper.updateLftRft(c_map);
+			Map<String, Object> p_map = new HashMap<String, Object>();
+			p_map.put("channelId", parentId);
+			p_map.put("lft", t_lft);
+			p_map.put("rft", t_rft + 2);
+			channelMapper.updateLftRft(p_map);
+		}
+	}
+
+	/**
+	 * 查询所有父级栏目
+	 * 
+	 * @param channelId
+	 * @return String
+	 */
+	@Override
+	public String selectAllParentChannels(String channelId) throws Exception {
+
+		String pid = "";
+		String tid = channelId;
+		Map<String, Object> m = new HashMap<String, Object>();
+
+		while (!"".equals(tid)) {
+			m = channelMapper.selectParentChannelById(tid);
+			if (null == m || m.isEmpty() || null == (String) m.get("ppid") || "".equals((String) m.get("ppid"))) {
+				tid = "";
+			} else {
+				if ("".equals(pid)) {
+					pid = (String) m.get("pid");
+				} else {
+					pid = pid + "," + (String) m.get("pid");
+				}
+				tid = (String) m.get("pid");
+			}
+		}
+		return pid;
+	}
+}

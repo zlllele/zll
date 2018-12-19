@@ -1,0 +1,221 @@
+package net.htjs.pt4.cms.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import net.htjs.pt4.cms.entity.CmsConfig;
+import net.htjs.pt4.cms.entity.Site;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.service.impl.ChannelService;
+import net.htjs.pt4.cms.utils.FileUtils;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+@RestController
+@RequestMapping("/site")
+public class SiteController extends BaseController{
+	
+//	private final Logger logger = LoggerFactory.getLogger(SiteController.class);
+	private Logger logger = Logger.getLogger(SiteController.class);
+	private static final String MSG_SUCCESS = "操作成功！";
+	
+	@Resource
+	private ISiteService siteService;
+	
+	@Autowired
+    private CmsConfig cmsConfig;
+	
+	@Autowired
+	private ChannelService channelService;
+	
+	/**
+	 * 站点全列表
+	 * @param page
+	 * @param pageSize
+	 * @param callback
+	 * @param contentTypeMap
+	 * @param request
+	 * @return
+	 */
+	@GetMapping(value="/list", produces = "application/json;charset=UTF-8")
+	public Object list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer pageSize, String callback, 
+			@RequestParam Map<String, String> contentTypeMap,HttpServletRequest request) {
+	    int code;
+	    String msg = MSG_SUCCESS;
+	    Map<String, Object> mapModel = new HashMap<String, Object>();
+	    try {
+	        Datagrid datagrid = siteService.selectSite(contentTypeMap, Integer.parseInt(contentTypeMap.get("page")),
+	                Integer.parseInt(contentTypeMap.get("pageSize")));
+	        mapModel.put("data", datagrid.getRows());
+	        code = 0;
+	    } catch (Exception e) {
+	        msg = e.getMessage();
+	        logger.info("输出{}",e);
+	        code = -1;
+	    }
+	    return getResult(mapModel, code, msg, callback);
+	}
+	
+	/**
+	 * 站点维护
+	 * @param page
+	 * @param pageSize
+	 * @param callback
+	 * @param contentTypeMap
+	 * @param request
+	 * @return
+	 */
+	@GetMapping(value="/list/manager", produces = "application/json;charset=UTF-8")
+	public Object listManager(String callback, HttpServletRequest request) {
+	    int code;
+	    String msg = MSG_SUCCESS;
+	    Map<String, Object> mapModel = new HashMap<String, Object>();
+	    String zzjgDm = UserUtils.getZzjgId(request);
+		if (StringUtils.isNotBlank(zzjgDm)) {
+			try {
+		        Site site = siteService.findByZzjgDm(zzjgDm);
+		        Map<String,Object> temp = new HashMap<>();
+		        temp.put("siteId", site.getSiteId());
+		        temp.put("site_name", site.getSiteName());
+		        temp.put("short_name", site.getShortName());
+		        temp.put("tpl_solution", site.getTplSolution());
+		        temp.put("domain", site.getDomain());
+		        temp.put("tpl_path", site.getTplPath());
+		        temp.put("static_path", site.getStaticPath());
+		        temp.put("static_dir", site.getStaticDir());
+		        temp.put("zzjgDm", site.getZzjgDm());
+		        temp.put("is_recycle_on", site.isRecydeOn()==true?"1":"0");
+		        temp.put("is_root", site.isRoot()==true?"1":"0");
+		        mapModel.put("data", temp);
+		        code = 0;
+		    } catch (Exception e) {
+		        msg = e.getMessage();
+		        logger.error(msg);
+		        e.printStackTrace();
+		        code = -1;
+		    }
+		} else {
+			code = -3;
+			msg = "登录信息失效 请重新登陆";
+		}
+	    return getResult(mapModel, code, msg, callback);
+	}
+	
+	/**
+	 * 站点新增/修改
+	 * @param siteMap
+	 * @param callback
+	 * @param request
+	 * @return
+	 */
+	@PostMapping
+	public Object add(@RequestParam Map<String, Object> siteMap, String callback, HttpServletRequest request) {
+		int code = 0;
+//		String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+//		path = path.substring(1, path.length()) + "static/cms_sys/t/";
+//		String path = ConfigProp.getConfig("filePath");
+		String path = cmsConfig.getFilePath();
+		System.out.println("站点新增/修改 path："+path);
+		String msg = MSG_SUCCESS;
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			if (siteMap.get("siteId")!=null&&!"".equals(String.valueOf(siteMap.get("siteId")))) {
+			//修改
+				siteService.editSite(siteMap);
+				//模板
+				FileUtils.copyDirectory(path+siteMap.get("sys_tpl_solution"), siteMap.get("tpl_path")+"/"+siteMap.get("tpl_solution")+"/");
+				//静态资源
+				FileUtils.copyDirectory(path+siteMap.get("sys_tpl_solution")+"_res", siteMap.get("tpl_path")+"/"+siteMap.get("tpl_solution")+"_res/");
+				FileUtils.copyDirectory(path+siteMap.get("sys_tpl_solution")+"_res", siteMap.get("static_path")+"/"+siteMap.get("static_dir"));
+				code = 0;
+			}else{
+			//新增
+				if (siteService.checkSiteIsExist(siteMap)) {
+					 code = -1;
+					 msg = "站点设置重复";
+				}else{
+					siteMap.put("site_id", UUIDUtils.getUUID());
+					siteService.addSite(siteMap);
+					channelService.insertRootChannel(siteMap);
+					//模板
+					FileUtils.copyDirectory(path+siteMap.get("sys_tpl_solution"), siteMap.get("tpl_path")+"/"+siteMap.get("tpl_solution")+"/");
+					//静态资源
+					FileUtils.copyDirectory(path+siteMap.get("sys_tpl_solution")+"_res", siteMap.get("tpl_path")+"/"+siteMap.get("tpl_solution")+"_res/");
+					FileUtils.copyDirectory(path+siteMap.get("sys_tpl_solution")+"_res", siteMap.get("static_path")+"/"+siteMap.get("static_dir"));
+					//
+					code = 0;
+				}
+			}
+		} catch (Exception e) {
+			 msg = e.getMessage();
+		     logger.error(msg);
+		     e.printStackTrace();
+		     code = -1;
+		}
+		return getResult(mapModel, code, msg, callback);
+	}
+	
+	/**
+	 * 根据ID获取站点详情
+	 * @param id
+	 * @param callback
+	 * @return
+	 */
+	@GetMapping("/{id}")
+	public Object detail(@PathVariable String id, String callback) {
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			Site site = siteService.findById(id);
+			mapModel.put("data", site);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			e.printStackTrace();
+			code = -1;
+		}
+		return getResult(mapModel, code, msg, callback);
+	}
+	
+	/**
+	 * 删除站点
+	 * @param id
+	 * @param callback
+	 * @return
+	 */
+	@DeleteMapping("/{id}")
+	public Object delete(@PathVariable String id, String callback) {
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			siteService.delSite(id);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			e.printStackTrace();
+			code = -1;
+		}
+		return getResult(mapModel, code, msg, callback);
+	}
+	
+}

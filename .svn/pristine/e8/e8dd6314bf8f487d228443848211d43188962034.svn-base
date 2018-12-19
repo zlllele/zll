@@ -1,0 +1,44 @@
+//使用窗口组件加载时注释下面的代码
+$(document).ready(function() {
+	debugger;
+	logDetails.onLoad();
+});
+
+/**
+ * <ol>
+ * <li>date:13-11-24</li>
+ * <li>editor:李强</li>
+ * <li>创建文档</li>
+ * <li>新增、修改参数</li>
+ * <li>功能：角色添加、修改</li>
+ * </ol>
+ */
+var logDetails = (function() {
+	// 私有属性
+	var curSeg, winObj, winParam;
+	
+	var initLayout = function() {
+		// 初始化页面UI
+		winObj = frameElement.api;
+		winParam = winObj.data;
+
+		winObj.button({
+				name : '关闭'
+			});
+	};
+
+	// 公有方法
+	return {
+		onLoad : function() {
+			curSeg = logDetails;
+			initLayout();
+			$(window).unload(function() {});
+			$("input[name='site_name']").val(winParam.other.log.site_name);
+			$("input[name='user_name']").val(winParam.other.log.user_name);
+			$("input[name='title']").val(winParam.other.log.title);
+			$("textarea[name='content']").val(winParam.other.log.content);
+			$("input[name='ip']").val(winParam.other.log.ip);
+			$("input[name='create_time']").val(winParam.other.log.create_time);
+		}
+	};
+})();

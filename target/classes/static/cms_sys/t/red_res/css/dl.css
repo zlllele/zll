@@ -1,0 +1,15 @@
+/*Internet Explorer 9及更早 IE 版本不支持 input 标签的 placeholder 属性*/
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:red;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:#ccc;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:#ccc;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 border: 1px solid; background-color: #6699ff; background:url('/r/cms/www/red/images/dlym1519.png') no-repeat center top;  border: 1px solid; */
+   color:#ccc;
+}

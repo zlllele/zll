@@ -1,0 +1,166 @@
+$(document).ready(function() {
+    index.onLoad();
+});
+var index = (function() {
+	// 私有属性
+	var rylb = "", curSeg, tbList, formSearch = "formSearch", gridObj, winParam = {};
+	// 私有方法
+	var initLayout = function() {
+		// 初始化页面UI
+		tbList = $("#tbList");
+        
+        var cols = [
+            { title:'类型', name:'type' ,width:80, align:'left', hidden: true } ,
+            { title:'文件名', name:'file_name' ,width:80, align:'left', hidden: false, renderer: function(val, item) {
+            	var type=item.type;
+            	if(type=="site"){
+            		return  "<a href='javascript:index.onQuery(\"1\",\""+item.site_id+"\");'>" + val + "</a>";
+            	}else if(type=="time"){
+            		$("#btn_goback").attr("onclick","index.onQuery(\"0\")");
+        			return  "<a href='javascript:index.onQuery(\"2\",\""+item.site_id+"\",\""+item.file_name+"\");'>" + val + "</a>";
+            	}else if(type=="file"){
+            		$("#btn_goback").attr("onclick","index.onQuery(\"1\",\""+item.site_id+"\")");
+            		return val;
+            	}
+            }} ,
+            { title:'大小', name:'file_size' ,width:80, align:'left', hidden: false } ,
+            { title:'下载次数', name:'download' ,width:80, align:'left', hidden: false } ,
+        ];
+
+        gridObj = tbList.mmGrid({
+			height : jdglTools.getMmGridHeight(tbList),
+			fullWidthRows : true,
+			indexCol : false,
+			checkCol : true,
+			showBackboard : false,
+			autoLoad : false,
+			nowrap : true,
+			cols : cols,
+			plugins : [ $('#tbListPg').htjsPaginator({
+				limitList : [ 10, 20, 30, 50 ],
+				loadFunction : [ curSeg.onQuery ]
+			}) ]
+		});
+
+    };
+    //公有方法
+    return {
+        onLoad : function() {
+			curSeg = index;
+			initLayout();
+			rylb = "";
+			formSearch_ = formSearch + "_";
+			baseTools.setIdByName([ formSearch ]);
+			curSeg.onQuery("0");
+			// 删除组件释放内存
+			$(window).unload(function() {
+			});
+		},
+		onToolbarClick : function(cmd) {
+			switch (cmd) {
+				case -1: // 删除操作
+					curSeg.onDeleteAttachment();
+					break;
+				default:
+					alert("未知的操作命令!");
+			}
+		},
+        // 查询数据
+		onQuery : function(flag,val_site_id,val_file_time) {
+			//flag值分为0,1,2；
+			//当为0时，查询站点
+			//当为1时，查询站点下日期文件夹
+			//当为2时，查询站点下日期文件夹下文件
+			var url="";
+			var params={pageNo:'46',pageSize:'1'};
+			if(flag=="0"){
+				url="/attachment/listSite.do";
+			}else if(flag=="1"){
+				url="/attachment/listTime.do";
+				params["site_id"]=val_site_id;
+			}else if(flag=="2"){
+				url="/attachment/listFile.do";
+				params["site_id"]=val_site_id;
+				params["file_time"]=val_file_time;
+			}
+			baseTools.xhrAjax({
+				url:url,
+	            params:params,
+				callback : [ curSeg.pageFlowControl ]
+			});
+		},
+		pageFlowControl : function(jsonObj, xhrArgs) {
+			switch (parseInt(jsonObj.code)) {
+				// 查询操作返回标志
+				case 0:
+					if(jsonObj.data.length==0){
+						$("#btn_goback").attr("onclick","index.onQuery(\"0\")");
+					}
+					curSeg.fillGridByJson(jsonObj, xhrArgs);
+					break;
+				case -1:
+					alert("请稍后重试");
+					break;
+				case -2:// 其它错误返回标志
+					alert(jsonObj.msg);
+					baseTools.hideMash();
+					break;
+				case -3:// cookie 失效请重新登录
+					alert(jsonObj.msg);
+					baseTools.gotoLogin();
+					break;
+				default:
+			}
+		},
+		onDeleteAttachment:function(){
+			//删除
+			var ids = gridObj.selectedRows();
+            if (ids.length == 0 || ids.length > 1) {
+                alert("请选择一条记录!");
+                return false;
+            }
+            if(ids[0].type!="file"){
+            	alert("目录下有文件不可删除");
+            	return false;
+            }
+            if (!confirm("确认要删除这个附件吗?")) {
+                return;
+            }
+            baseTools.xhrAjax({
+				url:"/attachment/delete.do",
+	            params:{content_id:ids[0].content_id,file_name:ids[0].file_name,file_path:ids[0].file_path,file_time:ids[0].file_time,site_id:ids[0].site_id},
+				callback : [ curSeg.deleteLogFinish ]
+			});
+		},
+		deleteLogFinish:function(jsonObj, xhrArgs){
+			//删除后的操作
+			switch (parseInt(jsonObj.code)) {
+				case 0:
+					alert("删除成功");
+					var condition=jsonObj.condition;
+					var file_time=jsonObj.file_time;
+					var site_id=jsonObj.site_id;
+					if(condition=="file"){
+						curSeg.onQuery("2",site_id,file_time);
+					}else if(condition=="time"){
+						curSeg.onQuery("1",site_id);
+					}else{
+						curSeg.onQuery("0");
+					}
+					break;
+				case -1:
+					alert("请稍后重试");
+					break;
+				case -3:// cookie 失效请重新登录
+					alert(jsonObj.msg);
+					baseTools.gotoLogin();
+					break;
+				default:
+			}
+		},
+		// 使用json格式的业务数据填充表格
+		fillGridByJson : function(jsonObj, xhrArgs) {
+			gridObj.load(jsonObj.data);
+		}
+    };
+})();

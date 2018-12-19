@@ -1,0 +1,11 @@
+package net.htjs.pt4.cms.service;
+
+/**
+ * 友情链接类别业务接口
+ * 
+ * @author xieshiyu
+ *
+ */
+public interface IFriendLinkTypeService {
+
+}

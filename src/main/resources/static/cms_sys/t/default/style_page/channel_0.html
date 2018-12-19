@@ -1,0 +1,31 @@
+[#--
+栏目翻页样式
+--]
+[#assign p=tag_pagination/]
+[#if p.pages gt 1]
+	<ul class="pull-left">
+		[#if p.isFirstPage]
+			<a charset="pageUp"><div class="pull-left">上一页</div></a>
+		[#else]
+			<a href="${hrefFormer}[#if p.prePage gt 1]_${p.prePage}[/#if]${hrefLatter}" charset="pageUp"><div class="pull-left">上一页</div></a>
+		[/#if]
+		
+		[#assign pageStart=((p.pageNum-5)/10)*10+1/]
+		[#if pageStart lt 1]
+			[#assign pageStart=1/]
+		[/#if]
+		[#assign pageEnd=pageStart+9/]
+		[#if pageEnd gt p.pages]
+			[#assign pageEnd=p.pages/]
+		[/#if]
+		[#list pageStart..pageEnd as i]
+			<a href="${hrefFormer}[#if i gt 1]_${i}[/#if]${hrefLatter}"><li [#if p.pageNum == i]class="list"[/#if]>${i}</li></a>
+		[/#list]
+		
+		[#if p.isLastPage]
+			<a class="pageDown"><div class="pull-left">下一页</div></a>
+		[#else]
+			<a href="${hrefFormer+'_'+p.nextPage+hrefLatter}" class="pageDown"><div class="pull-left">下一页</div></a>
+		[/#if]
+	</ul>
+[/#if]

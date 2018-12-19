@@ -1,0 +1,65 @@
+package net.htjs.pt4.cms.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import net.htjs.pt4.cms.entity.Content;
+import net.htjs.pt4.cms.entity.ContentFile;
+
+public interface ContentMapper {
+	List selectContentsByChannel(Map map);
+	// void selectLowerChannelsForDelete(Map map);
+	// int insertChannel(Map map);
+	// Map selectChannelById(String id);
+	// int updateChannelById(Map map);
+	// int deleteById(String id);
+	// Map selectQYXXGLByMc(String xsf_mc);
+	// int deleteKprById(String id);
+
+	/**
+	 * 以栏目ID查询其下内容
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelId(String channelId);
+
+	/**
+	 * 以栏目ID查询内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelId(String channelId);
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容列表
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelParentId(String channelId);
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelParentId(String channelId);
+
+	/**
+	 * 以内容ID查询附件集合
+	 * 
+	 * @param contentId
+	 * @return
+	 */
+	public List<ContentFile> getContentFileById(String contentId);
+
+	/**
+	 * 更新内容附件
+	 * 
+	 * @param contentFile
+	 */
+	public void updateContentFile(ContentFile contentFile);
+}

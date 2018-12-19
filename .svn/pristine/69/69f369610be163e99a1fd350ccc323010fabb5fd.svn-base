@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.htjs.pt4.cms.dao.ContentRecycleMapper">
+    <select id="getList" parameterType="map" resultType="hashMap">
+        select 
+        	a.content_id,
+        	a.channel_id,
+			a.user_id,
+			a.user_name,
+			a.type_id,
+			a.site_id,
+			a.title,
+			a.description,
+			a.top_level,
+			a.release_date,
+			a.is_recommend,
+			a.status,
+			a.tpl_content,
+			a.media_path,
+			a.media_type,
+			a.link,
+			a.image_path,
+			b.type_name,
+			b.img_width,
+			b.img_height,
+			b.has_image,
+			b.is_disabled,
+			ifnull(c.views,'0') views,
+			ifnull(c.views_month,'0') views_month,
+			ifnull(c.views_week,'0') views_week,
+			ifnull(c.views_day,'0') views_day
+		from 
+			hj_content a
+		left join hj_content_type b on a.type_id=b.type_id
+		left join hj_content_count c on a.content_id=c.content_id
+		where 
+			a.status=3 
+			<if test="user_name!=null and user_name!=''">
+	        	and a.user_name like concat('%',#{user_name},'%') 
+	        </if>
+	        <if test="title!=null and title!=''">
+	        	and a.title like  concat('%',#{title},'%') 
+	        </if>
+		order by 
+			<if test="sequencing=='allDown'">
+	        	c.views desc, 
+	        </if>
+			<if test="sequencing=='dayDown'">
+	        	c.views_day desc, 
+	        </if>
+			<if test="sequencing=='weekDown'">
+	        	c.views_week desc, 
+	        </if>
+			<if test="sequencing=='monthDown'">
+	        	c.views_month desc, 
+	        </if>
+			<if test="sequencing=='allUp'">
+	        	c.views asc, 
+	        </if>
+			<if test="sequencing=='dayUp'">
+	        	c.views_day asc, 
+	        </if>
+			<if test="sequencing=='weekUp'">
+	        	c.views_week asc, 
+	        </if>
+			<if test="sequencing=='monthUp'">
+	        	c.views_ month asc, 
+	        </if>
+	        a.release_date desc 
+	</select>
+	
+	<update id="restoreContent" parameterType="map">
+		update hj_content set status='2' where content_id=#{content_id}
+    </update>
+    
+    <delete id="deleteContent" parameterType="map">
+        delete from hj_content where content_id=#{content_id}
+    </delete>
+</mapper>

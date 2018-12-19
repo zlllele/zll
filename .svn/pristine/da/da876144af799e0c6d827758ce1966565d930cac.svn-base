@@ -1,0 +1,96 @@
+package net.htjs.pt4.cms.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import net.htjs.pt4.cms.dao.SiteMapper;
+import net.htjs.pt4.cms.entity.Site;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.SaveException;
+
+/**
+ * 站点业务处理类
+ * 
+ * @author xieshiyu
+ *
+ */
+@Service
+public class SiteService implements ISiteService {
+
+	@Autowired
+	private SiteMapper siteMapper;
+
+	/**
+	 * 以站点ID查询站点对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findById(String siteId) throws Exception {
+		Site site = siteMapper.findById(siteId);
+		return site;
+	}
+
+	@Override
+	public Datagrid selectSite(Map<String, String> map, int pageNum, int pageSize) throws Exception {
+		PageHelper.startPage(pageNum, pageSize);
+	    List<Map<String,Object>> list = siteMapper.selectSite(map);
+	    PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
+	    for (Map<String,Object> u : list) {
+	        u.put("TOTAL", pageInfo.getTotal());
+	    }
+	    Datagrid datagrid = new Datagrid(pageInfo.getTotal(), pageInfo.getList());
+	    return datagrid;
+	}
+
+	/**
+	 * 站点流量统计
+	 * 
+	 * @param siteId
+	 */
+	public Integer flow(String siteId) throws Exception {
+		Site site = findById(siteId);
+		int count = site.getViews() + 1;
+		site.setViews(count);
+		siteMapper.updateSiteById(site);
+		return count;
+	}
+
+	/**
+	 * 以组织机构查询站点信息
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findByZzjgDm(String zzjgDm) throws Exception {
+		Site site = siteMapper.findByZzjgDm(zzjgDm);
+		return site;
+	}
+
+	@Override
+	public boolean checkSiteIsExist(Map<String,Object> map) throws Exception {
+		List<Map<String,Object>> list = siteMapper.checkSiteIsExist(map);
+		if (list!=null&&list.size()>0) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public void addSite(Map<String, Object> map) throws Exception {
+		try {
+			siteMapper.addSite(map);
+		} catch (Exception e) {
+			throw new SaveException(e);
+		}
+	}
+
+}

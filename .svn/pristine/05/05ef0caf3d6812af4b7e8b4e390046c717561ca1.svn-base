@@ -1,0 +1,81 @@
+package net.htjs.pt4.cms.controller;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import net.htjs.pt4.cms.service.IContentCountService;
+import net.htjs.pt4.cms.service.ISiteService;
+
+/**
+ * 浏览量统计
+ * 
+ * @author xieshiyu
+ *
+ */
+@Controller
+@RequestMapping("/view")
+public class CountController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CountController.class);
+
+	@RequestMapping(value = "/content_view.do")
+	public void contentView(String contentId, String siteId, HttpServletResponse response) {
+		if (StringUtils.isBlank(contentId)) {
+			renderJson(response, "[]");
+		}
+		int count = 0;
+		try {
+			count = countSvc.viewAndGet(contentId, siteId);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+		LOGGER.info("统计内容{}流量次数{}", contentId, count);
+		renderJson(response, "[" + count + "]");
+	}
+
+	@RequestMapping(value = "/site_view.do")
+	public void sitetView(String siteId, HttpServletResponse response) {
+		if (StringUtils.isBlank(siteId)) {
+			renderJson(response, "[]");
+		}
+		int count = 0;
+		try {
+			count = siteSvc.flow(siteId);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+		LOGGER.info("统计站点{}流量次数{}", siteId, count);
+		renderJson(response, "[" + count + "]");
+	}
+
+	/**
+	 * 发送内容。使用UTF-8编码。
+	 * 
+	 * @param response
+	 * @param contentType
+	 * @param text
+	 */
+	private void renderJson(HttpServletResponse response, String text) {
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Pragma", "No-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expires", 0);
+		try {
+			response.getWriter().write(text);
+		} catch (IOException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+	}
+
+	@Autowired
+	private IContentCountService countSvc;
+	@Autowired
+	private ISiteService siteSvc;
+}

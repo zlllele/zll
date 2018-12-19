@@ -1,0 +1,92 @@
+package net.htjs.pt4.cms.controller;
+
+import net.htjs.pt4.cms.service.IUserService;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author xieshiyu
+ */
+@Controller
+@RequestMapping("/user")
+public class UserController extends BaseController {
+
+	@Autowired
+	private IUserService userService;
+
+	@RequestMapping(value = "/list.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object list(String userName, Integer page, Integer pageNo, Integer pageSize, String callback) {
+		int code = 0;
+		String msg = "";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			Datagrid datagrid = userService.getAll(page, pageSize);
+			mapModel.put("data", datagrid.getRows());
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+	@RequestMapping(value = "/o_save.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object save(String userName, String callback) {
+		int code = 1;
+		String msg = "操作成功";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			userService.insertUser(userName);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+	@RequestMapping(value = "/o_update.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object update(String id, String userName, String callback) {
+		int code = 1;
+		String msg = "操作成功";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			userService.updateUser(id, userName);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+	@RequestMapping(value = "/o_delete.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object delete(String id, String callback) {
+		int code = 2;
+		String msg = "操作成功";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			userService.deleteUser(id);
+			code = 2;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+}

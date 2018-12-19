@@ -1,0 +1,143 @@
+package net.htjs.pt4.cms.service.impl;
+
+import net.htjs.pt4.cms.dao.ChannelMapper;
+import net.htjs.pt4.cms.dao.ContentTypeMapper;
+import net.htjs.pt4.cms.entity.Channel;
+import net.htjs.pt4.cms.service.IChannelService;
+import net.htjs.pt4.cms.service.IContentTypeService;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.DaoException;
+import net.htjs.pt4.core.entity.SaveException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Description: author wangpengqi date 2017/09/14
+ */
+@Service
+@Transactional
+public class ChannelService implements IChannelService {
+
+	private final Logger logger = LoggerFactory.getLogger(ChannelService.class);
+
+	@Resource
+	private ChannelMapper channelMapper;
+
+	public List selectChannelTree(Map map) {
+		List zzjgList = null;
+		try {
+				zzjgList = channelMapper.selectChannelTree(map);
+		} catch (Exception e) {
+			logger.error(e.toString(), e);
+		}
+		return zzjgList;
+	}
+
+
+	//
+	//
+	@Override
+	public Datagrid selectLowerChannels(Map map, int pageNum, int pageSize) throws Exception {
+		PageHelper.startPage(pageNum, pageSize);
+	    List<Map> list = channelMapper.selectLowerChannels((String)map.get("pid"));
+	    PageInfo pageInfo = new PageInfo(list);
+	    for (Map u : list) {
+	        u.put("TOTAL", pageInfo.getTotal());
+	    }
+
+	    Datagrid datagrid = new Datagrid(pageInfo.getTotal(), pageInfo.getList());
+
+    return datagrid;
+}
+//
+@Override
+public int insertChannel(Map map) throws SaveException {
+	try {
+		channelMapper.insertChannel(map);
+    } catch (DaoException e) {
+        logger.error("添加出错", e);
+        throw new SaveException(e);
+    }
+    return 1;
+}
+//
+@Override
+public Map findById(String id) throws Exception {
+    Map<String,Object> map = channelMapper.selectChannelById(id);
+    return map;
+}
+//
+@SuppressWarnings("unchecked")
+@Override
+public int updateChannelById(Map map) throws SaveException {
+	try {
+		channelMapper.updateChannelById(map);
+		if (((String)map.get("is_display")).equals("0")){
+			map.put("areaId", (String)map.get("channel_id"));
+			channelMapper.selectLowerChannelsForDelete(map);
+		}
+    } catch (DaoException e) {
+        logger.error("添加出错", e);
+        throw new SaveException(e);
+    }
+    return 1;
+}
+
+
+@Override
+public int deleteById(String id) throws Exception {
+	try {
+		Map<String,Object> userMap = new HashMap<String,Object>();
+		channelMapper.deleteById(id);
+    } catch (DaoException e) {
+        logger.error("删除出错", e);
+        throw new SaveException(e);
+    }
+    return 1;
+}
+
+	/**
+	 * 以栏目父节点ID查询子栏目列表
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public List<Channel> getChannelByParentId(String parentId) {
+		return channelMapper.getChannelByParentId(parentId);
+	}
+
+	/**
+	 * 以站点ID查询根栏目对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Channel getRootChannelBySiteId(String siteId) {
+		return channelMapper.getRootChannelBySiteId(siteId);
+	}
+
+	/**
+	 * 以栏目ID查询栏目对象
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Channel getChannelById(String channelId) {
+		return channelMapper.getChannelById(channelId);
+	}
+}
+

@@ -1,0 +1,151 @@
+package net.htjs.pt4.cms.controller;
+
+import net.htjs.pt4.cms.service.IUserService;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+
+import javax.annotation.Resource;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author xieshiyu
+ */
+@Controller
+@RequestMapping("/user")
+public class UserController extends BaseController {
+
+	@Resource
+	private IUserService userService;
+
+	@RequestMapping(value = "/list.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object list(String userName, Integer page, Integer pageNo, Integer pageSize, String callback) {
+		int code = 0;
+		String msg = "";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			Datagrid datagrid = userService.getAll(page, pageSize);
+			mapModel.put("data", datagrid.getRows());
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			code = -1;
+		}
+		this.index(pageNo);
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+	@RequestMapping(value = "/o_save.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object save(String userName, String callback) {
+		int code = 1;
+		String msg = "操作成功";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			userService.insertUser(userName);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+	@RequestMapping(value = "/o_update.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object update(String id, String userName, String callback) {
+		int code = 1;
+		String msg = "操作成功";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			userService.updateUser(id, userName);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+	@RequestMapping(value = "/o_delete.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object delete(String id, String callback) {
+		int code = 2;
+		String msg = "操作成功";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			userService.deleteUser(id);
+			code = 2;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+	public void index(int pageNo) {
+		// 静态资源路径
+		String static_path = "C:/template/";
+		// 静态页目录
+		String static_dir = "www";
+		// 模板路径
+		String tpl_path = "C:/web8/CMS/src/main/resources/static/cms_sys/t/";
+		// 启用模板目录
+		String tpl_solution = "red";
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("pageNo", pageNo);
+		data.put("tplPath", tpl_path + tpl_solution);
+
+		File f = new File(static_path + static_dir + File.separator + "index.html");
+		File parent = f.getParentFile();
+		if (!parent.exists()) {
+			parent.mkdirs();
+		}
+		Writer out = null;
+		try {
+			// FileWriter不能指定编码确实是个问题，只能用这个代替了。
+			out = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+			conf.setDirectoryForTemplateLoading(new File(tpl_path + tpl_solution));
+			Template template = conf.getTemplate("index/index.html");
+			template.process(data, out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (out != null) {
+				try {
+					out.flush();
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private Configuration conf;
+
+	@Autowired
+	public void setFreeMarkerConfigurer(FreeMarkerConfigurer freeMarkerConfigurer) {
+		this.conf = freeMarkerConfigurer.getConfiguration();
+	}
+}

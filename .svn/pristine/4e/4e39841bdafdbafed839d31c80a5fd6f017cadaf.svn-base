@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.htjs.pt4.cms.dao.UserMapper">
+  <resultMap id="BaseUserMap" type="net.htjs.pt4.cms.entity.User">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+  
+   <select id="getAll" resultType="hashMap" parameterType="map">
+        select content_id as id, title as username  from test 
+   </select>
+  	
+   <insert id="insertUser" parameterType="map">
+        insert into test(content_id,title) values (#{id},#{title})
+    </insert>
+    
+    <update id="updateUser" parameterType="map">
+        update test set title=#{title} where content_id=#{id}
+    </update>
+    
+    <delete id="deleteUser" parameterType="map">
+        delete from test where content_id=#{id}
+    </delete>
+</mapper>

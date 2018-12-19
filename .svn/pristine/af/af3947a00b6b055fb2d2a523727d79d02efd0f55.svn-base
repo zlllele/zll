@@ -1,0 +1,103 @@
+package net.htjs.pt4.cms.service.impl;
+
+import net.htjs.pt4.cms.dao.ContentTypeMapper;
+import net.htjs.pt4.cms.service.IContentTypeService;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.DaoException;
+import net.htjs.pt4.core.entity.SaveException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+* Description:
+* author  wangpengqi
+* date 2017/09/14
+*/
+@Service
+@Transactional
+public class ContentTypeService implements IContentTypeService {
+
+private final Logger logger = LoggerFactory.getLogger(ContentTypeService.class);
+
+@Resource
+private ContentTypeMapper contentTypeMapper;
+
+
+@Override
+public Datagrid selectContentType(Map map, int pageNum, int pageSize) throws Exception {
+	PageHelper.startPage(pageNum, pageSize);
+    List<Map> list = contentTypeMapper.selectContentType(map);
+    PageInfo pageInfo = new PageInfo(list);
+    for (Map u : list) {
+        u.put("TOTAL", pageInfo.getTotal());
+    }
+
+    Datagrid datagrid = new Datagrid(pageInfo.getTotal(), pageInfo.getList());
+
+    return datagrid;
+}
+
+@Override
+public int insertContentType(Map map) throws SaveException {
+	try {
+		contentTypeMapper.insertContentType(map);
+    } catch (DaoException e) {
+        logger.error("添加出错", e);
+        throw new SaveException(e);
+    }
+    return 1;
+}
+
+@Override
+public Map findById(String id) throws Exception {
+    Map<String,Object> map = contentTypeMapper.selectContentTypeById(id);
+    return map;
+}
+
+@Override
+public Map queryNames() throws Exception {
+    Map<String,Object> map = contentTypeMapper.queryNames();
+    return map;
+}
+
+@SuppressWarnings("unchecked")
+@Override
+public int updateContentTypeById(Map map) throws SaveException {
+	try {
+		//map.put("gxsj", DateUtils.getDateTime2Str(new Date()));
+		contentTypeMapper.updateContentTypeById(map);
+    } catch (DaoException e) {
+        logger.error("添加出错", e);
+        throw new SaveException(e);
+    }
+    return 1;
+}
+
+@Override
+public int deleteById(String id) throws Exception {
+	try {
+		Map<String,Object> userMap = new HashMap<String,Object>();
+		contentTypeMapper.deleteById(id);
+    } catch (DaoException e) {
+        logger.error("删除出错", e);
+        throw new SaveException(e);
+    }
+    return 1;
+}
+
+}
+
+

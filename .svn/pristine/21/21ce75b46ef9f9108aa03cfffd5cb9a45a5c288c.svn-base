@@ -1,0 +1,11 @@
+package net.htjs.pt4.cms.dao;
+
+/**
+ * 友情链接持久层接口
+ * 
+ * @author xieshiyu
+ *
+ */
+public interface FriendLinkMapper {
+
+}

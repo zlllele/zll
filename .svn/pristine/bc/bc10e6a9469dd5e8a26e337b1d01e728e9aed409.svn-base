@@ -1,0 +1,168 @@
+package net.htjs.pt4.cms.service.impl;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import net.htjs.pt4.cms.dao.SiteMapper;
+import net.htjs.pt4.cms.entity.Site;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.SaveException;
+
+/**
+ * 站点业务处理类
+ * 
+ * @author xieshiyu
+ *
+ */
+@Service
+public class SiteService implements ISiteService {
+
+	@Autowired
+	private SiteMapper siteMapper;
+
+	/**
+	 * 以站点ID查询站点对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findById(String siteId) throws Exception {
+		Site site = siteMapper.findById(siteId);
+		return site;
+	}
+	
+	/**
+	 * 查询站点列表
+	 */
+	@Override
+	public Datagrid selectSite(Map<String, String> map, int pageNum, int pageSize) throws Exception {
+		PageHelper.startPage(pageNum, pageSize);
+	    List<Map<String,Object>> list = siteMapper.selectSite(map);
+	    PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
+	    for (Map<String,Object> u : list) {
+	        u.put("TOTAL", pageInfo.getTotal());
+	    }
+	    Datagrid datagrid = new Datagrid(pageInfo.getTotal(), pageInfo.getList());
+	    return datagrid;
+	}
+
+	/**
+	 * 站点流量统计
+	 * 
+	 * @param siteId
+	 */
+	public Integer flow(String siteId) throws Exception {
+		Site site = findById(siteId);
+		int count = site.getViews() + 1;
+		site.setViews(count);
+		siteMapper.updateSiteById(site);
+		return count;
+	}
+
+	/**
+	 * 以组织机构查询站点信息
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findByZzjgDm(String zzjgDm) throws Exception {
+		Site site = siteMapper.findByZzjgDm(zzjgDm);
+		return site;
+	}
+	
+	/**
+	 * 检查站点是否重复
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public boolean checkSiteIsExist(Map<String,Object> map) throws Exception {
+		List<Map<String,Object>> list = siteMapper.checkSiteIsExist(map);
+		if (list!=null&&list.size()>0) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * 站点新增
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public void addSite(Map<String, Object> map) throws Exception {
+		try {
+			siteMapper.addSite(map);
+		} catch (Exception e) {
+			throw new SaveException(e);
+		}
+	}
+	
+	/**
+	 * 站点修改
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public void editSite(Map<String, Object> map) throws Exception {
+		siteMapper.editSite(map);
+	}
+	
+	/**
+	 * 站点删除
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public void delSite(String id) throws Exception {
+		siteMapper.delSite(id);
+	}
+	
+	/**
+	 * 根据siteId,栏目名称(channel  content) 获取模板列表
+	 * @param siteId
+	 * @param channelName
+	 * @return json格式字符串
+	 * @throws Exception
+	 */
+	@Override
+	public String getChannelTpl(String siteId,String channelName) throws Exception {
+		Site site = siteMapper.findById(siteId);
+		String path = site.getTplPath()+"/"+site.getTplSolution()+"/"+channelName;
+		File srcDir = new File(path);
+		File[] files = srcDir.listFiles();
+		String fileName = "";
+		JSONArray jsonArray = new JSONArray();
+		for (int i = 0; i < files.length; i++){
+			if (files[i].exists()&&!files[i].isDirectory()) {
+				fileName = new String(files[i].getName().trim().getBytes("ISO8859-1"), "UTF-8");
+				if (fileName.indexOf(channelName)==0) {
+					JSONObject jsonObject = new JSONObject();
+					jsonObject.put("fileName", fileName);
+					jsonArray.add(jsonObject);
+				}
+			}
+		}
+		String json = null;
+		if (jsonArray != null){
+			json = jsonArray.toString();
+		}
+		return json;
+	}
+	
+}

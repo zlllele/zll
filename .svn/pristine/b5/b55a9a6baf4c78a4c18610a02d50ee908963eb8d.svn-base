@@ -1,0 +1,201 @@
+package net.htjs.pt4.cms.entity;
+
+import static net.htjs.pt4.cms.freemarker.FrontUtils.SPT;
+import static net.htjs.pt4.cms.freemarker.FrontUtils.INDEX_NAME;
+
+import java.io.Serializable;
+
+import org.apache.commons.lang.StringUtils;
+
+/**
+ * 栏目实体
+ * 
+ * @author xieshiyu
+ *
+ */
+public class Channel implements Serializable {
+
+	private static final long serialVersionUID = -7242535507907005366L;
+
+	// 栏目ID
+	private String channelId;
+	// 站点ID
+	private Site site;
+	// 父栏目ID
+	private String parentId;
+	// 栏目目录
+	private String channelPath;
+	// 栏目名称
+	private String channelName;
+	// 内容目录
+	private String contentPath;
+	// meta标题
+	private String title;
+	// meta关键字
+	private String keywords;
+	// meta描述
+	private String description;
+	// 栏目页模板，相对路径
+	private String tplChannel;
+	// 内容页模板，相对路径
+	private String tplContent;
+	// 排列顺序，值越小越靠前
+	private Integer priority;
+	// 是否显示，1是，0否
+	private boolean display;
+	// 是否新窗口打开，0否，1是
+	private boolean blank;
+	// 外部链接
+	private String link;
+	// 每页多少条记录
+	private Integer pageSize;
+
+	/**
+	 * 获取URL地址
+	 * 
+	 * @return
+	 */
+	public String getUrl() {
+		if (StringUtils.isNotBlank(getLink())) {
+			return getLink();
+		} else {
+			return getUrlStatic();
+		}
+	}
+
+	// 获取静态页路径
+	private String getUrlStatic() {
+		StringBuilder url = new StringBuilder(getSite().getContextPath());
+		url.append(SPT).append(getChannelPath()).append(SPT);
+		url.append(INDEX_NAME);
+		return url.toString();
+	}
+
+	public String getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(String channelId) {
+		this.channelId = channelId;
+	}
+
+	public Site getSite() {
+		return site;
+	}
+
+	public void setSite(Site site) {
+		this.site = site;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getChannelPath() {
+		return channelPath;
+	}
+
+	public void setChannelPath(String channelPath) {
+		this.channelPath = channelPath;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public String getContentPath() {
+		return contentPath;
+	}
+
+	public void setContentPath(String contentPath) {
+		this.contentPath = contentPath;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getTplChannel() {
+		return tplChannel;
+	}
+
+	public void setTplChannel(String tplChannel) {
+		this.tplChannel = tplChannel;
+	}
+
+	public String getTplContent() {
+		return tplContent;
+	}
+
+	public void setTplContent(String tplContent) {
+		this.tplContent = tplContent;
+	}
+
+	public Integer getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
+
+	public boolean isDisplay() {
+		return display;
+	}
+
+	public void setDisplay(boolean display) {
+		this.display = display;
+	}
+
+	public boolean isBlank() {
+		return blank;
+	}
+
+	public void setBlank(boolean blank) {
+		this.blank = blank;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+}

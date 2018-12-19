@@ -1,0 +1,22 @@
+package net.htjs.pt4.cms.freemarker.directive;
+
+import java.io.IOException;
+import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
+import net.htjs.pt4.cms.freemarker.directive.abs.AbstractUserDirective;
+
+@Component
+public class UserDirective extends AbstractUserDirective {
+
+	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
+			throws TemplateException, IOException {
+
+	}
+
+}

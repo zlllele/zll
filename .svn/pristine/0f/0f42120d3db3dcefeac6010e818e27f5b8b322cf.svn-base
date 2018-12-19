@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>回收站管理</title>
+    <script type="text/javascript" src="../../commons/js/include_ui.js?dm=102021222425"></script>
+    <script type="text/javascript" src="../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+    <script type="text/javascript" src="index.js?'+Math.random();+'"></script>
+</head>
+<body>
+	<!--工具栏开始-->
+	<div class="panelBar">
+	    <ul class="toolBar">
+	        <li class="">
+	        	<a class="query" style="display:none;">
+	        		<span><input type="button" onclick="index.onToolbarClick(1);" accesskey="a" onmouseout="this.style.color='#000'" onmousemove="this.style.color='#f00'" value="查看"></span>
+	            </a>
+	        	<a class="icon">
+	        		<span><input type="button" onclick="index.onToolbarClick(2);" accesskey="a" onmouseout="this.style.color='#000'" onmousemove="this.style.color='#f00'" value="还原"></span>
+	            </a>
+	        	<a class="delete">
+	        		<span><input type="button" onclick="index.onToolbarClick(-1);" accesskey="a" onmouseout="this.style.color='#000'" onmousemove="this.style.color='#f00'" value="删除"></span>
+	            </a>
+	        </li>
+	    </ul>
+	</div>
+	<form action="" name="formSearch" id="formSearch" onkeypress="if(event.keyCode == 13){index.onQuery();}">
+		<table cellpadding="0" cellspacing="0" class="table_add">
+			<tbody>
+				<tr>
+					<td class="tdclass_view" nowrap>标题：</td>
+					<td class="tdclass_edit" nowrap>
+						<input type="text" id="title" name="title"/>
+					</td>
+				    <td class="tdclass_view" nowrap>发布者：</td>
+					<td class="tdclass_edit" nowrap>
+						<input type="text" id="user_name" name="user_name"/>
+					</td>
+				    <td class="tdclass_view" nowrap>排序：</td>
+					<td class="tdclass_edit" nowrap>
+						<select id="sequencing" name="sequencing">
+							<option value="">==请选择==</option>
+							<option value="allDown">总点击降</option>
+							<option value="dayDown">日点击降</option>
+							<option value="weekDown">周点击降</option>
+							<option value="monthDown">月点击降</option>
+							<option value="allUp">总点击升</option>
+							<option value="dayUp">日点击升</option>
+							<option value="weekUp">周点击升</option>
+							<option value="monthUp">月点击升</option>
+						</select>
+					</td>
+					<td class="tdclass_view" align="right" colspan="2">
+						<a class="button" href="#;" id="search_dg" onclick="index.onQuery();">
+							<span>
+								<input accesskey="q" type="button" value="查询(Q)" class="searchbtn" />
+							</span>
+						</a>
+					</td>			
+				</tr>			
+			<tbody>
+		</table>
+	</form>
+	<!--工具栏结束-->
+	<div class="divider"></div>
+	<table id="tbList" class="tbClass"></table>
+	<div id="tbListPg" style="text-align: center;"></div>
+</body>
+</html>

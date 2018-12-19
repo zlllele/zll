@@ -1,0 +1,86 @@
+﻿@charset "utf-8";
+html ,body{
+	height:100%;
+	overflow:hidden;
+}
+.admin_home_body {
+	padding:0px;
+	margin:0px;
+	background:#1A56A8;
+}
+.admin_home_container {
+	width:100%;
+	height:100%;
+	text-align:center;
+	vertical-align:middle;
+}
+.admin_home_login{
+	width:825px;
+	margin:auto auto;
+
+}
+.admin_home_tdbg {
+	height:220px;
+	background:url(images/cms_login/admin_h21.jpg) top left no-repeat;
+}
+.admin_home_info {
+		width:235px;
+		margin:auto auto;
+		color:#FFF;
+		font-size:14px;
+}
+.admin_home_info td{
+	text-align:left;
+	padding:0 0 8px 0;
+}
+.admin_home_info .td_text {
+	width:75px;
+}
+.admin_home_info .td_bg ,.admin_home_info .input_bg ,.admin_home_info .yzm_bg , .admin_home_info .yzm_number ,.admin_home_info .submit_bg ,.admin_home_info .reset_bg{
+	background:url(images/cms_login/admin_login.gif) no-repeat;
+	border:0px;
+}
+.admin_home_info .td_bg {
+	height:22px;
+	font-size:14px;
+	color:#0D2B53;
+	width:150px;
+	background-position:0 0;
+}
+.admin_home_info .yzm_bg{
+	height:22px;
+	padding:3px 5px 0px 5px;
+	font-size:14px;
+	color:#0D2B53;
+}
+
+.admin_home_info .input_bg{
+    background:none;
+	height:22px;
+	padding:3px 5px 0px 5px;
+	font-size:14px;
+	color:#0D2B53;
+    border:0px;
+	width:150px;
+}
+.admin_home_info .yzm_bg {
+	width:70px;
+	background-position:0 -71px;
+}
+.admin_home_info .yzm_number {
+	width:76px;
+	height:25px;
+	background-position:-83px -71px;
+	cursor:pointer;
+}
+.admin_home_info .submit_bg , .admin_home_info .reset_bg {
+	width:60px;
+	height:25px;
+	cursor:pointer;
+}
+.admin_home_info .submit_bg {
+	background-position:-36px -107px;
+}
+.admin_home_info .reset_bg {
+	background-position:-100px -107px;
+}

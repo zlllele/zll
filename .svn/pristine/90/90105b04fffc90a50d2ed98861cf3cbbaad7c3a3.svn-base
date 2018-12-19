@@ -1,0 +1,5 @@
+// #require "base_template.js"
+// #require "base_tools.js"
+// #require "cross_domain_htjs.js"
+// #require "maxlength.js"
+// #require "../jquery.cookie.js"

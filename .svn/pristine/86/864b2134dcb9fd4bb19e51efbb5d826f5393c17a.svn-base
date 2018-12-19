@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>日志管理</title>
+    <script type="text/javascript" src="../../commons/js/include_ui.js?dm=102021222425"></script>
+    <script type="text/javascript" src="../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+    <script type="text/javascript" src="index.js?'+Math.random();+'"></script>
+</head>
+<body>
+	<!--工具栏开始-->
+	<div class="panelBar">
+	    <ul class="toolBar">
+	        <li class="">
+	        	<a class="query">
+	        		<span><input type="button" onclick="index.onToolbarClick(1);" accesskey="a" onmouseout="this.style.color='#000'" onmousemove="this.style.color='#f00'" value="查看"></span>
+	            </a>
+	        	<a class="delete">
+	        		<span><input type="button" onclick="index.onToolbarClick(-1);" accesskey="a" onmouseout="this.style.color='#000'" onmousemove="this.style.color='#f00'" value="删除"></span>
+	            </a>
+	        </li>
+	    </ul>
+	</div>
+	<form action="" name="formSearch" id="formSearch" onkeypress="if(event.keyCode == 13){index.onQuery();}">
+		<table cellpadding="0" cellspacing="0" class="table_add">
+			<tbody>
+				<tr>
+				    <td class="tdclass_view" nowrap>用户：</td>
+					<td class="tdclass_edit" nowrap>
+						<input type="text" id="user_name" name="user_name"/>
+					</td>
+					<td class="tdclass_view" nowrap>标题：</td>
+					<td class="tdclass_edit" nowrap>
+						<input type="text" id="title" name="title"/>
+					</td>
+					<td class="tdclass_view" nowrap>ip：</td>
+					<td class="tdclass_edit" nowrap>
+						<input type="text" id="ip" name="ip"/>
+					</td>
+					<td class="tdclass_view" align="right" colspan="2">
+						<a class="button" href="#;" id="search_dg" onclick="index.onQuery();">
+							<span>
+								<input accesskey="q" type="button" value="查询(Q)" class="searchbtn" />
+							</span>
+						</a>
+					</td>			
+					<td class="tdclass_view" align="right" colspan="2">
+						<select name="deleteType" id="deleteType" style="float:left;">
+		        			<option value="">==请选择==</option>
+		        			<option value="year">一年前日志</option>
+		        			<option value="quarter">一季度前日志</option>
+		        			<option value="month">一月前日志</option>
+		        			<option value="week">一周前日志</option>
+		        			<option value="all">所有日志</option>
+		        		</select>
+		        		<a class="button" href="#;" onclick="index.onDeleteBatchLog();" >
+							<span>
+								<input accesskey="q" type="button" value="批量删除(D)" class="searchbtn" />
+							</span>
+						</a>
+					</td>			
+				</tr>			
+			<tbody>
+		</table>
+	</form>
+	<!--工具栏结束-->
+	<div class="divider"></div>
+	<table id="tbList" class="tbClass"></table>
+	<div id="tbListPg" style="text-align: center;"></div>
+</body>
+</html>

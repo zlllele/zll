@@ -1,0 +1,33 @@
+package net.htjs.pt4.cms.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import net.htjs.pt4.cms.dao.SiteMapper;
+import net.htjs.pt4.cms.entity.Site;
+import net.htjs.pt4.cms.service.ISiteService;
+
+/**
+ * 站点业务处理类
+ * 
+ * @author xieshiyu
+ *
+ */
+@Service
+public class SiteService implements ISiteService {
+
+	@Autowired
+	private SiteMapper siteMapper;
+
+	/**
+	 * 以站点ID查询站点对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findById(String siteId) throws Exception {
+		Site site = siteMapper.findById(siteId);
+		return site;
+	}
+
+}

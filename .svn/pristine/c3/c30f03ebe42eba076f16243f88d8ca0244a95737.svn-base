@@ -1,0 +1,218 @@
+package net.htjs.pt4.cms.controller;
+
+
+import net.htjs.pt4.cms.service.IContentTypeService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * 内容类型控制类
+ * 
+ * @author wupeng
+ *
+ */
+@RestController
+@RequestMapping("/contenttype")
+public class ContentTypeController extends BaseController {
+
+	private final Logger logger = LoggerFactory.getLogger(ContentTypeController.class);
+	private static final String MSG_SUCCESS = "操作成功！";
+
+	@Resource
+	private IContentTypeService contentTypeService;
+	@Resource
+	private ISiteService siteService;
+
+	/**
+	 * 查询内容类型列表
+	 * 
+	 * @param id,page,pageSize,contentTypeMap,callback，request
+	 * @return Object
+	 */
+	@GetMapping(value = "/list", produces = "application/json;charset=UTF-8")
+	public Object list(@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "0") Integer pageSize, String callback,
+			@RequestParam Map<String, Object> contentTypeMap, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			Datagrid datagrid = contentTypeService.selectContentType(contentTypeMap,
+					Integer.parseInt((String) contentTypeMap.get("page")), Integer.parseInt((String) contentTypeMap.get("pageSize")));
+			mapModel.put("data", datagrid.getRows());
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			e.printStackTrace();
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 添加内容类型
+	 * 
+	 * @param contentTypeMap,callback，request
+	 * @return Object
+	 */
+	@PostMapping
+	public Object add(@RequestParam Map<String, Object> contentTypeMap, String callback, HttpServletRequest request) {
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			contentTypeMap.put("type_id", UUIDUtils.getUUID());
+			contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			if((String) contentTypeMap.get("img_width")=="")
+				contentTypeMap.remove("img_width", "");
+			if((String) contentTypeMap.get("img_height")=="")
+				contentTypeMap.remove("img_height", "");
+			contentTypeService.insertContentType(contentTypeMap);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			e.printStackTrace();
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+	}
+
+	/**
+	 * 修改内容类型
+	 * 
+	 * @param contentTypeMap,callback
+	 * @return Object
+	 */
+	@PutMapping
+	public Object update(@RequestParam Map<String, Object> qyxxglMap, String callback) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			if((String) qyxxglMap.get("img_width")=="")
+				qyxxglMap.remove("img_width", "");
+			if((String) qyxxglMap.get("img_height")=="")
+				qyxxglMap.remove("img_height", "");
+			contentTypeService.updateContentTypeById(qyxxglMap);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			e.printStackTrace();
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 查询指定id内容类型
+	 * 
+	 * @param id,qyxxglMap,callback
+	 * @return Object
+	 */
+	@GetMapping("/{id}")
+	public Object detail(@PathVariable String id, @RequestParam Map<String, String> qyxxglMap, String callback) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			Map<String,Object> datagrid = contentTypeService.findById(id);
+			mapModel.put("data", datagrid);
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			e.printStackTrace();
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 查询内容类型下拉列表
+	 * 
+	 * @param qyxxglMap,callback,request
+	 * @return Object
+	 */
+	@GetMapping("/queryNames")
+	public Object queryNames(@RequestParam Map<String, Object> qyxxglMap, String callback, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			qyxxglMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			Map<String,Object> datagrid = contentTypeService.queryNames(qyxxglMap);
+			mapModel.put("data", datagrid);
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			e.printStackTrace();
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 删除指定id内容类型
+	 * 
+	 * @param id,callback
+	 * @return Object
+	 */
+	@DeleteMapping("/{id}")
+	public Object delete(@PathVariable String id, String callback) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			contentTypeService.deleteById(id);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			e.printStackTrace();
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+}

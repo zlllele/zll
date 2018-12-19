@@ -1,0 +1,39 @@
+body {margin:0px; padding:0px;background-color:#F6F7F9; font-family:"Î¢ÈíÑÅºÚ","ËÎÌå"; font-size:12px;}
+
+a.white12 {font-size:12px; color:#fff; text-decoration:none;}
+a.green12 {font-size:12px; color:#5E7821; text-decoration:none;}
+a.green12:visited {font-size:12px; color:#5E7821; text-decoration:none;}
+a.green12:hover {font-size:12px; color:#5E7821; top: 1px; position: relative;}
+a.blue12 {font-size:12px; color:#3394D3; text-decoration:none;}
+a.blue12:visited {font-size:12px; color:#3394D3; text-decoration:none;}
+a.blue12:hover {font-size:12px; color:#3394D3; top: 1px; position: relative;}
+
+a.black12:link {font-size:12px; color:#000; text-decoration:none;}
+a.black12:visited {font-size:12px; color:#000; text-decoration:none;}
+a.black12:hover {font-size:12px; color:#000; top: 1px; position: relative;}
+
+
+.mar_b { margin-bottom:20px;}
+.txt_black121 {color:#666; font-size:12px; text-align:center;}
+.oa_top {height:91px; background:url(/images/kj09/gjj_r1_c7.jpg) repeat-x;}
+.logo {padding-left:454px; height:91px; background:url(/images/kj09/gjj_r1_c1.jpg) no-repeat;}
+.main_left {background:url(/images/login/n4_r4_c12.jpg) repeat-x top; padding-top:20px; }
+.main_list_top {width:100%; height:30px; background:url(/images/login/n4_r6_c3.jpg) no-repeat left; background-color:#BDDA78;}
+.main_list_border {border-left:1px solid #CCCCCC;border-right:1px solid #CCCCCC;border-bottom:1px solid #CCCCCC;}
+.main_list_top_r {width:100%; height:30px;  background:url(/images/login/n4_r6_c9.jpg) no-repeat right;}
+.main_list_top_text {padding-left:20px;width:auto; height:30px; font-family:"Î¢ÈíÑÅºÚ","ËÎÌå"; font-size:14px; color:#fff;line-height:30px;}
+.list_pic {background:url(/images/login/n4_r8_c5.jpg) no-repeat center;border-bottom:1px dotted #CCC;}
+.list_borderb {border-bottom:1px dotted #CCC;}
+
+.db_top { width:210px; height:30px; padding-left:20px; background:url(/images/login/n4_r6_c12.jpg) no-repeat;line-height:30px; font-family:"Î¢ÈíÑÅºÚ","ËÎÌå"; font-size:14px; color:#FFF;}
+.db_list {background:url(/images/login/l2.jpg) no-repeat center;border-bottom:1px dotted #CCC;}
+
+.btg {border-bottom:1px dotted #D6DADE;}
+.dxx {width:200px; padding-left:10px; padding-right:10px;}
+.dxxn1 {width:200px; height:30px; line-height:30px; font-size:12px; }
+.dxxn2 {width:200px; line-height:20px; color:#333333; font-size:12px; }
+
+
+
+
+

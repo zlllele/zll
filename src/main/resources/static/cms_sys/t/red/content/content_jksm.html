@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- <meta name=”viewport” content=”width=device-width, initial-scale=1″ /> -->
+<title>${channel.title!channel.name}-${site.siteName}</title>
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/css/reset.css">
+
+<link rel="stylesheet" type="text/css" href="${base}/css/style_cpjs.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/css/style_dianshang.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/css/style.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/css/dzfp.css">
+<script type="text/javascript" src="${base}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${base}/js/jquery.super.js"></script>
+<script type="text/javascript" src="${base}/js/tab.js"></script>
+<link rel="stylesheet" href="${base}/css/style_shouye.css">
+<link rel="stylesheet" href="${base}/css/style_denglu.css">
+<script type="text/javascript" src="${base}/js/denglu.js"></script>
+<!--解决IE6 png不透明的问题-->
+
+<!--[if IE 6]> 
+<script type="text/javascript" src="${base}/js/dd_png.js"></script> 
+<script type="text/javascript"> 
+        DD_belatedPNG.fix('a,div,img,*'); 
+</script> 
+
+<![endif]-->
+</head>
+<body>
+
+	[#include "../include/header.html"/]
+
+
+	<div style="margin: 0 auto; width: 1170px;">
+		<div class="location">
+			您所在的位置：<a>首页</a><a target="_self"> &gt;产品介绍</a><a target="_self"> &gt;接口说明</a>  
+		</div>
+		<div class="list_page">
+			<div class="dzfp_cd">
+				<div class="side_list">
+					<div calss="side_ziti">
+						<p>产品介绍</p>
+					</div>
+					<div calss="side_ziti">
+						<a href='${base}/wsp/index.html' target="_self">微开票</a>
+					</div>
+					<div calss="side_ziti">
+						<a href='${base}/ykp/index.html' target="_self">易开票</a>
+					</div>
+					<div calss="side_ziti">
+						<a href='${base}/kpb/index.html' target="_self">开票宝系列</a>
+					</div>
+					<div calss="side_ziti">
+						<a href='${base}/jksm/index.html' target="_self">接口说明</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="dzfp_nr">
+				<div class="nr">
+					<div class="zw_con">
+						<div class="zw-title">
+							<h1 style="text-align: center;">${content.title}</h1>
+
+							<div class="zw-fb-time" style="text-align: center;">发布日期：${content.releaseDate!} 消息来源：广东百望九赋电子有限公司</div>
+						</div>
+
+						<div class="swf_con">
+							 ${content.txt!}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	[#include "../include/footer.html"/]
+</body>
+</html>

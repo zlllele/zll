@@ -1,0 +1,32 @@
+/**
+ * <ol>
+ * date:12-3-5 editor:yanghongjian
+ * <li>创建文档</li>
+ * <li>校验组件的样式</li>
+ * </ol>
+ */
+@charset
+"utf-8"
+;
+
+.tiperror {
+	background: #FDF7D2 url(./invalid_line.gif) repeat-x bottom;
+	border: 1px solid #dd7870;
+}
+
+.requideerror {
+	background: #FDF7D2;
+	border: 1px solid #999999;
+}
+
+.wdatetiperror{
+	border:#dd7870 1px solid;
+	height:22px;
+	background:#FDF7D2 url(./datePickervalid.gif) no-repeat right;
+}
+
+.wdaterequideerror{
+	border:#999 1px solid;
+	height:22px;
+	background:#FDF7D2 url(../datepicker/skin/datePicker.gif) no-repeat right;
+}

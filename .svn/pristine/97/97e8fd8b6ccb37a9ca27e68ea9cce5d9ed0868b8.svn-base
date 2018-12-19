@@ -1,0 +1,42 @@
+package net.htjs.pt4.cms.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import net.htjs.pt4.cms.entity.Channel;
+
+public interface ChannelMapper {
+	List selectChannelTree(Map map);
+	List selectLowerChannels(String id);
+	void selectLowerChannelsForDelete(Map map);
+	int insertChannel(Map map);
+	Map selectChannelById(String id);
+	int updateChannelById(Map map);
+	int deleteById(String id);
+//	Map selectQYXXGLByMc(String xsf_mc);
+//	int deleteKprById(String id);
+
+	/**
+	 * 以栏目父节点ID查询子栏目列表
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public List<Channel> getChannelByParentId(String parentId);
+
+	/**
+	 * 以站点ID查询根栏目对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Channel getRootChannelBySiteId(String siteId);
+
+	/**
+	 * 以栏目ID查询栏目对象
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Channel getChannelById(String channelId);
+}

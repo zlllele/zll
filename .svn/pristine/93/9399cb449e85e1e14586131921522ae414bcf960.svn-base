@@ -1,0 +1,88 @@
+package net.htjs.pt4.cms.freemarker.directive;
+
+import static net.htjs.pt4.cms.freemarker.DirectiveUtils.OUT_PAGINATION;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import freemarker.core.Environment;
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapperBuilder;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
+import net.htjs.pt4.cms.entity.Channel;
+import net.htjs.pt4.cms.entity.Content;
+import net.htjs.pt4.cms.entity.Site;
+import net.htjs.pt4.cms.freemarker.DirectiveUtils;
+import net.htjs.pt4.cms.freemarker.directive.abs.AbstractContentPageDirective;
+
+/**
+ * 内容分页自定义标签
+ * 
+ * @author xieshiyu
+ *
+ */
+@Component
+public class ContentPageDirective extends AbstractContentPageDirective {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContentPageDirective.class);
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
+			throws TemplateException, IOException {
+		String channelId = DirectiveUtils.getString(PARAM_CHANNEL_ID, params);
+		PageInfo<Content> pageInfo = null;
+		try {
+			String typeId = DirectiveUtils.getString(PARAM_TYPE_ID, params);
+			int pageNo = DirectiveUtils.getPageNo(env);
+			int count = DirectiveUtils.getCount(params);
+			if (StringUtils.isNotBlank(channelId)) {
+				String siteId = DirectiveUtils.getString(PARAM_SITE_ID, params);
+				if (StringUtils.isBlank(siteId)) {
+					Site site = DirectiveUtils.getSite(env);
+					siteId = site.getSiteId();
+				}
+				PageHelper.startPage(pageNo, count);
+				List<Content> contents = contentSvc.getContentsByChannelParentId(siteId, channelId, typeId);
+				pageInfo = new PageInfo<Content>(contents);
+			} else {
+				String siteId = DirectiveUtils.getString(PARAM_SITE_ID, params);
+				if (StringUtils.isBlank(siteId)) {
+					Site site = DirectiveUtils.getSite(env);
+					siteId = site.getSiteId();
+				}
+				Channel channel = channelSvc.getRootChannelBySiteId(siteId);
+				if (channel != null) {
+					PageHelper.startPage(pageNo, count);
+					List<Content> contents = contentSvc.getContentsByChannelParentId(siteId, channel.getChannelId(),
+							typeId);
+					pageInfo = new PageInfo<Content>(contents);
+				} else {
+					LOGGER.info("栏目未维护");
+					pageInfo = new PageInfo<Content>(new ArrayList<Content>());
+				}
+			}
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+			pageInfo = new PageInfo<Content>(new ArrayList<Content>());
+		}
+		DefaultObjectWrapperBuilder builder = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(params);
+		paramWrap.put(OUT_PAGINATION, builder.build().wrap(pageInfo));
+		Map<String, TemplateModel> origMap = DirectiveUtils.addParamsToVariable(env, paramWrap);
+		body.render(env.getOut());
+		DirectiveUtils.removeParamsFromVariable(env, paramWrap, origMap);
+	}
+
+}

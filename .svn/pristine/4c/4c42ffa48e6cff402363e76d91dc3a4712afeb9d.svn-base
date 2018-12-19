@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<script type="text/javascript" src="/commons/js/include_ui.js?dm=102021222425"></script>
+<script type="text/javascript" src="/jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript">
+    if("${code}"==1) {
+    	parent.document.getElementById("${name}").value="${filename}";
+        parent.document.getElementById("${path}").value="${filepath}";
+        var mediaFileType = "${filename}".substring("${filename}".lastIndexOf(".")+1).toUpperCase();
+ 	   var flag = true;
+ 	   $(parent.document.getElementsByName("media_type")).each(function(){   
+ 		    if($(this).val() == mediaFileType){
+ 		    	$(this).attr("checked","true");
+ 		    	flag = false;
+ 		    	return;
+ 		    }
+ 		  });
+ 	   if(flag){
+ 		   $(parent.document.getElementsByName("media_type")).each(function(){
+       		    if($(this).val() == "OTHERS"){
+       		    	$(this).attr("checked","true");
+       		    	return;
+       		    }
+       		  });
+ 	   }
+       if ("${name}".substring(0,2)=='ps'){
+    	   $(parent.document.getElementById("psdescription"+("${name}".substring(6)))).removeAttr("readonly");
+       }
+        
+        
+} else if ("${code}"==-1){
+	alert("上传失败 请重新上传！");
+} else {
+	alert("上传出错 请重新上传！");
+}
+    
+    
+</script>
+</head>
+<body>
+</body>
+</html>

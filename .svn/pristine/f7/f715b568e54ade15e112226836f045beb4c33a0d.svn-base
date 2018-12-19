@@ -1,0 +1,352 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>首页 - ${site.shortName!site.siteName}</title>
+<link rel="stylesheet" href="${base}/css/reset.css">
+<link rel="stylesheet" href="${base}/css/icon.css">
+<!--[if lt IE 9]>    
+<link rel="stylesheet" href="${base}/css/iconforie8.css">	
+<![endif]-->
+</head>
+
+<body>
+	<div class="g_top">
+		<div class="g_top_con cb">
+			<div class="m_top">
+				<a href="#">登录</a>|<a href="#">注册</a><a href="#">企业信息平台</a>
+			</div>
+		</div>
+	</div>
+	<div class="g_logo_nav cb">
+		<div class="m_logo">
+			<a href="#" class="logo_link"><img src="${base}/img/login.png" alt=""></a>
+			<div class="area_sel">
+				<i class="icon-dingwei1"></i><span>河南</span>
+				<div class="m_province_list cb">
+					<ul>
+						<li><a>北京</a></li>
+						<li><a>上海</a></li>
+						<li><a>天津</a></li>
+						<li><a>重庆</a></li>
+						<li><a>河北</a></li>
+						<li><a>山西</a></li>
+						<li><a>河南</a></li>
+						<li><a>辽宁</a></li>
+						<li><a>吉林</a></li>
+						<li><a>黑龙江</a></li>
+						<li><a>内蒙古</a></li>
+						<li><a>江苏</a></li>
+						<li><a>山东</a></li>
+						<li><a>安徽</a></li>
+						<li><a>浙江</a></li>
+						<li><a>福建</a></li>
+						<li><a>湖北</a></li>
+						<li><a>湖南</a></li>
+						<li><a>广东</a></li>
+						<li><a>广西</a></li>
+						<li><a>江西</a></li>
+						<li><a>四川</a></li>
+						<li><a>海南</a></li>
+						<li><a>贵州</a></li>
+						<li><a>云南</a></li>
+						<li><a>西藏</a></li>
+						<li><a>陕西</a></li>
+						<li><a>甘肃</a></li>
+						<li><a>青海</a></li>
+						<li><a>宁夏</a></li>
+						<li><a>新疆</a></li>
+						<li><a>香港</a></li>
+						<li><a>澳门</a></li>
+						<li><a>台湾</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="m_nav">
+			<ul>
+				<li><a href="${base}">首页</a></li>
+				[@cms_channel_list]
+				[#list tag_list as c]
+				<li><a href="${c.url}" [#if c.blank ]target="_blank"[/#if] >${c.name}</a></li>
+				[/#list]
+				[/@cms_channel_list]
+			</ul>
+		</div>
+	</div>
+	<div class="g_banner">
+		<div class="fullSlide">
+			<div class="bd">
+				<ul>
+					[@cms_content_list channelId='13a7a891e6bf443994fd3150ab75f5e2' count='5' typeId='e00f1fe0449f4cf58e716e7d2d18ba57' ]
+					[#list tag_list as c]
+					<li><a target="_blank" href="${c.url}"><img src="${c.typeImg}" /></a></li>
+					[/#list]
+					[/@cms_content_list]
+				</ul>
+			</div>
+			<div class="hd"><ul></ul></div>
+			<a class="prev icon icon-fy_z" href="javascript:void(0)"></a> 
+			<a class="next icon icon-fy_y" href="javascript:void(0)"></a>
+		</div>
+	</div>
+	<div class="g_floor4 cb">
+		<div class="m_floor4_l">
+			<ul>
+				<li><a href="#"><h3 class="fpcy">发票查验<span>电子发票怎么查？</span></h3></a></li>
+				<li><a href="#"><h3 class="fpkj">发票开具<span>电子发票怎么开？</span></h3></a></li>
+				<li><a href="#"><h3 class="about_bw">关于百望<span>百望公司怎么样？</span></h3></a></li>
+				<li><a href="#"><h3 class="skpgm">税控盘购买<span>税控盘在线购买<br> 方便、快捷</span></h3></a></li>
+			</ul>
+		</div>
+		<div class="m_floor4_r">
+			<div class="m_login_hd">
+				<ul>
+					<li class="on">企业用户</li>
+					<!--<li>个人用户</li>-->
+				</ul>
+			</div>
+			<div class="m_login_bd">
+				<form action="">
+					<div class="m_input_box pl40">
+						<span class="icon icon-tubiao211"></span> <input type="text">
+					</div>
+					<div class="m_input_box pl40">
+						<span class="icon icon-mima"></span> <input type="text">
+					</div>
+					<div class="m_input_box u_yzm">
+						<input type="text">
+						<div class="u_yzm_box">KSFO</div>
+					</div>
+					<div class="m_f_btn">
+						<a href="#">登录</a>
+					</div>
+					<div class="m_links_box cb">
+						<a href="#" class="fl">注册</a><a href="#" class="fr">忘记密码？</a>
+					</div>
+				</form>
+				<form action=""></form>
+			</div>
+		</div>
+	</div>
+	<div class="g_solution cb">
+		<h3 class="u_solution_tit">解决方案</h3>
+		<ul class="m_solution_list cb">
+			[@cms_content_list channelId='20d325afa05a4b858e9c385869cf23d5' count='4' typeId='e00f1fe0449f4cf58e716e7d2d18ba57' ]
+			[#list tag_list as c]
+			[#if c_index==0]
+			<li><a href="${c.url}"><img src="${c.typeImg!}" alt=""><h3>${c.title}</h3><p>${c.description!}</p></a></li>
+			[#else]
+			<li class="ml50"><a href="${c.url}"> <img src="${c.typeImg!}" alt=""><h3>${c.title}</h3><p>${c.description!}</p></a></li>
+			[/#if]
+			[/#list]
+			[/@cms_content_list]
+		</ul>
+	</div>
+	<div class="g_dynamic cb">
+		<h3 class="u_solution_tit">行业动态</h3>
+		[@cms_content_list channelId='6ece1dcf8a984984af2144448c17fd90' count='3']
+		<div class="m_list_item">
+		[#list tag_list as c]
+			[#if tag_list?size==1]
+				<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+			[/#if]
+			[#if tag_list?size==2]
+				[#if c_index == 0]
+					<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+				[#else]
+					<ul class="m_news_list m_news_icon">
+						<li><a href="${c.url}">${c.title}</a></li>
+					</ul>
+				[/#if]
+			[/#if]
+			[#if tag_list?size==3]
+				[#if c_index == 0]
+					<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+				[#elseif c_index ==1]
+					<ul class="m_news_list m_news_icon">
+						<li><a href="${c.url}">${c.title}</a></li>
+				[#elseif c_index ==2]
+						<li><a href="${c.url}">${c.title}</a></li>
+					</ul>
+				[/#if]
+			[/#if]
+		[/#list]
+		</div>
+		[/@cms_content_list]
+		[@cms_content_list channelId='9ae7d68fd2d5467b8625429b3fff8119' count='3']
+		<div class="m_list_item plr80">
+		[#list tag_list as c]
+			[#if tag_list?size==1]
+				<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+			[/#if]
+			[#if tag_list?size==2]
+				[#if c_index == 0]
+					<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+				[#else]
+					<ul class="m_news_list m_news_icon">
+						<li><a href="${c.url}">${c.title}</a></li>
+					</ul>
+				[/#if]
+			[/#if]
+			[#if tag_list?size==3]
+				[#if c_index == 0]
+					<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+				[#elseif c_index ==1]
+					<ul class="m_news_list m_news_icon">
+						<li><a href="${c.url}">${c.title}</a></li>
+				[#elseif c_index ==2]
+						<li><a href="${c.url}">${c.title}</a></li>
+					</ul>
+				[/#if]
+			[/#if]
+		[/#list]
+		</div>
+		[/@cms_content_list]
+		[@cms_content_list channelId='db9d770e2000489da256ee985298b08b' count='3']
+		<div class="m_list_item">
+		[#list tag_list as c]
+			[#if tag_list?size==1]
+				<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+			[/#if]
+			[#if tag_list?size==2]
+				[#if c_index == 0]
+					<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+				[#else]
+					<ul class="m_news_list m_news_icon">
+						<li><a href="${c.url}">${c.title}</a></li>
+					</ul>
+				[/#if]
+			[/#if]
+			[#if tag_list?size==3]
+				[#if c_index == 0]
+					<a href="${c.url}" class="img_box"><img src="${c.typeImg!}" alt="">${c.title}</a>
+				[#elseif c_index ==1]
+					<ul class="m_news_list m_news_icon">
+						<li><a href="${c.url}">${c.title}</a></li>
+				[#elseif c_index ==2]
+						<li><a href="${c.url}">${c.title}</a></li>
+					</ul>
+				[/#if]
+			[/#if]
+		[/#list]
+		</div>
+		[/@cms_content_list]
+	</div>
+	<div class="g_cases">
+		<h3 class="u_solution_tit">成功案例</h3>
+		<div class="m_solution_links">
+			<div class="swf_foucs_div">
+				<div class="swf_slider">
+					<div class="bd">
+						[@cms_friendlink_list typeId='30674565be61416e957a0f3bb995d3d5' count='12' ]
+						[#if tag_list?size > 0][#if tag_list?size <= 4]
+						<table class="m_table">
+							<tr>
+							[#list tag_list as f]
+								<td><a><img src="${f.logoPath}" alt="${f.name}"></a></td>
+							[/#list]
+							</tr>
+						</table>
+						[/#if][/#if]
+						[#if tag_list?size > 4][#if tag_list?size <= 8]
+						<table class="m_table">
+							<tr>
+							[#list tag_list as f]
+								<td><a><img src="${f.logoPath}" alt="${f.name}"></a></td>
+							[#if f_index == 3]
+							</tr>
+							<tr>
+							[/#if]
+							[/#list]
+							</tr>
+						</table>
+						[/#if][/#if]	
+						[#if tag_list?size > 8][#if tag_list?size <= 12]
+						<table class="m_table">
+							<tr>
+							[#list tag_list as f]
+								<td><a><img src="${f.logoPath}" alt="${f.name}"></a></td>
+							[#if f_index == 3]
+							</tr>
+							<tr>
+							[/#if]
+							[#if f_index == 7]
+							</tr>
+							<tr>
+							[/#if]
+							[/#list]
+							</tr>
+						</table>
+						[/#if][/#if]
+						[/@cms_friendlink_list]
+						
+						[@cms_friendlink_list typeId='57d93fbbd068467599e2372ca5bca2de' count='12' ]
+						[#if tag_list?size > 0][#if tag_list?size <= 4]
+						<table class="m_table">
+							<tr>
+							[#list tag_list as f]
+								<td><a><img src="${f.logoPath}" alt="${f.name}"></a></td>
+							[/#list]
+							</tr>
+						</table>
+						[/#if][/#if]
+						[#if tag_list?size > 4][#if tag_list?size <= 8]
+						<table class="m_table">
+							<tr>
+							[#list tag_list as f]
+								<td><a><img src="${f.logoPath}" alt="${f.name}"></a></td>
+							[#if f_index == 3]
+							</tr>
+							<tr>
+							[/#if]
+							[/#list]
+							</tr>
+						</table>
+						[/#if][/#if]	
+						[#if tag_list?size > 8][#if tag_list?size <= 12]
+						<table class="m_table">
+							<tr>
+							[#list tag_list as f]
+								<td><a><img src="${f.logoPath}" alt="${f.name}"></a></td>
+							[#if f_index == 3]
+							</tr>
+							<tr>
+							[/#if]
+							[#if f_index == 7]
+							</tr>
+							<tr>
+							[/#if]
+							[/#list]
+							</tr>
+						</table>
+						[/#if][/#if]
+						[/@cms_friendlink_list]
+					</div>
+					<div class="hd">
+						<ul>
+						</ul>
+					</div>
+					<a class="prev icon icon-fy_z" href="javascript:void(0)"></a> 
+					<a class="next icon icon-fy_y" href="javascript:void(0)"></a>
+					<!-- 进度条 -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="g_footer cb">
+		<div class="m_foot_con">
+			<p>
+				版权所有：河南航天金穗电子有限公司 <span>电话：0371-66368023</span>
+			</p>
+			<p>地址：郑州市金水东路与东风南路绿地原盛国际1号楼C座（卫华大厦）20层</p>
+			<div class="m_ewm_box">
+				<img src="${base}/img/ewm.png" alt=""> 开票吧
+			</div>
+		</div>
+	</div>
+	<script src="${base}/js/jquery.js"></script>
+	<script src="${base}/js/jquery.SuperSlide.js"></script>
+	<script src="${base}/js/effect.js"></script>
+</body>
+</html>

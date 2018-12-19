@@ -1,0 +1,33 @@
+package net.htjs.pt4.cms.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import net.htjs.pt4.cms.dao.FriendLinkMapper;
+import net.htjs.pt4.cms.entity.FriendLink;
+import net.htjs.pt4.cms.service.IFriendLinkService;
+
+/**
+ * 友情链接业务类
+ * 
+ * @author xieshiyu
+ *
+ */
+@Service
+public class FriendLinkService implements IFriendLinkService {
+
+	@Autowired
+	private FriendLinkMapper fLMapper;
+
+	/**
+	 * 以类别ID查询友情链接列表
+	 * 
+	 * @param typeId
+	 * @return
+	 */
+	public List<FriendLink> getFriendLinksByTypeId(String typeId) throws Exception {
+		return fLMapper.getFriendLinksByTypeId(typeId);
+	}
+}

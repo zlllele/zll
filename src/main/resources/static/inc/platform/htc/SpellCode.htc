@@ -1,0 +1,507 @@
+
+
+<PUBLIC:COMPONENT>
+	<PUBLIC:PROPERTY NAME="dm_filed"  />
+	<PUBLIC:PROPERTY NAME="source_code"  />
+	<PUBLIC:PROPERTY NAME="onFinish"  />
+	<PUBLIC:PROPERTY NAME="xztj"  />
+	<PUBLIC:ATTACH   EVENT="onkeydown" ONEVENT="return f_OnKeyDown()" />
+	<PUBLIC:ATTACH   EVENT="onkeyup" ONEVENT="return f_OnKeyUp()" />
+	<PUBLIC:ATTACH   EVENT="onchange" ONEVENT="return f_OnChange()" />
+	<PUBLIC:ATTACH   EVENT="onblur" ONEVENT="return f_OnBlur()" />
+	<PUBLIC:ATTACH   EVENT="onfocus" ONEVENT="return f_OnFocus()" />
+	
+	
+	<script language="javascript">
+	function SpellCode(){
+		this.g_CodelList=null;
+		this.g_CodeDiv=null;
+		this.g_BackDiv=null;
+		this.g_Body=null;
+		this.g_FirstTd=null;
+		this.g_CurrentTd=null;
+		this.g_InputObject=null;
+		this.g_NewInnerTxt="";
+		this.g_TdCssClassName="autofinish_over";
+		this.g_TbCssClassName="autofinish";
+		this.arr_mc=null;
+		this.g_hidden=null;
+		this.g_num=10;
+		this.page=1;
+		this.pageCount=0;
+		this.g_focus="";
+	}
+var spellCode = new SpellCode();
+function f_OnKeyDown()
+{
+	var e=window.event.srcElement;
+    //alert(arr_mc);
+    spellCode.g_hidden=dm_filed;
+        //alert("f_table=="+source_code+"f_type=="+type+"f_dm=="+spellCode.dm_filed+"spellCode.g_focus=="+spellCode.g_focus);
+    if(e!=spellCode.g_InputObject){
+		if(spellCode.g_CodeDiv!=null){
+			spellCode.g_CodeDiv.innerHTML="";
+			spellCode.g_CodeDiv=null;
+		};
+		spellCode.g_NewInnerTxt="";
+		spellCode.g_FirstTd=null;
+		spellCode.g_CurrentTd=null;
+		spellCode.dm_filed="";
+        //spellCode.g_focus="";
+        spellCode.g_InputObject=e;
+        spellCode.page=1;
+        spellCode.pageCount=0;
+		spellCode.arr_mc=eval(source_code.toLowerCase());
+		if(spellCode.arr_mc==null){
+			return false;
+		}
+    };
+    f_InitMain();
+	var kc=window.event.keyCode;
+    //alert(kc);
+    //alert(spellCode.g_CodeDiv.innerHTML)
+    f_SetDivDisplay(true);
+    switch(kc){
+		case 13:
+			f_EnterKey();
+			f_SetDivDisplay(false);
+			event.keyCode=9;//tab
+			return false;
+			break;
+		case 27:
+			f_EscapeKey();
+       		f_SetDivDisplay(false);
+        	spellCode.g_InputObject.value="";
+        	window.document.getElementById(spellCode.g_hidden).value="";
+      		return false;
+			break;
+		case 8:
+			f_BackSpaceKey();
+			if(spellCode.g_InputObject.value.length==1){
+				window.document.getElementById(spellCode.g_hidden).value="";
+			}
+			return;
+			break;
+		case 38:
+        	spellCode.g_focus=1111;
+        	f_UpKey();
+			return;
+			break;
+		case 40:
+        	spellCode.g_focus=1111;
+        	f_DownKey();
+			return;
+			break;
+		case 37:
+         	spellCode.g_focus=1111;
+         	f_frontPage();
+         	return false;
+         	break;
+       //39
+        case 39:
+           	spellCode.g_focus=1111;
+           	f_nextPage();
+           	return false;
+           	break;
+		default:
+			break;
+		};
+		return true;
+	};
+  function f_OnFocus(f_table,f_dm){
+      spellCode.g_focus=888;
+      window.event.srcElement.select();
+      f_OnKeyDown();
+      //spellCode.g_focus="focus";
+      f_InitDivData();
+	  spellCode.addDmFiled(f_dm);
+  }
+    function f_OnKeyUp(){
+		var kc=window.event.keyCode;
+		var sTemp="13,27,38,40,9,116,";
+		kc=kc+"";
+        if(sTemp.indexOf(kc)>-1){
+            return false;
+			};
+            f_InitDivData();
+            if(spellCode.g_NewInnerTxt==""){
+				if(kc==37||kc==38||kc==39||kc==40||spellCode.g_focus==888){
+                    //alert(arr_mc);
+                f_SetDivDisplay(true);
+			   }else{
+                    f_SetDivDisplay(false);
+			   }
+			}
+			else{
+				f_SetDivDisplay(true);
+			};
+		};
+	function f_OnKeyPress(){
+		return;
+	};
+	function f_OnChange(){
+		if(spellCode.g_InputObject.value.length==0){
+			window.document.getElementById(spellCode.g_hidden).value="";
+		}
+		return ;
+	};
+	function f_OnBlur(){
+		if(spellCode.g_CodeDiv&&spellCode.g_CodeDiv.style.display!="none"){
+			f_EnterKey();
+		}
+		//if(window.srcElement!=spellCode.g_InputObject)
+	        f_SetDivDisplay(false);
+        /*
+        if(spellCode.g_InputObject==null){
+			return;
+		};
+		var s=spellCode.g_InputObject.value;
+		var x=s.substr(s.length-1,1);
+		if(x==","||x==";"){
+			spellCode.g_InputObject.value=s.substr(0,s.length-1);
+			};
+			return;*/
+		};
+	function f_OnPasete(){
+		return;
+		};
+	function f_InitMain(){
+		
+		if(spellCode.g_Body==null){
+			spellCode.g_Body=window.document.body;
+		};
+		if(spellCode.g_CodeDiv==null){
+			spellCode.g_CodeDiv=f_CreateDiv();
+			spellCode.g_BackDiv=f_CreateDiv();
+			//����iframe
+			var iframe = window.document.createElement("IFRAME");
+			iframe.style.width="100%"
+			spellCode.g_BackDiv.appendChild(iframe);
+			spellCode.g_CodeDiv.style.zIndex=9999;
+			
+			spellCode.g_Body.insertAdjacentElement("beforeEnd",spellCode.g_CodeDiv);
+			spellCode.g_Body.appendChild(spellCode.g_BackDiv);
+			f_SetDivPosition();
+		};
+	};
+	function f_CreateDiv(){
+		var div=window.document.createElement("<DIV></DIV>");
+		div.id="divCodeMain";
+		div.style.position="absolute";
+		div.style.display="";
+		return div;
+	};
+	function f_SetDivDisplay(bTrue){
+		if(spellCode.g_CodeDiv){
+		if(bTrue){
+			spellCode.g_CodeDiv.style.display="";
+			spellCode.g_BackDiv.style.display="";
+		}else{
+			spellCode.g_CodeDiv.style.display="none";
+			spellCode.g_BackDiv.style.display="none";
+		};
+		}
+	};
+	function f_SetDivPosition(){
+		var e=window.event.srcElement;
+		spellCode.g_CodeDiv.style.left=f_GetX(e)+1;
+		spellCode.g_BackDiv.style.left=f_GetX(e)+1;
+		spellCode.g_CodeDiv.style.top=f_GetY(e)+21;
+		spellCode.g_BackDiv.style.top=f_GetY(e)+21;
+	};
+	function f_GetX(e){
+		var l=e.offsetLeft;
+		while(e=e.offsetParent){
+			l+=e.offsetLeft;
+		};
+		return l;
+	};
+	function f_GetY(e){
+		var t=e.offsetTop;
+		while(e=e.offsetParent){
+			t+=e.offsetTop;
+		};
+		return t;
+	};
+	function f_CreateTable(){
+		var oTable=window.document.createElement("<table border=\"0\" cellspacing=\"2\" cellpadding=\"2\">");
+		oTable.className=spellCode.g_TbCssClassName;
+		return oTable;
+	};
+	function f_CreateRow(table){
+		var rowNode=table.insertRow();
+		return rowNode;
+	};
+	function f_CreateColumn(row,i){
+		var colNode=row.insertCell();
+		var p=i%10
+		colNode.id="tdACMA_"+i;
+		colNode.zIndex=i;
+		colNode.style.cursor="hand";
+		colNode.onmouseover=f_TdOnmouseover;
+		colNode.onmouseout=f_TdOnmouseout;
+		colNode.onmousedown=f_TdOnclick;
+		if(p==0){colNode.className=spellCode.g_TdCssClassName;
+		spellCode.g_FirstTd=colNode;
+		spellCode.g_CurrentTd=colNode;
+         //alert(spellCode.g_CurrentTd);
+        }else{
+			colNode.className="";
+		};
+		return colNode;
+	};
+	function f_TdOnmouseover(){
+		var o=window.event.srcElement;
+        //alert(o.tagName);
+        while(o.tagName!="TD"){
+			o=o.parentNode;
+		};
+		o.className="";
+		if(spellCode.g_CurrentTd!=null){
+			spellCode.g_CurrentTd.className="";
+		};
+		spellCode.g_CurrentTd=o;
+		spellCode.g_CurrentTd.className=spellCode.g_TdCssClassName;
+        //alert(spellCode.g_CurrentTd.className);
+    };
+	function f_TdOnmouseout(){
+		var o=window.event.srcElement;
+		while(o.tagName!="TD"){
+			o=o.parentNode;
+		};
+		o.className="";
+		if(spellCode.g_CurrentTd!=null){
+			spellCode.g_CurrentTd.className="";
+		};
+		spellCode.g_CurrentTd=spellCode.g_FirstTd;
+		spellCode.g_CurrentTd.className=spellCode.g_TdCssClassName;
+	};
+	function f_TdOnclick(){
+        f_FillCurrentCode(window.event.srcElement);
+	};
+	function f_FillCurrentCode(){
+		if(spellCode.g_CurrentTd==null||spellCode.g_InputObject==null){
+			return;
+		};
+		if(spellCode.g_CodelList==null||spellCode.g_CodelList.length==0){
+			return;
+		};
+		if(spellCode.g_InputObject.value==""&&spellCode.g_CurrentTd==spellCode.g_FirstTd&&!arguments[0]) return;
+		window.document.getElementById(spellCode.g_hidden).value = spellCode.g_CurrentTd.codeValue;
+		spellCode.g_InputObject.focus();
+		var iLastSign = spellCode.g_CurrentTd.innerHTML.lastIndexOf("|");
+		spellCode.g_InputObject.value = spellCode.g_CurrentTd.innerHTML.substring(iLastSign + 1, spellCode.g_CurrentTd.innerHTML.length);
+		f_SetDivDisplay(false);
+		spellCode.g_CurrentTd=null;
+        spellCode.g_hidden=null;
+		if(onFinish){
+			eval(onFinish);
+		}
+    };
+	function f_InitDivData(){
+        //alert(arr_mc);
+        var oTb,oTr,oTd;
+		var start
+        var end;
+        spellCode.g_CodelList = f_GetArrCodeList();
+		if(spellCode.g_CodelList!=null){
+			start=(spellCode.page-1)*spellCode.g_num;
+			end=spellCode.page*spellCode.g_num;
+			spellCode.g_CodeDiv.innerHTML="";
+			spellCode.g_BackDiv.children[0].style.width=0;
+			spellCode.g_BackDiv.children[0].style.height=0;
+			oTb=f_CreateTable();
+			spellCode.g_CodeDiv.insertAdjacentElement("beforeEnd",oTb);
+			
+            //f_hidden('YES');
+            for(var i=start;i<end;i++){
+				if(spellCode.g_CodelList[i]!=undefined){
+					oTr=f_CreateRow(oTb);
+					oTd=f_CreateColumn(oTr,i);
+					oTd.codeValue=spellCode.g_CodelList[i][0];
+					oTd.innerHTML=""+spellCode.g_CodelList[i][1];
+				}
+			}
+			spellCode.g_BackDiv.children[0].style.width=spellCode.g_CodeDiv.scrollWidth;
+			spellCode.g_BackDiv.children[0].style.height=spellCode.g_CodeDiv.scrollHeight;
+		}
+	}
+	function f_GetArrCodeList(){
+		if(spellCode.g_InputObject==null){
+			return null; };
+		var s=spellCode.g_InputObject.value;
+		var k=s.length;
+		var iLastSign=0;
+		if(s.lastIndexOf(",")>s.lastIndexOf(";")){
+			iLastSign=s.lastIndexOf(",");
+		}else{
+			iLastSign=s.lastIndexOf(";");
+		};
+		spellCode.g_NewInnerTxt=s.substring(iLastSign+1,k);
+		if(window.event.keyCode==8){
+			spellCode.g_NewInnerTxt=s.substring(iLastSign+1,k-1);
+		};
+		spellCode.g_NewInnerTxt=f_Trim(spellCode.g_NewInnerTxt);
+		var arr=new Array();
+		var re;
+		var j=0;
+		var ks=window.event.keyCode;
+        if(spellCode.g_NewInnerTxt==""){
+			if(ks==37||ks==39||ks==38||ks==40||spellCode.g_focus==888){
+                if(spellCode.g_focus==888){
+                   spellCode.page=1;
+                   spellCode.pageCount=0;
+                }
+                  arr=f_getAll();
+            }
+		 }
+		 else{
+			try{
+				re=RegExp("^\\w*"+spellCode.g_NewInnerTxt,"i");
+				for(var i=0;i<spellCode.arr_mc.length;i++){
+					if(((re.test(spellCode.arr_mc[i][0])||(spellCode.arr_mc[i].length>2&&re.test(spellCode.arr_mc[i][2])))
+						&&(xztj==null||xztj==''||spellCode.arr_mc[i][3]==xztj))){
+						tmp = new Array();
+						tmp[0]=spellCode.arr_mc[i][0];
+						tmp[1]=spellCode.arr_mc[i][1];
+						arr[j]=tmp;
+						j++;
+					};
+				};
+			}catch(ex){
+
+			};
+		};
+		return arr;
+	};
+	function f_getAll(){
+    var arr=new Array();
+    var j=0;
+    for(var i=0;i<spellCode.arr_mc.length;i++){
+    	if(xztj==null||xztj==''||spellCode.arr_mc[i][3]==xztj){
+			tmp = new Array();
+			tmp[0]=spellCode.arr_mc[i][0];
+			tmp[1]=spellCode.arr_mc[i][1];
+			arr[j]=tmp;
+	        j++;
+        }
+    };
+    return arr;
+  };
+	function f_EnterKey(){
+		f_FillCurrentCode();
+		return false;
+	};
+	function f_EscapeKey(){
+		return;
+	};
+	function f_BackSpaceKey(){
+		f_InitDivData();
+        if(spellCode.g_NewInnerTxt==""){
+            spellCode.page=1;
+            spellCode.pageCount=0;
+            window.document.getElementById(spellCode.g_hidden).value="";
+            //alert(window.document.getElementById(spellCode.g_hidden).value);
+            f_SetDivDisplay(true);
+		}else{
+			f_SetDivDisplay(true);
+		};
+	};
+	function f_UpKey(){
+		if(spellCode.g_CurrentTd==null){
+			return;
+		};
+        //alert(spellCode.g_CurrentTd.zIndex);
+        var k=spellCode.g_CurrentTd.zIndex-1;
+		if(k==-1){
+			k+=1;
+		};
+        var str=spellCode.g_CurrentTd.zIndex%10;
+        //alert("spellCode.g_CurrentTd.zIndex"+spellCode.g_CurrentTd.zIndex+"kkkk"+k+"======"+str);
+        if(spellCode.page>1&&str==0){
+        f_frontPage();}
+		var oTd=window.document.getElementById("tdACMA_"+k);
+		spellCode.g_CurrentTd.className="";
+		spellCode.g_CurrentTd=oTd;
+		spellCode.g_CurrentTd.className=spellCode.g_TdCssClassName;
+		f_SetDivDisplay(true);
+	};
+	function f_DownKey(){
+        if(spellCode.g_CurrentTd==null){
+			return;
+		};
+        //alert(spellCode.g_CurrentTd.zIndex);
+        var k=spellCode.g_CurrentTd.zIndex+1;
+        //var s=k+1;
+        //alert("----"+(spellCode.g_CodelList.length-1)+"+++"+k);
+        if(k==spellCode.g_CodelList.length){
+             //alert("----"+spellCode.g_CodelList.length+"+++"+k);
+            k-=1;
+		};
+		if(k%10==0){
+        f_nextPage();
+        }//else{
+			var oTd = window.document.getElementById("tdACMA_" + k);
+			spellCode.g_CurrentTd.className = "";
+			spellCode.g_CurrentTd = oTd;
+			spellCode.g_CurrentTd.className = spellCode.g_TdCssClassName;
+			f_SetDivDisplay(true);//}
+	};
+
+function f_nextPage(){
+    if (spellCode.g_CurrentTd == null) {
+        return;
+		}
+    if(spellCode.g_CodelList.length%spellCode.g_num==0){
+       spellCode.pageCount=spellCode.g_CodelList.length/spellCode.g_num;
+    }else{
+    spellCode.pageCount=Math.floor(spellCode.g_CodelList.length/spellCode.g_num)+1;
+        }
+    if((spellCode.page+1)>=spellCode.pageCount){
+        spellCode.page=spellCode.pageCount;
+    }else{
+        spellCode.page=spellCode.page+1;
+    }
+    f_InitDivData();
+
+};
+
+function f_frontPage(){
+    if (spellCode.g_CurrentTd == null) {
+        return; }
+    if(spellCode.page>1){
+        spellCode.page=spellCode.page-1;
+    }else{
+       spellCode.page=1;
+    }
+    f_InitDivData();
+};
+	function f_Trim(str){
+		str=str.replace(/(^\s*)|(\s*$)/g,"");
+		return str;
+	};
+
+function f_hidden(val){
+    if(val=='YES'){
+        for(var i=0;i<spellCode.g_select.length;i++){
+            window.document.getElementById(spellCode.g_select[i]).style.display="none";
+        }
+    }else{
+        for(var i=0;i<spellCode.g_select.length;i++){
+            window.document.getElementById(spellCode.g_select[i]).style.display="inline";
+        }
+    }
+}
+SpellCode.prototype.addDmFiled=function(){
+	if(this.g_InputObject.parentNode.lastChild.name==this.g_hidden)
+		return;
+	if(window.document.getElementById(this.g_hidden))
+		return;
+	tmp = window.document.createElement("input");
+	tmp.type="hidden";
+	tmp.name=this.g_hidden;
+	tmp.id=this.g_hidden;
+	this.g_InputObject.parentNode.appendChild(tmp);
+}
+</script>
+</PUBLIC:COMPONENT>

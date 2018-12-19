@@ -1,0 +1,133 @@
+/*---------------------------字体------------------------------*/
+.unnamed1{ font-size: 9pt;color:#003366}
+
+/*------------------------定义的table--------------------------*/
+table.tb_1{
+	border:1px solid #cccccc;
+}
+
+table.tb_0, table.tb_1{
+	font-size:9pt; color:#003366;
+	text-align:center;
+	border-collapse:collapse;
+	margin:auto;
+	word-break:break-all;
+}
+
+/*---------------------------定义的td---------------------------------*/
+td.td_title{
+    border-left:1px solid #cccccc;
+	border-right:1px solid silver; 
+	border-top:1px solid silver;
+	height:18px; 
+	font-size:9pt;color:#003366;
+	text-align:center; vertical-align:middle;
+	background-image:url(/chinataxskskjdk/images/boot_r2_c1.gif);
+	background-position:2%
+}
+
+td.td_title2{
+	height:16px;
+	border:1px solid #cccccc;
+	font-size:9pt; color:#003366;
+	text-align:center;
+	border-collapse:collapse;
+	vertical-align: middle;
+    background-color: #F3F5F7;
+}
+/*----------------------------- td of xtgl ----------------------------------*/
+
+td.td_gtd{
+	height:25px;
+	text-align:center; 
+	background-color: #ffffcc;
+}
+/*---------------------------------------------------------------------------*/
+	
+td.td_l{ text-align:left;}
+td.td_c{ text-align:center;}
+td.td_r{ text-align:right;}
+
+td.td_l, td.td_c, td.td_r, td.td_gtd{
+	height:25px; 
+	border:1px solid #cccccc;
+	font-size:9pt; color:#003366;
+	border-collapse:collapse;
+	vertical-align: middle;
+	
+}
+td.td_gl{
+	text-align:left;
+	height:25px; 
+	border:1px solid #cccccc;
+	font-size:9pt; color:#003366;
+	border-collapse:collapse;
+	vertical-align: top;
+	
+}
+
+.css_dbpage
+{
+	height:25px; 
+	border:1px solid #cccccc;
+	font-size:9pt; color:#003366;
+	border-collapse:collapse;
+	vertical-align: middle;
+}
+
+.css_dbpage_input
+{
+	height:17px; 
+	border:1px solid #cccccc;
+	font-size:9pt; color:#003366;
+	border-collapse:collapse;
+	vertical-align: middle;
+}
+
+/*---------------------------定义的tr（系统管理）---------------------------------*/
+tr.tr_gtr{
+	height:25px;
+	text-align:center; 
+	background-color: #EAEAF4;
+}
+
+/*-----------------------------定义的按钮类-------------------------------*/
+input.btn_2{ width: 50px;background-image: url(../../images/button2.gif);letter-spacing:0.5em;}
+input.btn_3{ width: 50px;background-image: url(../../images/button2.gif);}
+input.btn_4{ width: 67px;background-image: url(../../images/button4.gif);}
+input.btn_6{ width: 100px;background-image: url(../../images/button6.gif);}
+input.btn_11{width: 160px;background-image: url(../../images/button11.gif);}
+input.btn_20{width: 275px;background-image: url(../../images/button20.gif);}
+input.btn_lg{ width: 50px;background-image: url(../../images/button_login.gif);letter-spacing:0.5em;}
+
+input.btn_2, input.btn_3, input.btn_4, input.btn_6, input.btn_11,input.btn_20,input.btn_lg{
+	height: 20px;cursor: hand;
+	background-position: center center;
+	background-repeat: no-repeat;
+	border: none;
+	font-size:9pt;color:#3d3d3d;
+	vertical-align: bottom;
+}
+
+/*----------------------------超级链接----------------------------------*/
+a:link { color:#003366; font-weight: normal; text-decoration: none}
+a:visited {color:#003366;font-weight:normal; text-decoration: none}
+a:hover {color:#FF0000;font-weight:normal;text-decoration:underline} 
+a:active {color:#FF0000;font-weight:normal;text-decoration: none }
+
+/*-----------------------------滚动条-------------------*/
+BODY {
+scrollbar-face-color: #F2F2F2;
+scrollbar-shadow-color: #999999;
+scrollbar-highlight-color: #FFFFFF;
+scrollbar-3dlight-color: #999999;
+scrollbar-darkshadow-color: #F5F5F5;
+scrollbar-track-color: #F1F1F1;
+scrollbar-arrow-color: #999999;
+}
+
+.tdinput03 {border: 0px; height: 18px; text-align: left; background: #f3f6ff; } 
+.tdinput03chg { width: 80%; border: 0px; height: 18px; text-align: left; background: #f3f6ff; } 
+.tdinput04 { width: 100%; border: 0px; text-align: left; background: #f3f6ff; } 
+.tdinput05dd { width: 90%; border: 0px; height: 18px; text-align: left; background: #f3f6ff; } 
+.bodyline { BORDER-RIGHT: #98aab1 1px solid; BORDER-TOP: #98aab1 1px solid; BORDER-LEFT: #98aab1 1px solid; BORDER-BOTTOM: #98aab1 1px solid; BACKGROUND-COLOR: #ffffff }

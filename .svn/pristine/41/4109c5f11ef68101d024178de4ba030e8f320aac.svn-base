@@ -1,0 +1,177 @@
+package net.htjs.pt4.cms.service.impl;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import net.htjs.pt4.cms.service.IStaticPageService;
+
+/**
+ * 首页、栏目、内容 静态化业务类
+ * 
+ * @author xieshiyu
+ *
+ */
+@Service
+public class StaticPageService implements IStaticPageService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(StaticPageService.class);
+
+	/**
+	 * 首页静态化
+	 * 
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	public void index() throws IOException, TemplateException {
+		long time = System.currentTimeMillis();
+		// 静态资源路径
+		String static_path = "C:/software/tomcat7/webapps/";
+		// 静态页目录
+		String static_dir = "www";
+		// 模板路径
+		String tpl_path = "C:/web8/CMS/src/main/resources/static/cms_sys/t/";
+		// 启用模板目录
+		String tpl_solution = "red";
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("pageNo", 5);
+		data.put("tplPath", tpl_path + tpl_solution);
+
+		File f = new File(static_path + static_dir + File.separator + "index.html");
+		File parent = f.getParentFile();
+		if (!parent.exists()) {
+			parent.mkdirs();
+		}
+		Writer out = null;
+		try {
+			// FileWriter不能指定编码确实是个问题，只能用这个代替了。
+			out = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+			conf.setDirectoryForTemplateLoading(new File(tpl_path + tpl_solution));
+			Template template = conf.getTemplate("index/index.html");
+			template.process(data, out);
+		} finally {
+			if (out != null) {
+				try {
+					out.flush();
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		time = System.currentTimeMillis() - time;
+		channel();
+		content();
+		LOGGER.info("create index page, in {} ms", time);
+	}
+
+	/**
+	 * 栏目页静态化
+	 * 
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	public void channel() throws IOException, TemplateException {
+		long time = System.currentTimeMillis();
+		// 静态资源路径
+		String static_path = "C:/software/tomcat7/webapps/";
+		// 静态页目录
+		String static_dir = "www";
+		// 模板路径
+		String tpl_path = "C:/web8/CMS/src/main/resources/static/cms_sys/t/";
+		// 启用模板目录
+		String tpl_solution = "red";
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("pageNo", 5);
+		data.put("tplPath", tpl_path + tpl_solution);
+
+		File f = new File(static_path + static_dir + File.separator + "channel/index.html");
+		File parent = f.getParentFile();
+		if (!parent.exists()) {
+			parent.mkdirs();
+		}
+		Writer out = null;
+		try {
+			// FileWriter不能指定编码确实是个问题，只能用这个代替了。
+			out = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+			conf.setDirectoryForTemplateLoading(new File(tpl_path + tpl_solution));
+			Template template = conf.getTemplate("channel/channel.html");
+			template.process(data, out);
+		} finally {
+			if (out != null) {
+				try {
+					out.flush();
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		time = System.currentTimeMillis() - time;
+		LOGGER.info("create channel page, in {} ms", time);
+	}
+
+	/**
+	 * 内容页静态化
+	 * 
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	public void content() throws IOException, TemplateException {
+		long time = System.currentTimeMillis();
+		// 静态资源路径
+		String static_path = "C:/software/tomcat7/webapps/";
+		// 静态页目录
+		String static_dir = "www";
+		// 模板路径
+		String tpl_path = "C:/web8/CMS/src/main/resources/static/cms_sys/t/";
+		// 启用模板目录
+		String tpl_solution = "red";
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("pageNo", 5);
+		data.put("tplPath", tpl_path + tpl_solution);
+
+		File f = new File(static_path + static_dir + File.separator + "channel/content/111.html");
+		File parent = f.getParentFile();
+		if (!parent.exists()) {
+			parent.mkdirs();
+		}
+		Writer out = null;
+		try {
+			// FileWriter不能指定编码确实是个问题，只能用这个代替了。
+			out = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+			conf.setDirectoryForTemplateLoading(new File(tpl_path + tpl_solution));
+			Template template = conf.getTemplate("content/content.html");
+			template.process(data, out);
+		} finally {
+			if (out != null) {
+				try {
+					out.flush();
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		time = System.currentTimeMillis() - time;
+		LOGGER.info("create content page, in {} ms", time);
+	}
+
+	@Autowired
+	private Configuration conf;
+}

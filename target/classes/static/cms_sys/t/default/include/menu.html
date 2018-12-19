@@ -1,0 +1,48 @@
+		<nav>
+			<div class="nav no-print nav_position">
+				<div class="nav_bj"></div>
+				<div class="nav_content">
+					<div class="main">
+						<div class="nav_logo pull-left">
+							<img src="${base}/public/images/logo_fff.png">
+						</div>
+						<div class="nav_ul pull-right">
+							<ul class="pull-left">
+								<li><a href="${base}">首页</a></li>
+								[@cms_channel_list]
+								[#list tag_list as c]
+								<li><a href="${c.url}" onclick="window.open(this.href); return false">${c.name}</a></li>
+								[/#list]
+								[/@cms_channel_list]
+							</ul>
+							<div class="pull-right">
+								<a href="javascript:void(0);" class="nav_xl"><i class="Hui-iconfont Hui-iconfont-weizhi"></i>北京市</a>
+								<div class="nav_tab">
+									<p><img src="${base}/public/images/nav_xl.png"></p>
+									<ol class="clearfix">
+										<li><a href="${base}" onclick="window.open(this.href); return false">北京</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">青岛</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">山东</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">厦门</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">山西</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">辽宁</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">贵州</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">安徽</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">天津</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">上海</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">广西</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">深圳</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">江苏</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">江西</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">广东</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">四川</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">河北</a></li>
+										<li><a href="${base}" onclick="window.open(this.href); return false">内蒙古</a></li>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>

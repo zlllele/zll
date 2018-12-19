@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>栏目页静态化</title>
+<script type="text/javascript" src="../../commons/js/include_ui.js?dm=102021222425"></script>
+<script type="text/javascript" src="../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript" src="channel.js?'+Math.random();+'"></script>
+</head>
+<body>
+	<div id="divSplitter" class="divSplitter">
+		<div id="rigthPane" class="rigthPane">
+			<table cellpadding="0" cellspacing="0" class="table_add">
+				<tbody>
+					<tr>
+						<td class="tdclass_view" nowrap>栏目：</td>
+						<td class="tdclass_edit">
+							<select name="channelId" id="channelId" class="select">
+								<option value="">所有栏目</option>
+							</select>
+						</td>
+						<td class="tdclass_view" nowrap>更新子栏目：</td>
+						<td class="tdclass_edit">
+							<input type="radio" name="containChild" value="1" checked="checked" class="textInput">是</input>
+							<input type="radio" name="containChild" value="0" class="textInput">否</input>
+						</td>
+						<td style="text-align:center;"><a class="button" id="search_dg"
+							onclick="staticPage.onToolbarClick(1);"> <span> <input
+									accesskey="q" type="button" value="生成栏目页HTML" class="searchbtn"></input>
+							</span>
+						</a></td>
+					</tr>
+				<tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

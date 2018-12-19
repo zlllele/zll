@@ -1,0 +1,334 @@
+package net.htjs.pt4.cms.controller;
+
+
+import net.htjs.pt4.cms.service.IChannelService;
+import net.htjs.pt4.cms.service.IContentService;
+import net.htjs.pt4.cms.service.IMarkService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.service.IStaticPageService;
+import net.htjs.pt4.cms.utils.FileUtils;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+
+
+import org.springframework.web.bind.annotation.*;
+
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * 内容管理控制类
+ * 
+ * @author wupeng
+ *
+ */
+@RestController
+@RequestMapping("/content")
+public class ContentController extends BaseController {
+
+	private final Logger logger = LoggerFactory.getLogger(ContentController.class);
+	private static final String MSG_SUCCESS = "操作成功！";
+
+	@Resource
+	private IContentService contentService;
+
+	@Resource
+	private IStaticPageService staticPageService;
+
+	@Resource
+	private ISiteService siteService;
+	
+	@Resource
+	private IMarkService markService;
+	
+	@Resource
+	private IChannelService channelService;
+
+	/**
+	 * 查询下级栏目内容列表
+	 * 
+	 * @param id,page,pageSize,contentTypeMap,callback，request
+	 * @return Object
+	 */
+	@GetMapping(value = "/selectContentsByChannel/{id}", produces = "application/json;charset=UTF-8")
+	public Object selectLowerChannels(@PathVariable String id, @RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "0") Integer pageSize, String callback,
+			@RequestParam Map<String, Object> contentTypeMap, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			contentTypeMap.put("pid", id);
+			contentTypeMap.put("zzjgid", UserUtils.getZzjgId(request));
+			contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			Datagrid datagrid = contentService.selectContentsByChannel(contentTypeMap,
+					Integer.parseInt((String) contentTypeMap.get("page")), Integer.parseInt((String) contentTypeMap.get("pageSize")));
+			mapModel.put("data", datagrid.getRows());
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 筛选下级栏目内容列表
+	 * 
+	 * @param id,page,pageSize,contentTypeMap,callback，request
+	 * @return Object
+	 */
+	@PostMapping(value = "/queryContentsByChannel", produces = "application/json;charset=UTF-8")
+	public Object queryContentsByChannel(@RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "0") Integer pageSize, String callback,
+			@RequestParam Map<String, Object> contentTypeMap, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			contentTypeMap.put("zzjgid", UserUtils.getZzjgId(request));
+			contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			Datagrid datagrid = contentService.selectContentsByChannel(contentTypeMap,
+					Integer.parseInt((String) contentTypeMap.get("page")), Integer.parseInt((String) contentTypeMap.get("pageSize")));
+			mapModel.put("data", datagrid.getRows());
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 添加内容
+	 * 
+	 * @param contentTypeMap,callback，request
+	 * @return Object
+	 */
+	@PostMapping
+	public Object add(@RequestParam Map<String, Object> contentTypeMap, String callback, HttpServletRequest request) {
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			if (((String) contentTypeMap.get("updateFlag")) == null) {
+				contentTypeMap.put("content_id", UUIDUtils.getUUID());
+			}
+			if (contentTypeMap.get("is_recommend") == null)
+				contentTypeMap.put("is_recommend", "0");
+			if (contentTypeMap.get("status") == null)
+				contentTypeMap.put("status", "2");
+			if (((String) contentTypeMap.get("release_date")) == "") {
+				contentTypeMap.put("release_date", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+			}
+
+			List<Map<String, Object>> contentFileList = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> contentPicsList = new ArrayList<Map<String, Object>>();
+			String[] attachmentString = ((String) contentTypeMap.get("aSring")).split(",");
+			for (int i = 0; i < attachmentString.length; i = i + 2) {
+				if (attachmentString[i].length() > 0) {
+					Map<String, Object> m = new HashMap<String, Object>();
+					m.put("file_name", attachmentString[i]);
+					if (attachmentString[i + 1].indexOf("/u/") >= 0) {
+						m.put("file_path", attachmentString[i + 1].substring(attachmentString[i + 1].indexOf("/u/")));
+					}
+					if (attachmentString[i + 1].indexOf("\\u\\") >= 0) {
+						m.put("file_path", attachmentString[i + 1].substring(attachmentString[i + 1].indexOf("\\u\\")));
+					}
+
+					contentFileList.add(m);
+				}
+			}
+			contentTypeMap.put("contentFileList", contentFileList);
+
+			if (contentTypeMap.get("psSring") != null) {
+				String[] picsPaths = ((String) contentTypeMap.get("psSring")).split(",");
+				String picsDes = (String) contentTypeMap.get("psdesSring");
+				List<Integer> list = FileUtils.getIndex(picsDes, "-?+@$_[]{}");
+				list.add(0, -10);
+				list.add(picsDes.length());
+				for (int i = 0; i < picsPaths.length; i = i + 1) {
+					if (picsPaths[i].length() > 0) {
+						Map<String, Object> m = new HashMap<String, Object>();
+						if (picsPaths[i].indexOf("/u/") >= 0) {
+							m.put("img_path", picsPaths[i].substring(picsPaths[i].indexOf("/u/")));
+						}
+						if (picsPaths[i].indexOf("\\u\\") >= 0) {
+							m.put("img_path", picsPaths[i].substring(picsPaths[i].indexOf("\\u\\")));
+						}
+						m.put("description", picsDes.substring(list.get(i) + 10, list.get(i + 1)));
+						contentPicsList.add(m);
+					}
+				}
+				contentTypeMap.put("contentPicsList", contentPicsList);
+			}
+			String media_type = (String) contentTypeMap.get("mName") == null ? ""
+					: ((String) contentTypeMap.get("mName"))
+							.substring(((String) contentTypeMap.get("mName")).lastIndexOf(".") + 1);
+			String media_path = (String) contentTypeMap.get("mPath") == null ? ""
+					: (String) contentTypeMap.get("mPath");
+			if (media_path.length() > 0) {
+				if (media_path.indexOf("/u/") >= 0) {
+					contentTypeMap.put("media_path", media_path.substring(media_path.indexOf("/u/")));
+				}
+				if (media_path.indexOf("\\u\\") >= 0) {
+					contentTypeMap.put("media_path", media_path.substring(media_path.indexOf("\\u\\")));
+				}
+			}
+
+			if (contentTypeMap.get("tPath") != null && ((String) contentTypeMap.get("tPath")).length() > 0) {
+				String tPath = (String) contentTypeMap.get("tPath");
+				if (tPath.indexOf("/u/") >= 0) {
+					contentTypeMap.put("tPath", tPath.substring(tPath.indexOf("/u/")));
+				}
+				if (tPath.indexOf("\\u\\") >= 0) {
+					contentTypeMap.put("tPath", tPath.substring(tPath.indexOf("\\u\\")));
+				}
+			}
+
+			contentTypeMap.put("media_type", media_type);
+			contentTypeMap.put("user_id", UserUtils.getUserId(request));
+			contentTypeMap.put("user_name", UserUtils.getUserName(request));
+			contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			contentService.insertContent(contentTypeMap, contentFileList, contentPicsList);
+			String picMark = siteService.findById(siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId()).getStaticPath() + siteService.findById(siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId()).getStaticDir();
+			markService.createMark(siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId(), picMark+(String) contentTypeMap.get("tPath"));
+			code = 1;
+			staticPageService.index(UserUtils.getZzjgId(request));
+			staticPageService.channel(UserUtils.getZzjgId(request), (String) contentTypeMap.get("channel_id"), true);
+			
+			String pid = channelService.selectAllParentChannels((String) contentTypeMap.get("channel_id"));
+			if(!"".equals(pid)){
+				String[] pidArr = pid.split(",");
+				for (String string : pidArr) {
+					staticPageService.channel(UserUtils.getZzjgId(request), string, false);
+				}
+			}
+			
+			staticPageService.content(UserUtils.getZzjgId(request), (String) contentTypeMap.get("channel_id"));
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+	}
+
+	/**
+	 * 查询内容模板
+	 * 
+	 * @param id,qyxxglMap,callback
+	 * @return Object
+	 */
+	@GetMapping("/queryContentTemplates")
+	public Object queryContentTemplates(@RequestParam Map<String, String> qyxxglMap, String callback, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			String channelTpl = siteService.getChannelTpl(siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId(), "content");
+			mapModel.put("data", channelTpl);
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+	
+	/**
+	 * 查询内容模板
+	 * 
+	 * @param id,qyxxglMap,callback
+	 * @return Object
+	 */
+	@GetMapping("/{id}")
+	public Object detail(@PathVariable String id, @RequestParam Map<String, String> qyxxglMap, String callback) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			Map<String,Object> datagrid = contentService.findById(id);
+			mapModel.put("data", datagrid);
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 删除指定id内容
+	 * 
+	 * @param id,callback
+	 * @return Object
+	 */
+	@DeleteMapping("/{id}")
+	public Object delete(@PathVariable String id, String callback, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			contentService.deleteById(id);
+			code = 1;
+			staticPageService.index(UserUtils.getZzjgId(request));
+			String cid = contentService.getContentById(id).getChannel().getChannelId();
+			
+			String pid = channelService.selectAllParentChannels(cid);
+			if(!"".equals(pid)){
+				String[] pidArr = pid.split(",");
+				for (String string : pidArr) {
+					staticPageService.channel(UserUtils.getZzjgId(request), string, false);
+				}
+			}
+			staticPageService.content(UserUtils.getZzjgId(request), cid);
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+}

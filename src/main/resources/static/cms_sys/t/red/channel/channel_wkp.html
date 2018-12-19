@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name=”viewport” content=”width=device-width, initial-scale=1″ />
+<title>${channel.title!channel.name}-${site.siteName}</title>
+
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/css/style_cpjs.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/css/style_dianshang.css">
+
+<script type="text/javascript" src="${base}/js/jquery.super.js"></script>
+<script type="text/javascript" src="${base}/js/tab.js"></script>
+<link rel="stylesheet" href="${base}/css/style_shouye.css">
+<link rel="stylesheet" href="${base}/css/style_denglu.css">
+<script type="text/javascript" src="${base}/js/denglu.js"></script>
+<!--解决IE6 png不透明的问题-->
+
+<!--[if IE 6]> 
+<script type="text/javascript" src="${base}/js/dd_png.js"></script> 
+<script type="text/javascript"> 
+        DD_belatedPNG.fix('a,div,img,*'); 
+</script> 
+<![endif]-->
+
+<script>
+	function myFunction(val) {
+		// alert("你好，我是一个警告框！");
+		var flag = val;
+		if (flag == "2") {
+			$(".button_moshi2").show();
+			$(".sjms").show();
+			$(".button_moshi").hide();
+			$(".xfzms").hide();
+		} else {
+			$(".button_moshi").show();
+			$(".xfzms").show();
+			$(".button_moshi2").hide();
+			$(".sjms").hide();
+		}
+	}
+</script>
+<style>
+a:hover {
+	text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+	[#include "../include/header.html"/]
+
+	<!-- -->
+	<div class="nr_cpjs ">
+		<div class="nav_side">
+			<div class="side_list">
+				<div calss="side_ziti">
+					<p>产品介绍</p>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/wsp/index.html' target="_self">微开票</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/ykp/index.html' target="_self">易开票</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/kpb/index.html' target="_self">开票宝系列</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/jksm/index.html' target="_self">接口说明</a>
+				</div>
+			</div>
+		</div>
+		<div class="cpld">
+			<div class="cpld_wz">
+				<span><img src="${base}/images/cp-wkp_r1_c2.png"><span
+					id="ysfw_wz_s">产品亮点</span></span>
+			</div>
+
+			<div class="cpld_fz_l">
+				<div class="cpld_fz_l_tp">
+					<img src="${base}/images/cp-wkp03_r1_c1.png">
+				</div>
+				<div class="cpld_fz_l_wz">
+					<span class="cpld_fz_l_wz_u">支持“微信扫一扫/支付宝扫一扫”</span><br> <span
+						class="cpld_fz_l_wz_l">消费者扫描商家二维码发送抬头，智能填充，完成开票</span>
+				</div>
+			</div>
+			<div class="cpld_fz_r">
+				<div class="cpld_fz_r_tp">
+					<img src="${base}/images/cp-wkp03_r3_c3.png">
+				</div>
+				<div class="cpld_fz_r_wz">
+					<p class="cpld_fz_r_wz_u">支持商家扫码模式</p>
+					<p class="cpld_fz_r_wz_l">商家使用扫描枪扫描用户二维码，智能填充抬头信息，极速开票</p>
+				</div>
+			</div>
+
+			<div class="cpld_fz_l">
+				<div class="cpld_fz_l_tp">
+					<img src="${base}/images/cp-wkp03_r5_c1.png">
+				</div>
+				<div class="cpld_fz_l_wz">
+					<p class="cpld_fz_l_wz_u">不限填充票种</p>
+					<p class="cpld_fz_l_wz_l">专票（纸票）、普票（电票+纸票）都支持</p>
+				</div>
+			</div>
+			<div class="cpld_fz_r">
+				<div class="cpld_fz_r_tp">
+					<img src="${base}/images/cp-wkp03_r7_c3.png">
+				</div>
+				<div class="cpld_fz_r_wz">
+					<p class="cpld_fz_r_wz_u">消费者可提前提交抬头至待开列表</p>
+					<p class="cpld_fz_r_wz_l">开票时，开票员直接从待开列表中选择对应的抬头填充即可</p>
+				</div>
+			</div>
+			<div class="cpld_fz_l">
+				<div class="cpld_fz_l_tp">
+					<img src="${base}/images/cp-wkp03_r9_c1.png">
+				</div>
+				<div class="cpld_fz_l_wz">
+					<span class="cpld_fz_l_wz_u">不限税控系统</span><br> <span
+						class="cpld_fz_l_wz_l">兼容百望、航信的税控盘</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cz">
+		<!--操作说明 -->
+		<div class="czsm">
+			<!--按钮切换状态 -->
+			<div class="button_moshi">
+				<div class="button_ms_l">
+					<div class="ms_xz">
+						<p class="img_ms_l" onclick="myFunction(1)">消费者扫码模式</p>
+					</div>
+				</div>
+				<div class="button_ms_r">
+					<div class="ms_xz02">
+						<p class="img_ms_r" onclick="myFunction(2)">商家扫码模式</p>
+					</div>
+				</div>
+			</div>
+			<div class="button_moshi2" style="display: none">
+				<div class="button_ms_l">
+					<div class="ms_xz02">
+						<p class="img_ms_l02" onclick="myFunction(1)">消费者扫码模式</p>
+					</div>
+				</div>
+				<div class="button_ms_r">
+					<div class="ms_xz">
+						<p class="img_ms_r02" onclick="myFunction(2)">商家扫码模式</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="czsm_wz">
+				<span><img src="${base}/images/cp-wkp_r1_c2.png"><span
+					id="ysfw_wz_s">操作说明</span></span>
+			</div>
+			<!-- 消费者模式-->
+			<div class="xfzms">
+				<div class="xfzms_1">
+					<div class="shuzi">
+						<img src="${base}/images/cp-wkp02_r1_c1.png">
+					</div>
+					<div class="wenzi">
+						<div style="font-size: 20px; color: #333333; padding-top: 36px;">
+							<span>下载安装客户端</span>
+						</div>
+						<div style="font-size: 16px; color: #333333; padding-top: 46px;">
+							<span>打开www.kaipiaoba.net,下载微开票客户端，并安装在商家的电脑上</span>
+						</div>
+					</div>
+					<div class="tupian">
+						<img src="${base}/images/cp-wkp02_r1_c3.png">
+					</div>
+				</div>
+
+				<div class="xfzms_1">
+					<div class="shuzi">
+						<img src="${base}/images/cp-wkp02_r3_c1.png">
+					</div>
+					<div class="wenzi">
+						<div style="font-size: 20px; color: #333333; padding-top: 36px;">
+							<span>打印企业名片</span>
+						</div>
+						<div style="font-size: 16px; color: #333333; padding-top: 46px;">
+							<span>启动“微开票”，打印企业名片，打印在立牌上，并将立牌摆放到前台</span>
+						</div>
+					</div>
+					<div class="tupian">
+						<img src="${base}/images/cp-wkp01_r3_c3.png">
+					</div>
+				</div>
+
+				<div class="xfzms_1">
+					<div class="shuzi">
+						<img src="${base}/images/cp-wkp02_r5_c1.png">
+					</div>
+					<div class="wenzi">
+						<div style="font-size: 20px; color: #333333; padding-top: 36px;">
+							<span>消费者扫描发送抬头</span>
+						</div>
+						<div style="font-size: 16px; color: #333333; padding-top: 46px;">
+							<span>消费者用微信扫一扫立牌上的二维码后，即可将发票抬头发送到“为开票”中</span>
+						</div>
+					</div>
+					<div class="tupian">
+						<img src="${base}/images/cp-wkp01_r5_c3.png">
+					</div>
+				</div>
+
+				<div class="xfzms_1">
+					<div class="shuzi">
+						<img src="${base}/images/cp-wkp02_r7_c1.png">
+					</div>
+					<div class="wenzi">
+						<div style="font-size: 20px; color: #333333; padding-top: 36px;">
+							<span>商家快速开票</span>
+						</div>
+						<div style="font-size: 16px; color: #333333; padding-top: 46px;">
+							<span>商家打开开票界面，自动接收消费者发送的开票抬头，极速开具开票</span>
+						</div>
+					</div>
+					<div class="tupian">
+						<img src="${base}/images/cp-wkp01_r7_c3.png">
+					</div>
+				</div>
+
+			</div>
+			<!--商家模式 -->
+			<div class="sjms">
+				<div class="xfzms_1">
+					<div class="shuzi">
+						<img src="${base}/images/cp-wkp02_r1_c1.png">
+					</div>
+					<div class="wenzi">
+						<div style="font-size: 20px; color: #333333; padding-top: 36px;">
+							<span>下载安装客户端</span>
+						</div>
+						<div style="font-size: 16px; color: #333333; padding-top: 46px;">
+							<span>打开www.kaipiaoba.net,下载微开票客户端，并安装在商家的电脑上</span>
+						</div>
+					</div>
+					<div class="tupian">
+						<img src="${base}/images/cp-wkp02_r1_c3.png">
+					</div>
+				</div>
+
+				<div class="xfzms_1">
+					<div class="shuzi">
+						<img src="${base}/images/cp-wkp02_r3_c1.png">
+					</div>
+					<div class="wenzi">
+						<div style="font-size: 20px; color: #333333; padding-top: 36px;">
+							<span>消费者设置二维码</span>
+						</div>
+						<div style="font-size: 16px; color: #333333; padding-top: 46px;">
+							<span>消费者可通过开票吧微信公众号/微信发票助手/支付宝发票管家设置抬头二维码。</span>
+						</div>
+					</div>
+					<div class="tupian">
+						<img src="${base}/images/cp-wkp02_r3_c3.png">
+					</div>
+				</div>
+
+				<div class="xfzms_1">
+					<div class="shuzi">
+						<img src="${base}/images/cp-wkp02_r5_c1.png">
+					</div>
+					<div class="wenzi">
+						<div style="font-size: 20px; color: #333333; padding-top: 36px;">
+							<span>扫码枪扫码</span>
+						</div>
+						<div style="font-size: 16px; color: #333333; padding-top: 46px;">
+							<span>商家使用扫码枪扫描消费者设置好的二维码。</span>
+						</div>
+					</div>
+					<div class="tupian">
+						<img src="${base}/images/cp-wkp02_r5_c3.png">
+					</div>
+				</div>
+
+				<div class="xfzms_1">
+					<div class="shuzi">
+						<img src="${base}/images/cp-wkp02_r7_c1.png">
+					</div>
+					<div class="wenzi">
+						<div style="font-size: 20px; color: #333333; padding-top: 36px;">
+							<span>商家快速开票</span>
+						</div>
+						<div style="font-size: 16px; color: #333333; padding-top: 46px;">
+							<span>商家打开开票界面，自动接收消费者发送的开票抬头，极速开具开票。</span>
+						</div>
+					</div>
+					<div class="tupian">
+						<img src="${base}/images/cp-wkp02_r7_c3.png">
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- 优势服务-->
+	<div class="ysfw">
+		<div class="ysfw_wz">
+			<span><img src="${base}/images/cp-wkp_r1_c2.png"><span
+				id="ysfw_wz_s">优势服务</span></span>
+		</div>
+		<div class="ysfw_nr">
+			<img src="${base}/images/weikaipiao01.jpg">
+		</div>
+	</div>
+
+
+	<div>
+		<div style="min-width: 1200px; width: 100%; margin: 0 auto;">
+			<img style="width: 100%;" src="${base}/images/gou01.png">
+		</div>
+	</div>
+</body>
+</html>

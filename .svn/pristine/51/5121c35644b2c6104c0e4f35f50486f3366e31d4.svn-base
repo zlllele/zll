@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- <meta name=”viewport” content=”width=device-width, initial-scale=1″ /> -->
+<title>${channel.title!channel.name}-${site.siteName}</title>
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${base}/css/style_cpjs.css">
+<link rel="stylesheet" type="text/css"
+	href="${base}/css/style_dianshang.css">
+<link rel="stylesheet" type="text/css" href="${base}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${base}/css/dzfp.css">
+<script type="text/javascript" src="${base}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${base}/js/jquery.super.js"></script>
+<script type="text/javascript" src="${base}/js/tab.js"></script>
+<link rel="stylesheet" href="${base}/css/style_shouye.css">
+<link rel="stylesheet" href="${base}/css/style_denglu.css">
+<script type="text/javascript" src="${base}/js/denglu.js"></script>
+<!--解决IE6 png不透明的问题-->
+
+<!--[if IE 6]> 
+<script type="text/javascript" src="${base}/js/dd_png.js"></script> 
+<script type="text/javascript"> 
+        DD_belatedPNG.fix('a,div,img,*'); 
+</script> 
+
+<![endif]-->
+</head>
+<body>
+
+	[#include "../include/header.html"/]
+
+	<div class="solution_pic">
+		<img style="width: 100%;" src="${base}/images/jksm_banner.png"
+			alt="jksm_banner">
+	</div>
+	<div style="margin: 0 auto; width: 1170px;">
+		<div class="location">
+			您所在的位置：<a>首页</a><a target="_self"> &gt;产品介绍</a><a target="_self"> &gt;接口说明</a>  
+		</div>
+		<div class="list_page">
+			<div class="dzfp_cd">
+				<div class="side_list">
+					<div calss="side_ziti">
+						<p>产品介绍</p>
+					</div>
+					<div calss="side_ziti">
+						<a href='${base}/wsp/index.html' target="_self">微开票</a>
+					</div>
+					<div calss="side_ziti">
+						<a href='${base}/ykp/index.html' target="_self">易开票</a>
+					</div>
+					<div calss="side_ziti">
+						<a href='${base}/kpb/index.html' target="_self">开票宝系列</a>
+					</div>
+					<div calss="side_ziti">
+						<a href='${base}/jksm/index.html' target="_self">接口说明</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="dzfp_nr">
+				<div class="nr">
+
+					[@cms_content_page channelId=channel.channelId count='5']
+					<ul>
+						[#list tag_pagination.list as a]
+						<li>
+
+							<div class="list_contain">
+								<h2>
+									<a href="${a.url}" title="${a.title}" target="_self">${a.title}</a>
+								</h2>
+								<p>发布日期：${a.releaseDate}</p>
+							</div>
+							<div class="ljgd">
+								<a href="${a.url}" title="${a.title}" target="_self"><p>了解更多></p></a>
+							</div>
+						</li> [/#list]
+					</ul>
+					
+
+				</div>
+			</div>
+			<!--分页 -->
+			<div class="pages" align="center">
+				<ul class="pagination">
+					<li class="page-item">[#if tag_pagination.isFirstPage]<a
+						class="page-link" disabled="disabled">首页</a>
+					</li>
+					<li class="page-item"><a class="page-link" disabled="disabled">上一页</a>[#t/]
+					</li>
+					<li class="page-item">[#else]<a class="page-link"
+						href="${hrefFormer}${hrefLatter}">首页</a>
+					</li>
+					<li class="page-item"><a class="page-link"
+						href="${hrefFormer}[#if tag_pagination.prePage gt 1]_${tag_pagination.prePage}[/#if]${hrefLatter}">上一页</a>[#t/]
+						[/#if]</li>
+
+					<li class="page-item">[#if tag_pagination.isLastPage]<a
+						class="page-link" disabled="disabled">下一页</a></li>
+					<li class="page-item"><a class="page-link" disabled="disabled">尾页</a></li>
+					<li class="page-item">[#else]<a class="page-link"
+						href="${hrefFormer}_${tag_pagination.nextPage}${hrefLatter}">下一页</a></li>
+					<li class="page-item"><a class="page-link"
+						href="${hrefFormer}_${tag_pagination.totalPage}${hrefLatter}">尾页</a>
+						[/#if]</li>
+				</ul>
+			</div>
+			[/@cms_content_page]
+		</div>
+	</div>
+
+	[#include "../include/footer.html"/]
+</body>
+</html>

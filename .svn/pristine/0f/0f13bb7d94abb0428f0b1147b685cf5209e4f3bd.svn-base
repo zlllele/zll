@@ -1,0 +1,175 @@
+package net.htjs.pt4.cms.entity;
+
+import java.io.Serializable;
+
+/**
+ * 内容实体类
+ * 
+ * @author xieshiyu
+ *
+ */
+public class Content implements Serializable {
+
+	private static final long serialVersionUID = 5448975553911833560L;
+
+	// 内容ID
+	private String contentId;
+	// 栏目ID
+	private Channel channel;
+	// 发布人用户ID
+	private String userId;
+	// 发布人用户姓名
+	private String userName;
+	// 内容类型ID
+	private String typeId;
+	// 站点ID
+	private Site site;
+	// 标题
+	private String title;
+	// 摘要
+	private String description;
+	// 固顶级别，0不固定
+	private Integer topLevel;
+	// 发布日期
+	private String releaseDate;
+	// 是否推荐，0否
+	private Integer recommend;
+	// 状态(0:草稿;1:审核中;2:审核通过;3:回收站)
+	private Integer status;
+	// 指定模板，相对路径，默认继承栏目
+	private String tpl_content;
+	// 媒体路径
+	private String mediaPath;
+	// 媒体类型
+	private String mediaType;
+	// 外部链接
+	private String link;
+
+	public String getContentId() {
+		return contentId;
+	}
+
+	public void setContentId(String contentId) {
+		this.contentId = contentId;
+	}
+
+	public Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+
+	public Site getSite() {
+		return site;
+	}
+
+	public void setSite(Site site) {
+		this.site = site;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getTopLevel() {
+		return topLevel;
+	}
+
+	public void setTopLevel(Integer topLevel) {
+		this.topLevel = topLevel;
+	}
+
+	public String getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(String releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public Integer getRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(Integer recommend) {
+		this.recommend = recommend;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getTpl_content() {
+		return tpl_content;
+	}
+
+	public void setTpl_content(String tpl_content) {
+		this.tpl_content = tpl_content;
+	}
+
+	public String getMediaPath() {
+		return mediaPath;
+	}
+
+	public void setMediaPath(String mediaPath) {
+		this.mediaPath = mediaPath;
+	}
+
+	public String getMediaType() {
+		return mediaType;
+	}
+
+	public void setMediaType(String mediaType) {
+		this.mediaType = mediaType;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+}

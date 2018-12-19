@@ -1,0 +1,56 @@
+<div style="height:76px;background-color: #114c99;width: 100%;">
+<div class="header">
+    <div class="header_content">
+      <div class="logo_l2" ><a href="${base}"><img src="${base}/images/logo-kpbpt.png" alt="logo"></a> </div>
+    
+         
+     
+<!--登录注册 -->
+   <div class="logo_r2" >      
+      <div class="demo" style="float:float: right;;">		
+                  <nav >	   
+                      <div class="main_nav" style="float: left;"><a class="cd-signin" target="_blank" href="${base}/dl/index.html"></a> </div>
+                      <div  style="float: left;"><a class="cd-signup2" target="_blank" href="${base}/zc/index.html"></a></div>             
+		</nav>
+	   </div>
+     <!-- 电话-->
+     <!--
+       <div style="float:left;padding-left:48px;">
+              <span><img src="${base}/images/dianhua_r3_c2.png" style="float:left">
+             <p style="font-family:Microsoft YaHei;color:#FFFFFF;float:left;font-size: 1.125rem;padding-left: 7px;margin-bottom:0px">
+              400-833-9666</p></span>
+                </div>
+      </div> -->
+  </div>
+<!-- 导航栏 -->
+ <div style="float: right;height:76px;margin: 0 auto;">
+   <div class="nav"  >
+       <div class="nav_bar" >
+   	    <ul class="list" id="navlist">
+			<li [#if !channel??] class="nli cli" [#else] class="nli" [/#if]>
+				<h3><a href="${base}/" target="_self"><span>首页</span></a></h3>				
+			</li>
+		[@cms_channel_list count='6']
+		[#list tag_list as c]
+		<li [#if channel??&&channel.channelId==c.channelId] class="nli cli" [#else] class="nli" [/#if]>
+		<h3><a href="${c.url}" target="_self">${c.name}</a></h3>
+			<div class="sub">
+	            <ul>
+				[@cms_channel_list parentId=c.channelId]
+				    [#list tag_list as sub]
+				        <li><a href='${sub.url}' target="_self">${sub.name}</a></li>
+				    [/#list] 
+				[/@cms_channel_list]
+			  	</ul>
+			</div>
+		</li>	
+		[/#list]
+	        [/@cms_channel_list]         
+	    </ul> 
+          </div>
+    </div>
+  </div>    
+
+   </div>
+  </div>
+</div>

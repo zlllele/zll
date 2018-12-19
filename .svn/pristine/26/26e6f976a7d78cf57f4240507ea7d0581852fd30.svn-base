@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/www/css/css.css" type="text/css" rel="stylesheet" />
+<title>新闻中心</title>
+
+</head>
+<body>
+	<div class="main">
+		[#include "../include/top.html"/]
+		<div class="sub_mid">
+			<div class="sub_midleft">
+				<div class="sub_midleft_tittle">新闻中心</div>
+				<div class="suckerdiv">
+					<ul id="suckertree1">
+						<li><a href="#"> 火炬型系列</a>
+							<ul>
+								<li><a href="#">塔架式火炬系统</a></li>
+								<li><a href="#">地面式火炬系统</a></li>
+								<li><a href="#">自支撑式火炬系统</a></li>
+								<li><a href="#">斜拉绳式火炬系统</a></li>
+							</ul></li>
+						<li><a href="#"> 火炬燃烧器系列</a>
+							<ul>
+								<li><a href="#">火炬燃烧器系列（无蒸汽式）</a></li>
+								<li><a href="#">火炬燃烧器系列（蒸汽消烟式）</a></li>
+								<li><a href="#">自支撑式火炬系统</a></li>
+								<li><a href="#">斜拉绳式火炬系统</a></li>
+							</ul></li>
+						<li><a href="#">火炬管理系统</a></li>
+						<li><a href="#">火炬点火装置</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="sub_midright">
+				<div class="postiton_box">
+					<div class="postiton_name">新闻中心</div>
+					<div class="postiton">当前位置：首页 > 公司简介</div>
+				</div>
+				<div class="content">
+					<ul>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+						<li>·公司新郑州光威高科有州市高新技术开发区翠竹街1号郑州光威高科有州市高新技术开发区翠竹街1号限公司闻
+							2010/02/03</li>
+					</ul>
+					<div class="pages">首页 上一页 下一页 尾页</div>
+				</div>
+			</div>
+		</div>
+		[#include "../include/footer.html"/]
+	</div>
+</body>
+</html>

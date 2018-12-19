@@ -1,0 +1,84 @@
+package net.htjs.pt4.cms.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.utils.FileUtils;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+@RestController
+@RequestMapping("/site")
+public class SiteController extends BaseController{
+	
+	private final Logger logger = LoggerFactory.getLogger(SiteController.class);
+	private static final String MSG_SUCCESS = "操作成功！";
+	
+	@Resource
+	private ISiteService siteService;
+	
+	@GetMapping(value="/list", produces = "application/json;charset=UTF-8")
+	public Object list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer pageSize, String callback, 
+			@RequestParam Map<String, String> contentTypeMap,HttpServletRequest request) {
+	    int code;
+	    String msg = MSG_SUCCESS;
+	    Map<String, Object> mapModel = new HashMap<String, Object>();
+	    try {
+	        Datagrid datagrid = siteService.selectSite(contentTypeMap, Integer.parseInt(contentTypeMap.get("page")),
+	                Integer.parseInt(contentTypeMap.get("pageSize")));
+	        mapModel.put("data", datagrid.getRows());
+	        code = 0;
+	    } catch (Exception e) {
+	        msg = e.getMessage();
+	        logger.error(msg);
+	        e.printStackTrace();
+	        code = -1;
+	    }
+	    return getResult(mapModel, code, msg, callback);
+	}
+	
+	@PostMapping
+	public Object add(@RequestParam Map<String, Object> siteMap, String callback, HttpServletRequest request) {
+		int code = 0;
+		String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+		path = path.substring(1, path.length()) + "/static/cms_sys/t/";
+		String msg = MSG_SUCCESS;
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			if (siteService.checkSiteIsExist(siteMap)) {
+				 code = -1;
+			}else{
+				siteMap.put("site_id", UUIDUtils.getUUID());
+				siteMap.put("zzjgDm", UserUtils.getZzjgId(request));
+				siteService.addSite(siteMap);
+				//模板
+				FileUtils.copyDirectory(path+siteMap.get("tpl_solution"), siteMap.get("tpl_path")+"/"+siteMap.get("tpl_solution")+"/");
+				//静态资源
+				FileUtils.copyDirectory(path+"res", siteMap.get("static_path")+"/res/"+siteMap.get("static_dir"));
+				code = 0;
+			}
+		} catch (Exception e) {
+			 msg = e.getMessage();
+		     logger.error(msg);
+		     e.printStackTrace();
+		     code = -1;
+		}
+		return getResult(mapModel, code, msg, callback);
+	}
+	
+}

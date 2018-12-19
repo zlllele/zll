@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.htjs.pt4.cms.dao.ContentMapper">
+    
+    <select id="selectContentsByChannel" parameterType="hashMap" resultType="hashMap">
+		SELECT c.content_id content_id,c.title title,t.type_name
+		type_name,c.user_name user_name,cc.views views,
+		c.release_date release_date,c.status c_status
+		FROM hj_content c INNER JOIN hj_content_type t ON c.type_id=t.type_id INNER
+		JOIN hj_content_count cc ON c.content_id = cc.content_id 	
+		<where>
+            <if test="pid!=null and pid!=''">
+                and c.channel_id = #{pid} 
+            </if>
+             <if test="channel_id!=null and channel_id!=''">
+                and c.channel_id = #{channel_id} 
+            </if>
+            <if test="title!=null and title!=''">
+                and c.title like concat("%",#{title},"%") 
+            </if>
+            <if test="user_name!=null and user_name!=''">
+                and c.user_name like concat("%",#{user_name},"%")  
+            </if>
+            <if test="top_level!=null and top_level=='1'.toString()">
+                and c.top_level != 0 
+            </if>
+            <if test="is_recommend!=null and is_recommend=='1'.toString()">
+                and c.is_recommend != 0 
+            </if>
+            <if test="type_id!=null and type_id!=''">
+                and t.type_id = #{type_id} 
+            </if>
+        </where>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='0'.toString()">
+                 order by c.content_id desc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='1'.toString()">
+                 order by c.content_id asc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='2'.toString()">
+                 order by c.release_date desc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='3'.toString()">
+                 order by c.release_date asc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='4'.toString()">
+                 order by cc.views desc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='5'.toString()">
+                 order by cc.views asc
+            </if>		
+    </select>
+    
+   <!-- <insert id="insertChannel" parameterType="map">
+       insert into hj_channel values(#{channel_id},'1',#{parent_id},#{channel_path},#{channel_name},#{content_path},#{title},
+       #{keywords},#{description},#{tpl_channel},#{tpl_content},#{priority},#{is_display},#{is_blank},#{link},20)
+    </insert> 
+    
+    <select id="selectChannelById" parameterType="map" resultType="hashMap">
+        SELECT * from hj_channel where channel_id = #{id}
+    </select>
+    
+   <update id="updateChannelById" parameterType="map">
+    update hj_channel set parent_id=#{parent_id},channel_path=#{channel_path},
+    channel_name=#{channel_name},content_path=#{content_path},title=#{title},keywords=#{keywords},description=#{description},
+    tpl_channel=#{tpl_channel},tpl_content=#{tpl_content},priority=#{priority},is_display=#{is_display},is_blank=#{is_blank},
+    link=#{link} where channel_id = #{channel_id}
+    </update>
+    
+    <update id="deleteById" parameterType="string">
+	    update hj_channel set is_display= 0 where channel_id = #{id}
+    </update>
+    
+    <select id="selectLowerChannelsForDelete" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[ 
+        {call queryChildrenAreaInfo(#{areaId,jdbcType=VARCHAR,mode=IN})}      
+         ]]>
+    </select> -->
+    
+</mapper>

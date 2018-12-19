@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="baidu-site-verification" content="yD37bRfZyE" />
+
+<title>开票吧电子发票服务平台</title>
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<!-- cdn -->
+<script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	
+<link href="${base}/images/logo.ico" type="image/x-icon" rel="shortcut icon" />
+<link rel="stylesheet" href="${base}/css/style_shouye.css?version=1.4">
+<link rel="stylesheet" href="${base}/css/style_denglu.css">
+<link rel="stylesheet" href="${base}/css/carousel.scss">
+
+<script type="text/javascript" src="${base}/js/jquery.super.js"></script>
+<script type="text/javascript" src="${base}/js/jquery.layerModel.js"></script>
+<script type="text/javascript" src="${base}/js/tab.js"></script>
+<script type="text/javascript" src="${base}/js/shouye-zxzx.js"></script>
+
+<script type="text/javascript" src="${base}/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="${base}/js/jqueryslide.js"></script>
+<script type="text/javascript" src="${base}/js/gryhzc.js"></script>
+<script type="text/javascript" src="${base}/js/dzfp.js"></script>
+<script type="text/javascript" src="${base}/js/denglu.js?version=1.2.9"></script>
+<script type="text/javascript" src="${base}/js/jquery.form.js"></script>
+<script type="text/javascript" src="${base}/js/dl.js"></script>
+
+<style>
+/* 轮播样式 */
+.carousel-inner {
+	min-width: 1200px;
+}
+
+.carousel-inner img {
+	margin: 0 auto;
+	width: 100%;
+	min-width: 1200px;
+}
+
+.carousel-indicators li {
+	margin-right: 9px;
+	margin-left: 9px;
+	width: 13px;
+	height: 13px;
+	border-radius: 10px;
+}
+
+.carousel-indicators li.active {
+	background-color: #1262cc;
+}
+
+a:hover {
+	text-decoration: none;
+}
+</style>
+
+<script type="text/javascript">
+	function browserRedirect() {
+		var sUserAgent = navigator.userAgent.toLowerCase();
+		var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+		var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+		var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+		var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv :1.2.3.4";
+		var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+		var bIsAndroid = sUserAgent.match(/android/i) == "android";
+		var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+		var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+		if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid
+				|| bIsCE || bIsWM) {
+			location.replace("http://web.bwfapiao.com/mob/index.html");
+		}
+	}
+	
+</script>
+</head>
+<body>
+
+	[#include "../include/header.html"/]
+
+	<!--  客服悬浮框-->
+	<!-- <div id="top"></div>  -->
+	<!-- 轮播开始 -->
+	<div id="demo" class="carousel slide" data-ride="carousel">
+
+		<!-- 指示符 -->
+		<ul class="carousel-indicators">
+			<li data-target="#demo" data-slide-to="0" class="active"></li>
+			<li data-target="#demo" data-slide-to="1"></li>
+			<li data-target="#demo" data-slide-to="2"></li>
+			<li data-target="#demo" data-slide-to="3"></li>
+		</ul>
+
+		<!-- 轮播图片 -->
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="${base}/images/2banner01.png" alt="First slide">
+			</div>
+			<div class="carousel-item">
+				<img src="${base}/images/2banner03.jpg" />
+			</div>
+			<div class="carousel-item">
+				<img src="${base}/images/2banner02.jpg" alt="Third slide">
+			</div>
+			<div class="carousel-item">
+				<img src="${base}/images/banner06.jpg" alt="Third slide">
+			</div>
+		</div>
+
+		<!-- 左右切换按钮 -->
+		<a class="carousel-control-prev" href="#demo" data-slide="prev"> <span
+			class="carousel-control-prev-icon"></span>
+		</a> <a class="carousel-control-next" href="#demo" data-slide="next">
+			<span class="carousel-control-next-icon"></span>
+		</a>
+	</div>
+
+	<!-- 轮播结束 -->
+
+	<!-- 在线验证开始 -->
+	<div class="liucheng">
+		<div class="gjcy">
+
+			<!-- 发票管家-->
+			<div class="fpgj">
+				<div class="gjlogo"></div>
+				<div class="jy">
+					<div class="tp">
+						<img src="${base}/images/jy-tp.png" alt="节约在哪里">
+					</div>
+					<div class="wz">
+						<span class="wzup">节约在哪里？</span><br> <span class="wzlow">节约大量发票（冠名发票）打印、开具、重开快递和存储成本可更高效服务于用户（尤其个人）。</span>
+					</div>
+				</div>
+				<div class="bl">
+					<div class="bltp">
+						<img src="${base}/images/bl-tp.png" alt="便利在哪里">
+					</div>
+					<div class="blwz">
+						<span class="blwzup">便利在哪里？</span><br> <span class="blwzlow">有效简化财务人员在票源申请、分开开具、发票红冲、存根储存查询统计和纳税申报的工作沿路。</span>
+					</div>
+				</div>
+				<div class="jy" style="margin-top: 38px;">
+					<div class="tp">
+						<img src="${base}/images/glfp.png" alt="怎么管理发票">
+					</div>
+					<div class="wz">
+						<span class="wzup">怎么管理发票？</span><br> <span class="wzlow">电子发票服务平台（开票吧APP/www.bwfapiao.com）让消费者（或企业）接受、存储和归集电子发票都十分方便。</span>
+					</div>
+				</div>
+				<div class="bl">
+					<div class="bltp">
+						<img src="${base}/images/fl.png" alt="是否具有法律效力">
+					</div>
+					<div class="blwz" style="border-bottom-style: none;">
+						<span class="blwzup">是否具有法律效力？</span><br> <span
+							class="blwzlow">电子发票的法律效力、基本用途等与纸质发票相同。</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- 查验-->
+			<div class="check_b">
+				<div class="cy_b">
+					<div class="chayan_wz">
+						<p>电子发票在线查验</p>
+					</div>
+					<form class="chayan_form" action="demo-form.php" autocomplete="on">
+						<div class="fpdm">
+							<span>发票代码</span><input type="text" placeholder="请输入发票代码" />
+						</div>
+						<div class="fphm">
+							<span>发票号码</span><input type="text" placeholder="请输入发票号码" />
+						</div>
+						<div class="yzm">
+							<span>验证号码</span><input type="text" style="float: left; width: 184px;" placeholder="字母不区分大小" style="width: 134px;" />
+							<div class="check_img">
+								<img id="yzm" alt="点击更改图片验证码" src="">
+							</div>
+						</div>
+						<div class="chaxun_tj">
+							<p>查询</p>
+						</div>
+					</form>
+					<div class="cysm">
+						<p>*注册并登录电子发票服务平台，查验发票后可自动为您归集发票，方便您今后查阅，详情见个人中心发票归集。当您输入的所有号码都显示时，才可以进行查验。*</p>
+					</div>
+					<div class="ktrw"></div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	
+	<div class="pro" id="zycp">
+		<div class="pro2">
+			<div class="title_shouye">
+				<h1 class="h1">主要产品</h1>
+				<span>2018全新研发产品首发</span>
+			</div>
+			<div style="margin: 0 auto;">
+				<div class="pro_show">
+					
+					<div style="float: left">
+						<div>
+							<img src="${base}/images/zycp01-kpb.png">
+						</div>
+						<h3 class="pro_name">
+							<a href="${base}/kpb/index.html">开票宝</a>
+						</h3>
+						<span><p class="pro_introduce">开票宝扫码开票，百望帮您一天上电票</p></span>
+					</div>
+					<div style="float: left">
+						<div>
+							<img src="${base}/images/zycp02-wkp.png">
+						</div>
+						<h3 class="pro_name">
+							<a href="${base}/wsp/index.html">微开票</a>
+						</h3>
+						<span><p class="pro_introduce">智能填充抬头，极速开具发票</p></span>
+					</div>
+					<div style="float: left">
+						<div>
+							<img src="${base}/images/zycp03-ykp.png">
+						</div>
+						<h3 class="pro_name">
+							<a href="${base}/ykp/index.html">易开票</a>
+						</h3>
+						<span><p class="pro_introduce">百望易开票，自定义模板的批量导入开票神器</p></span>
+					</div>
+
+				</div>
+			</div>
+			<div class="more">
+				<a href="${base}/chanpinjieshao/index.html" class="more_btn">了解更多></a>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<!-- 解决方案-->
+	<div id="jjfa">
+		<div id="jjfa2">
+			<div class="jjfa_content">
+				<div style="margin: 0 auto;">
+					<div class="jjfa_wz">
+						<p class="jjfa_wzup">解决方案</p>
+						<p class="jjfa_wzlow">2018全新解决方案首发</p>
+					</div>
+					
+					<div class="fangan">
+						<div class="sc">
+							<div class="sc_tp">
+								<img src="${base}/images/fangan_sc.png">
+							</div>
+							<div class="sc_nr">
+								<div class="nr_up">
+									<p class="nr_up_l" style="color: #eeb458;">商超</p>
+									<a href="${base}/sc/index.html" class="ljgd_btn nr_up_r">了解更多></a>
+								</div>
+								<div class="nr_low">
+									<p>消费者通过客户端查询各类电子发票，统一记录、统一归档，随时查阅、维保调用。</p>
+								</div>
+							</div>
+						</div>
+						<div class="ds">
+							<div class="sc_tp">
+								<img src="${base}/images/fangan_ds.png">
+							</div>
+							<div class="sc_nr">
+								<div class="nr_up">
+									<p class="nr_up_l" style="color: #87b5f4;">电商</p>
+									<a href="${base}/ds/index.html" class="ljgd_btn nr_up_r">了解更多></a>
+								</div>
+								<div class="nr_low">
+									<p>消费者可以通过电子发票服务平台会统一归集电子发票，实现未来企业发票管理与电子档案系统、会计凭证入账的无缝衔接。</p>
+								</div>
+							</div>
+						</div>
+						<div class="sc" style="margin-top: 23px;">
+							<div class="sc_tp">
+								<img src="${base}/images/fangan_tcc.png">
+							</div>
+							<div class="sc_nr">
+								<div class="nr_up">
+									<p class="nr_up_l" style="color: #60dbce;">停车场</p>
+									<a href="${base}/tcc/index.html" class="ljgd_btn nr_up_r">了解更多></a>
+								</div>
+								<div class="nr_low">
+									<p>停车缴费方式通过自助缴费机、微信、支付宝、以及羊城通等直接扣费。</p>
+								</div>
+							</div>
+						</div>
+						<div class="ds" style="margin-top: 23px;">
+							<div class="sc_tp">
+								<img src="${base}/images/fangan__wl.png">
+							</div>
+							<div class="sc_nr">
+								<div class="nr_up">
+									<p class="nr_up_l" style="color: #b5df71;">物流快递</p>
+									<a href="${base}/kd/index.html" class="ljgd_btn nr_up_r">了解更多></a>
+								</div>
+								<div class="nr_low">
+									<p>电子发票针对协议客户，每月定期集中开票，完成月度结算；针对散户，即时领取电子发票，省时省力又省心。</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!-- 资讯-->
+	<div class="zx">
+		<div class="zx1">
+			<div class="zx_wz">
+				<p class="zx_wzup">开票吧公众号</p>
+				<p class="zx_wzlow">2018全新公众号推文首发</p>
+			</div>
+			<div class="zx_content">
+				<div class="zx_fz">
+					<div class="gd">
+						<p class="ljgd_b01">教程</p>
+					</div>
+					<div class="zx_tp">
+						<img src="${base}/images/news_img_1-1.png" style="width: 254px; height: 198px;">
+					</div>
+					<div class="zx_wz">
+						<span class="zx_bt"><a href="http://url.cn/5qKEAyN" target="view_window">纳税人新手学堂</a></span>
+						<div class="zx_wa">开票软件在哪下载？怎么安装？又该如何使用呢？纳税人新手学堂第一课，帮您轻松解决“不会开票”的问题。</div>
+
+					</div>
+				</div>
+				<div class="zx_fz">
+					<div class="gd">
+						<p class="ljgd_b02">便捷</p>
+					</div>
+					<div class="zx_tp">
+						<img src="${base}/images/news_img_1-2.png" style="width: 254px; height: 198px;">
+					</div>
+					<div class="zx_wz">
+						<span class="zx_bt"><a href="http://url.cn/51Q1GZx" target="view_window">让广东百望带您走上便捷之路</a></span>
+						<div class="zx_wa">2017年， 广东百望努力提升纳税服务质效，打造优质便捷的服务，开票办税环节更简，用时更短，服务更实。
+						</div>
+
+					</div>
+				</div>
+				<div class="zx_fz">
+					<div class="gd">
+						<p class="ljgd_b03">结账</p>
+					</div>
+					<div class="zx_tp">
+						<img src="${base}/images/news_img_1-3.png" style="width: 254px; height: 198px;">
+					</div>
+					<div class="zx_wz">
+						<span class="zx_bt"><a href="http://url.cn/5S4gAx6" target="view_window">不排队也能领发票？</a></span>
+						<div class="zx_wa">每到周末，无论去商场、超市、餐厅、服装店……结账时都得排一条长长的队。复杂的抬头的信息，繁多的开票手续，都需要不少的时间，怎样才能不排队？</div>
+
+					</div>
+				</div>
+				<div class="zx_fz">
+					<div class="gd">
+						<p class="ljgd_b04">干货</p>
+					</div>
+					<div class="zx_tp">
+						<img src="${base}/images/news_img_1-4.png" style="width: 254px; height: 198px;">
+					</div>
+					<div class="zx_wz">
+						<span class="zx_bt"><a href="http://url.cn/5A4VCKN" target="view_window">增值税发票的学问</a></span>
+						<div class="zx_wa">增值税发票开具和取得该如何规范税收风险，又有哪些开具发票新规则?这些常识对每个纳税人来说都非常重要，今天我们来聊聊增值税发票的那些学问。</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--合作伙伴 -->
+	<div class="hzhb">
+		<div class="hzhb2">
+			<div class="hzhb_wz">
+				<p style="font-size: 20px; color: #333;">合作伙伴</p>
+			</div>
+			<div class="hzhb_tp">
+				<img src="${base}/images/hzhb.png">
+			</div>
+		</div>
+	</div>
+	<!-- 版权-->
+
+
+	[#include "../include/footer.html"/]
+</body>
+</html>

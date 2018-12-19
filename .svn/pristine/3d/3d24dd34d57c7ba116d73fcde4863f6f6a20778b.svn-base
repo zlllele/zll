@@ -1,0 +1,282 @@
+package net.htjs.pt4.cms.controller;
+
+
+import net.htjs.pt4.cms.service.IChannelService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.service.IStaticPageService;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * 栏目管理控制类
+ * 
+ * @author wupeng
+ *
+ */
+@RestController
+@RequestMapping("/channel")
+public class ChannelController extends BaseController {
+
+	private final Logger logger = LoggerFactory.getLogger(ChannelController.class);
+	private static final String MSG_SUCCESS = "操作成功！";
+
+	@Resource
+	private IChannelService channelService;
+	@Resource
+	private ISiteService siteService;
+	@Resource
+	private IStaticPageService staticPageService;
+
+	/**
+	 * 查询栏目树
+	 * 
+	 * @param userMap,callback，request
+	 * @return Object
+	 */
+	@GetMapping(value = "/selectZzjgTree", produces = "application/json;charset=UTF-8")
+	public Object selectZzjgTree(@RequestParam Map<String, Object> userMap, String callback,
+			HttpServletRequest request) {
+		try {
+			userMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			List<Map<String,Object>> list = channelService.selectChannelTree(userMap);
+			List<Map<String,Object>> ja = new ArrayList<Map<String,Object>>();
+			// 按ztree格式要求转换数据
+			for (int i = 0, n = list.size(); i < n; i++) {
+				Map<String,Object> smap = (Map<String,Object>) list.get(i);
+				Map<String,Object> jo = new HashMap<String,Object>();
+				jo.putAll(smap);
+				String isParent = "0".equals(String.valueOf(smap.get("ISPARENT"))) ? "false" : "true";
+				jo.put("isParent", isParent);
+				ja.add(jo);
+			}
+			return callback != null ? new JSONPObject(callback, ja) : ja;
+		} catch (Exception e) {
+
+			logger.error(e.getMessage());
+			return getResult(new HashMap<String,Object>(), 0, e.getMessage(), callback);
+		}
+	}
+
+	/**
+	 * 查询下级栏目列表
+	 * 
+	 * @param id,page,pageSize,contentTypeMap,callback，request
+	 * @return Object
+	 */
+	@GetMapping(value = "/selectLowerChannels/{id}", produces = "application/json;charset=UTF-8")
+	public Object selectLowerChannels(@PathVariable String id, @RequestParam(defaultValue = "0") Integer page,
+			@RequestParam(defaultValue = "0") Integer pageSize, String callback,
+			@RequestParam Map<String, Object> contentTypeMap, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			contentTypeMap.put("pid", id);
+			contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			Datagrid datagrid = channelService.selectLowerChannels(contentTypeMap,
+					Integer.parseInt((String) contentTypeMap.get("page")), Integer.parseInt((String) contentTypeMap.get("pageSize")));
+			mapModel.put("data", datagrid.getRows());
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 添加栏目
+	 * 
+	 * @param contentTypeMap,callback，request
+	 * @return Object
+	 */
+	@PostMapping
+	public Object add(@RequestParam Map<String, Object> contentTypeMap, String callback, HttpServletRequest request) {
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			contentTypeMap.put("channel_id", UUIDUtils.getUUID());
+			contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			if (contentTypeMap.get("is_blank") == null)
+				contentTypeMap.put("is_blank", "0");
+			channelService.insertChannel(contentTypeMap);
+			staticPageService.index(UserUtils.getZzjgId(request));
+			staticPageService.channel(UserUtils.getZzjgId(request), null, true);
+			staticPageService.content(UserUtils.getZzjgId(request), null);
+			code = 1;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+	}
+
+	/**
+	 * 更新栏目
+	 * 
+	 * @param qyxxglMap,callback
+	 * @return Object
+	 */
+	@PutMapping
+	public Object update(@RequestParam Map<String, Object> qyxxglMap, String callback, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			if (qyxxglMap.get("is_blank") == null)
+				qyxxglMap.put("is_blank", "0");
+			channelService.updateChannelById(qyxxglMap);
+			code = 1;
+			staticPageService.index(UserUtils.getZzjgId(request));
+			staticPageService.channel(UserUtils.getZzjgId(request), null, true);
+			staticPageService.content(UserUtils.getZzjgId(request), null);
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 查询指定id栏目
+	 * 
+	 * @param id,qyxxglMap,callback
+	 * @return Object
+	 */
+	@GetMapping("/{id}")
+	public Object detail(@PathVariable String id, @RequestParam Map<String, String> qyxxglMap, String callback) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			Map<String,Object> datagrid = channelService.findById(id);
+			mapModel.put("data", datagrid);
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+	/**
+	 * 级联删除指定id栏目
+	 * 
+	 * @param id,callback
+	 * @return Object
+	 */
+	@DeleteMapping("/{id}")
+	public Object delete(@PathVariable String id, String callback, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			channelService.deleteById(id);
+			code = 1;
+			staticPageService.index(UserUtils.getZzjgId(request));
+			staticPageService.channel(UserUtils.getZzjgId(request), null, true);
+			staticPageService.content(UserUtils.getZzjgId(request), null);
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+	
+	/**
+	 * 栏目目录重复性校验
+	 * 
+	 * @param id,page,pageSize,contentTypeMap,callback，request
+	 * @return Object
+	 */
+	@GetMapping(value = "/pathCheck/{id}", produces = "application/json;charset=UTF-8")
+	public Object pathCheck(@PathVariable String id, String callback,
+			@RequestParam Map<String, Object> contentTypeMap, HttpServletRequest request) {
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+		
+
+		try {
+			contentTypeMap.put("channel_path", id);
+			contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+			List<Map<String,Object>> datagrid = channelService.pathCheck(contentTypeMap);
+			mapModel.put("data", datagrid);
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+		return getResult(mapModel, code, msg, callback);
+	}
+	
+	/**
+	 * 查询栏目模板
+	 * 
+	 * @param id,qyxxglMap,callback
+	 * @return Object
+	 */
+	@GetMapping("/queryChannelTemplates")
+	public Object queryChannelTemplates(@RequestParam Map<String, String> qyxxglMap, String callback, HttpServletRequest request) {
+
+		int code;
+		String msg = MSG_SUCCESS;
+		Map<String,Object> mapModel = new HashMap<String,Object>();
+
+		try {
+			String channelTpl = siteService.getChannelTpl(siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId(), "channel");
+			mapModel.put("data", channelTpl);
+			code = 0;
+		} catch (Exception e) {
+			msg = e.getMessage();
+			logger.error(msg);
+			code = -1;
+		}
+
+		return getResult(mapModel, code, msg, callback);
+
+	}
+
+}

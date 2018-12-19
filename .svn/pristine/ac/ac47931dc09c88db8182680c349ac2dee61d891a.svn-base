@@ -1,0 +1,76 @@
+var site_id="1";
+$(function(){
+	index.onLoad();
+})
+var index = (function() {
+	// 私有属性
+	var curSeg, formSave = "formSave";
+	return {
+		onLoad : function() {
+			curSeg = index;
+			Validator.validate(baseTools.byId(formSave), 3);
+			
+			index.onQuery();
+		},
+		// 查询数据
+		onQuery : function() {
+			baseTools.xhrAjax({
+				url : "/mark/list.do",
+				params : {
+					"site_id":site_id
+				},
+				callback : [ curSeg.showMark ]
+			});
+		},
+		showMark:function(jsonObj, xhrArgs) {
+			switch (parseInt(jsonObj.code)) {
+				case 0:
+					var data=jsonObj.data;
+					var mark_on=data.mark_on;
+					if(mark_on==false){
+						$("#radio0").attr("checked","checked");
+					}else{
+						$("#radio1").attr("checked","checked");
+					}
+					$("#mark_content").val(data.mark_content);
+					$("#mark_size").val(data.mark_size);
+					$("#mark_color").val(data.mark_color);
+					$("#mark_alpha").val(data.mark_alpha);
+					$("#mark_position").val(data.mark_position);
+					$("#mark_offset_x").val(data.mark_offset_x);
+					$("#mark_offset_y").val(data.mark_offset_y);
+					break;
+				case -1:
+					alert("请稍后重试");
+					break;
+				case -2:
+					//alert("未找到水印数据");
+					break;
+				default:
+			}
+		},
+		saveMark:function(){
+			if (!Validator.validate(baseTools.byId(formSave)))
+				return;
+			baseTools.xhrAjax({
+				url : '/mark/add.do',
+				forms : [ formSave ],
+				params : {
+					"site_id":site_id
+				},
+				callback : [ curSeg.saveBackMark ]
+			});
+		},
+		saveBackMark:function(jsonObj, xhrArgs){
+			switch (parseInt(jsonObj.code)) {
+				case 0:
+					alert("保存成功");
+					break;
+				case -1:
+					alert("请稍后重试");
+					break;
+				default:
+			}
+		}
+	};
+})();

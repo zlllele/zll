@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>登录-电子发票服务平台</title>
+<link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+<script type="text/javascript" src="${base}/js/jquery.form.js"></script>
+
+<style type="text/css">
+body {
+	background: url('${base}/images/denglubg.jpg') no-repeat center;
+	background-size: 100% 100%;
+	min-height: 880px;
+}
+
+.logon_tp {
+	border-bottom-style: solid;
+	border-bottom-color: #eeeeee;
+	border-bottom-width: 1px;
+}
+
+.logon_tp img {
+	margin-top: 21px;
+	margin-bottom: 23px;
+	margin-left: 50px;
+}
+
+.form-bg0 {
+	padding: 2em 0;
+}
+
+.form-horizontal {
+	height: 100%;
+	border-radius: 15px;
+	text-align: center;
+}
+
+.form-horizontal .heading {
+	display: block;
+	padding-bottom: 10px;
+	margin-bottom: 63px;
+}
+
+.form-horizontal .form-group {
+	padding: 0 40px;
+	margin: 0 0 25px 0;
+	position: relative;
+}
+
+.form-horizontal .form-control {
+	color: #fff;
+	border: 1px solid #fff;
+	background-color: transparent;
+	border-radius: 20px;
+	box-shadow: none;
+	padding: 0 20px 0 45px;
+	height: 49px;
+	transition: all 0.3s ease 0s;
+}
+
+.form-horizontal .form-control:focus {
+	box-shadow: 0px 0px 10px #fff;
+	outline: 0 none;
+}
+
+.form-horizontal .form-group i {
+	position: absolute;
+	top: 16px;
+	left: 60px;
+	font-size: 17px;
+	color: #c8c8c8;
+	transition: all 0.5s ease 0s;
+}
+
+.form-horizontal .form-group #img {
+	background: url('${base}/images/dl_gr.png') 13px center no-repeat;
+}
+
+.form-horizontal .form-group #img_nsrsb {
+	background: url('${base}/images/nsrsb.png') 13px center no-repeat;
+}
+
+.form-horizontal .form-group #img_mm {
+	background: url('${base}/images/dl_mm.png') 13px center no-repeat;
+}
+
+.form-horizontal .form-control:focus+i {
+	color: #00b4ef;
+}
+
+.form-horizontal .fa-question-circle {
+	display: inline-block;
+	top: 12px;
+	right: 60px;
+	font-size: 18px;
+	transition: all 0.5s ease 0s;
+}
+
+.form-horizontal .fa-question-circle:hover {
+	color: #000;
+}
+
+.form-horizontal .main-checkbox {
+	float: left;
+	width: 20px;
+	height: 20px;
+	background: #11a3fc;
+	border-radius: 50%;
+	position: relative;
+	margin: 5px 0 0 5px;
+	border: 1px solid #11a3fc;
+}
+
+.form-horizontal .main-checkbox label {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+}
+
+.form-horizontal .main-checkbox label:after {
+	content: "";
+	width: 10px;
+	height: 5px;
+	position: absolute;
+	top: 5px;
+	left: 4px;
+	border: 3px solid #fff;
+	border-top: none;
+	border-right: none;
+	background: transparent;
+	opacity: 0;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.form-horizontal .main-checkbox input[type=checkbox] {
+	visibility: hidden;
+}
+
+.form-horizontal .main-checkbox input[type=checkbox]:checked+label:after
+	{
+	opacity: 1;
+}
+
+.form-horizontal .text {
+	float: left;
+	margin-left: 7px;
+	line-height: 20px;
+	padding-top: 5px;
+	text-transform: capitalize;
+}
+
+.form-horizontal .btn {
+	width: 100%;
+	font-size: 20px;
+	color: #fff;
+	background: #6ad5f2;
+	border-radius: 8px;
+	padding: 10px 25px;
+	border: none;
+	text-transform: capitalize;
+	transition: all 0.5s ease 0s;
+}
+
+.form-horizontal .btn:hover {
+	background: #96e0f6;
+}
+
+@media only screen and (max-width: 479px) {
+	.form-horizontal .form-group {
+		padding: 0 25px;
+	}
+	.form-horizontal .form-group i {
+		left: 45px;
+	}
+	.form-horizontal .form-group #img {
+		left: 45px;
+	}
+	.form-horizontal .btn {
+		padding: 10px 20px;
+	}
+}
+
+.dl_wenzi {
+	font-size: 20px;
+	cursor: pointer;
+}
+
+#gr_wenzi {
+	margin: 0 auto;
+	padding-top: 0;
+	width: 177px;
+	border-top-left-radius: 15px;
+}
+
+#qy_wenzi {
+	margin: 0 auto;
+	padding-top: 0;
+	width: 177px;
+	border-top-right-radius: 15px;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.form-control::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: #fff;
+}
+
+.form-control:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #fff;
+	opacity: 1;
+}
+
+.form-control::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #fff;
+	opacity: 1;
+}
+
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: #fff;
+}
+</style>
+<script type="text/javascript">
+	function grsubmit() {
+		//document.getElementById('myform').submit()  
+		//下面为用jquery方法提交，不过需要引入js文件  
+		//$('#myform').submit();  
+		// alert("before--------");
+		$('#grloginform')
+				.ajaxSubmit(
+						{
+							url : "http://www.bwfapiao.com/login/user/userLogin.do",
+							type : 'post',
+							async : false,
+							dataType : "jsonp",
+							cache : false,
+							success : function(jsonObj) {
+								console.log("======" + JSON.stringify(jsonObj));
+								if (jsonObj.code == 1) {
+									// alert("登录成功");     
+									console.info("========="
+											+ JSON.stringify(jsonObj));
+									window.location.href = "http://www.bwfapiao.com/server3/dzfp/zcyhgl/yhzx.html";
+								} else {
+									alert("用户名或密码错误，请重新输入");
+								}
+							},
+							error : function(data) {
+								console.log("error" + data);
+								alert("error" + data);
+							}
+
+						});
+	}
+	//企业登录
+	function qysubmit() {
+		$('#qyloginform')
+				.ajaxSubmit(
+						{
+							url : "http://www.bwfapiao.com/login/user/userLogin.do",
+							type : 'post',
+							async : false,
+							dataType : "jsonp",
+							cache : false,
+							success : function(jsonObj) {
+								console.log("======" + JSON.stringify(jsonObj));
+								if (jsonObj.code == 1) {
+									//  alert("登录成功");                                 
+									window.location.href = "http://www.bwfapiao.com/server3/dzfp/zcyhgl/yhzx.html";
+								} else {
+									alert("用户名或密码错误，请重新输入");
+								}
+							},
+							error : function(data) {
+								console.log("error" + data);
+								alert("error" + data);
+							}
+
+						});
+	}
+	//切换登录
+	function myFunction(val) {
+		var flag = val;
+		if (flag == "2") {
+			$("#qyloginform").show();
+			$("#grloginform").hide();
+		} else {
+			$("#qyloginform").hide();
+			$("#grloginform").show();
+		}
+	}
+</script>
+</head>
+<body>
+	<div class="htmleaf-container" id="bj">
+		<!-- 图片  style="text-align: center;"-->
+		<div class="logon_tp">
+			<a href="${base}"> <img class="img_ms_l" src="${base}/images/denglu_logo.png"></a>
+		</div>
+
+		<div class="demo form-bg" style="margin-top: 50px;">
+			<div class="container">
+
+				<div class="row">
+
+					<div class="col-md-offset-3 col-md-6" style="height: 411px;">
+						<!-- 个人登录 -->
+
+						<form class="form-horizontal" id="grloginform">
+							<div class="heading"">
+								<div style="float: left; width: 50%;">
+									<div id="gr_wenzi"
+										style="border-bottom: 4px solid #7be6f1; color: #ffffff;"
+										onclick="myFunction(1)">
+										<p class="dl_wenzi">个人登录</p>
+									</div>
+								</div>
+								<div style="float: right; width: 50%;">
+									<div id="qy_wenzi" style="color: #ffffff;"
+										onclick="myFunction(2)">
+										<p class="dl_wenzi">企业登录</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<input type="text" id="img" class="form-control"
+									id="inputEmail3" placeholder="个人登录" name="USERNAME">
+							</div>
+							<div class="form-group help">
+								<input type="password" id="img_mm" class="form-control"
+									id="inputPassword3" placeholder="密码"
+									autocomplete="new-password" name="PASSWORD">
+							</div>
+							<div class="form-group">
+
+							</div>
+							<div class="form-group">
+								<input type="button" name="h" value="个人登录"
+									class="btn btn-default" onclick="grsubmit()" />
+							</div>
+							<div class="form-group" style="font-size: 16px; color: #fff;">
+								<span style="float: right;"><a class="fa "
+									href="${base}/forgetgr/index.html"> 忘记密码 ?</a></span>
+								<span style="float: left;"><a
+									href="${base}/zc/index.html">免费注册</a></span>
+							</div>
+						</form>
+
+						<!-- 企业登录 -->
+						<form class="form-horizontal" id="qyloginform"
+							style="display: none">
+
+							<div class="heading" style="color: #ffffff;">
+								<div style="float: left; width: 50%;">
+									<div id="gr_wenzi" onclick="myFunction(1)">
+										<p class="dl_wenzi">个人登录</p>
+									</div>
+								</div>
+								<div style="float: right; width: 50%;">
+									<div id="qy_wenzi"
+										style="border-bottom: 4px solid #7be6f1; color: #ffffff;"
+										onclick="myFunction(2)">
+										<p class="dl_wenzi">企业登录</p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="text" id="img_nsrsb" class="form-control"
+									id="inputEmail32" placeholder="纳税人识别号" name="NSRSBH">
+							</div>
+							<div class="form-group">
+								<input type="text" id="img" class="form-control"
+									" placeholder="管理员账号（企业税号）" name="USERNAME">
+							</div>
+							<div class="form-group help">
+								<input type="password" id="img_mm" class="form-control"
+									id="inputPassword32" placeholder="密码"
+									autocomplete="new-password" name="PASSWORD">
+							</div>
+							<div class="form-group">
+
+							</div>
+							<div class="form-group">
+								<input type="button" name="h" value="企业登录"
+									class="btn btn-default" onclick="qysubmit()" />
+							</div>
+							<div class="form-group" style="font-size: 16px; color: #fff;">
+								<span style="float: right;"><a class="fa"
+									href="${base}/forgetgr/index.html"> 忘记密码 ?</a></span>
+								<span style="float: left;"><a
+									href="${base}/zc/index.html">免费注册</a></span>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

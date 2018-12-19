@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.htjs.pt4.cms.dao.ChannelMapper">
+	  
+   
+	<resultMap id="channelMap" type="net.htjs.pt4.cms.entity.Channel">
+		<id column="channel_id" jdbcType="VARCHAR" property="channelId" />
+		<result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+		<result column="channel_path" jdbcType="VARCHAR" property="channelPath" />
+		<result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+		<result column="content_path" jdbcType="VARCHAR" property="contentPath" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="keywords" jdbcType="VARCHAR" property="keywords" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="tpl_channel" jdbcType="VARCHAR" property="tplChannel" />
+		<result column="tpl_content" jdbcType="VARCHAR" property="tplContent" />
+		<result column="priority" jdbcType="INTEGER" property="priority" />
+		<result column="is_display" jdbcType="CHAR" property="display" />
+		<result column="is_blank" jdbcType="CHAR" property="blank" />
+		<result column="link" jdbcType="VARCHAR" property="link" />
+		<result column="page_size" jdbcType="INTEGER" property="pageSize" />
+		<result column="lft" jdbcType="INTEGER" property="lft" />
+		<result column="rft" jdbcType="INTEGER" property="rft" />
+		<association property="site" javaType="net.htjs.pt4.cms.entity.Site">
+            <id column="site_id" jdbcType="VARCHAR" property="siteId" />
+			<result column="site_name" jdbcType="VARCHAR" property="siteName" />
+			<result column="short_name" jdbcType="VARCHAR" property="shortName" />
+			<result column="tpl_path" jdbcType="VARCHAR" property="tplPath" />
+			<result column="static_path" jdbcType="VARCHAR" property="staticPath" />
+			<result column="domain" jdbcType="VARCHAR" property="domain" />
+			<result column="static_dir" jdbcType="VARCHAR" property="staticDir" />
+			<result column="tpl_solution" jdbcType="VARCHAR" property="tplSolution" />
+			<result column="is_recycle_on" jdbcType="CHAR" property="recydeOn" />
+			<result column="is_root" jdbcType="CHAR" property="root" />
+        </association>
+	</resultMap>
+	<!-- 以栏目父节点ID查询子栏目列表 -->
+	<select id="getChannelByParentId" resultMap="channelMap" parameterType="String">
+        select c.*,s.* from hj_channel c ,hj_site s where c.site_id=s.site_id and c.parent_id=#{parentId} and c.is_display='1' order by c.priority asc
+    </select>
+    <!-- 以站点ID查询根栏目对象 -->
+	<select id="getRootChannelBySiteId" resultMap="channelMap" parameterType="String">
+        select c.*,s.* from hj_channel c ,hj_site s where c.site_id=s.site_id and s.site_id=#{siteId} and c.channel_name='根节点' and c.is_display='1' 
+    </select>
+    <!-- 以组织机构代码查询根栏目对象 -->
+	<select id="getRootChannelByZzjgDm" resultMap="channelMap" parameterType="String">
+        select c.*,s.* from hj_channel c ,hj_site s where c.site_id=s.site_id and s.zzjg_dm=#{zzjgDm} and c.channel_name='根节点' and c.is_display='1' 
+    </select>
+     <!-- 以栏目ID查询根栏目对象 -->
+	<select id="getChannelById" resultMap="channelMap" parameterType="String">
+        select c.*,s.* from hj_channel c ,hj_site s where c.site_id=s.site_id and c.channel_id=#{channelId} and c.is_display='1' 
+    </select>
+    <!-- 更新栏目左右范围 -->
+    <update id="updateLftRft" parameterType="map">
+    	update hj_channel set lft=#{lft},rft=#{rft} where channel_id=#{channelId}
+    </update>
+    <!-- 获取子节点以rft降序排列的集合 -->
+	<select id="getChannelOrderByRft" resultMap="channelMap" parameterType="String">
+        select c.* from hj_channel c where c.parent_id=#{parentId} and c.rft!=0 order by c.rft desc
+    </select>
+    <!-- 获取栏目右范围值大于此值的栏目列表 -->
+	<select id="getChannelByRft" resultMap="channelMap" parameterType="Integer">
+        select c.* from hj_channel c where c.rft>#{rft}
+    </select>
+    
+    <!-- 查询栏目树 -->
+    <select id="selectChannelTree" parameterType="map" resultType="hashMap">
+        SELECT a.channel_id ZZJG_DM,a.channel_name ZZJG_MC,a.parent_id SJ_ZZJG_DM,
+        (SELECT COUNT(1) FROM hj_channel WHERE parent_id=a.channel_id) isParent
+        FROM hj_channel a WHERE a.site_id = #{site_id}
+    </select>
+    <!-- 查询下级栏目 -->
+    <select id="selectLowerChannels" parameterType="string" resultType="hashMap">
+        SELECT a.*,(SELECT COUNT(1) FROM hj_channel WHERE parent_id=a.channel_id) isParent FROM hj_channel a 
+        WHERE parent_id = #{pid} and site_id = #{site_id} order by priority
+    </select>
+    <!-- 添加栏目 -->
+   <insert id="insertChannel" parameterType="map">
+       insert into hj_channel(channel_id,site_id,parent_id,channel_path,channel_name,content_path,title,keywords,description,tpl_channel,
+   tpl_content,priority,is_display,is_blank,link,page_size,lft,rft) values(#{channel_id},#{site_id},#{parent_id},#{channel_path},#{channel_name},#{content_path},#{title},
+       #{keywords},#{description},#{tpl_channel},#{tpl_content},#{priority},#{is_display},#{is_blank},#{link},20,0,0)
+    </insert>
+    <!-- 添加根栏目 --> 
+    <insert id="insertRootChannel" parameterType="map">
+       insert into hj_channel(channel_id,site_id,parent_id,channel_path,channel_name,content_path,title,keywords,description,tpl_channel,
+   tpl_content,priority,is_display,is_blank,link,page_size,lft,rft) values(#{channel_id},#{site_id},#{parent_id},#{channel_path},#{channel_name},#{content_path},#{title},
+       #{keywords},#{description},#{tpl_channel},#{tpl_content},#{priority},#{is_display},#{is_blank},#{link},20,0,0)
+    </insert> 
+    <!-- 根据id查询栏目 -->
+    <select id="selectChannelById" parameterType="map" resultType="hashMap">
+        SELECT * from hj_channel where channel_id = #{id}
+    </select>
+    <!-- 更新栏目 -->
+   <update id="updateChannelById" parameterType="map">
+    update hj_channel set parent_id=#{parent_id},channel_path=#{channel_path},
+    channel_name=#{channel_name},content_path=#{content_path},title=#{title},keywords=#{keywords},description=#{description},
+    tpl_channel=#{tpl_channel},tpl_content=#{tpl_content},priority=#{priority},is_display=#{is_display},is_blank=#{is_blank},
+    link=#{link} where channel_id = #{channel_id}
+    </update>
+    <!-- 删除栏目 -->
+    <delete id="deleteById" parameterType="string">
+	    delete from hj_channel where channel_id = #{id}
+    </delete>
+    <!-- 级联删除下级栏目 -->
+    <select id="selectLowerChannelsForDelete" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[ 
+        {call queryChildrenAreaInfo(#{areaId,jdbcType=VARCHAR,mode=IN})}      
+         ]]>
+    </select> 
+    <!-- 根据id查询栏目 -->
+    <select id="selectChannelByChannelPath" parameterType="map" resultType="hashMap">
+        SELECT * from hj_channel where channel_path = #{channel_path} and site_id = #{site_id}
+    </select>
+</mapper>

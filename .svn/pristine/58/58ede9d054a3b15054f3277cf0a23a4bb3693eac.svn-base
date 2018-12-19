@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name=”viewport” content=”width=device-width, initial-scale=1″ />
+<title>${channel.title!channel.name}-${site.siteName}</title>
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${base}/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${base}/css/style.css">
+<!-- <link rel="stylesheet" type="text/css" href="${base}/css/style_jjfa.css">  -->
+<link rel="stylesheet" type="text/css"
+	href="${base}/css/style_dianshang.css">
+<script type="text/javascript" src="${base}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${base}/js/jquery.super.js"></script>
+<script type="text/javascript" src="${base}/js/tab.js"></script>
+<link rel="stylesheet" href="${base}/css/style_shouye.css">
+<link rel="stylesheet" href="${base}/css/style_denglu.css">
+<script type="text/javascript" src="${base}/js/denglu.js"></script>
+<!--解决IE6 png不透明的问题-->
+
+<!--[if IE 6]> 
+<script type="text/javascript" src="${base}/js/dd_png.js"></script> 
+<script type="text/javascript"> 
+        DD_belatedPNG.fix('a,div,img,*'); 
+</script> 
+<![endif]-->
+</head>
+
+<body>
+	[#include "../include/header.html"/]
+
+	<!-- -->
+	<div class="solution_pic">
+		<img style="width: 100%;" src="${base}/images/jjfa_banner.png"
+			alt="Solution">
+	</div>
+	<div class="nr_jjfa">
+		<div class="nav_side">
+			<div class="side_list">
+				<div calss="side_ziti">
+					<p>解决方案</p>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/ds/index.html' target="_self">电商</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/ggsy/index.html' target="_self">公共事业</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/sc/index.html' target="_self">商超</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/jr/index.html' target="_self">金融</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/bx/index.html' target="_self">保险</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/yys/index.html' target="_self">运营商</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/kd/index.html' target="_self">快递</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/jt/index.html' target="_self">交通</a>
+				</div>
+				<div calss="side_ziti">
+					<a href='${base}/tcc/index.html' target="_self">停车场</a>
+				</div>
+
+			</div>
+		</div>
+		<!-- 内容 -->
+		<div class="main_content">
+			<div>
+				<div class="neirong_weizhi">解决方案>公共事业</div>
+
+				<div style="margin-top: 23px;">
+					<img style="width: 960px;"
+						src="${base}/images/ggsy02_r1_c1.png" alt="Solution">
+				</div>
+				<div class="neirong_weizhi" style="padding-top: 44px;">[ 行业痛点
+					]</div>
+				<div style="margin-top: 23px;">
+					<img style="width: 960px;"
+						src="${base}/images/ggsy02_r3_c1.png" alt="Solution">
+				</div>
+				<div class="neirong_weizhi" style="padding-top: 44px;">[ 解决方案
+					]</div>
+				<div style="margin-top: 23px;">
+					<img style="width: 960px;"
+						src="${base}/images/ggsy02_r2_c2.png" alt="Solution">
+				</div>
+				<div class="neirong_weizhi" style="padding-top: 44px;">[ 方案优势
+					]</div>
+				<div style="margin-top: 23px; margin-bottom: 60px;">
+					<img style="width: 960px;"
+						src="${base}/images/ggsy02_r7_c1.png" alt="Solution">
+				</div>
+
+			</div>
+		</div>
+	</div>
+	[#include "../include/footer.html"/]
+
+</body>
+</html>

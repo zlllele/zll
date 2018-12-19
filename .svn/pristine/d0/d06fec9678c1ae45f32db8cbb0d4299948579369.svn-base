@@ -1,0 +1,25 @@
+package net.htjs.pt4.cms.service;
+
+import java.util.List;
+import java.util.Map;
+
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.SaveException;
+
+
+/**
+* Description:
+* author  wangpengqi
+* date 2017/09/14
+*/
+public interface IContentService {
+	
+	Datagrid selectContentsByChannel(Map map, int pageNum, int pageSize) throws Exception;
+//	int insertChannel(Map map) throws SaveException;
+//	Map findById(String id) throws Exception;
+//	int updateChannelById(Map map) throws SaveException;
+//	int deleteById(String id) throws Exception;
+//	List findQyxxglByZZJG(Map map) throws Exception;
+//	Map findByMc(String xsf_mc) throws Exception;
+}
+

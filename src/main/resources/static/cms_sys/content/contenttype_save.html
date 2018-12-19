@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户管理</title>
+<script type="text/javascript" src="../../../../commons/js/include_ui.js?dm=102127"></script>
+<script type="text/javascript" src="../../../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript" src="contenttype_save.js"></script>
+</head>
+<body>
+	<form action="" name="formSave" id="formSave">
+		<table id="tbSave" class="table_add" cellpadding="0" cellspacing="0">
+			<caption>内容类型管理</caption>
+			<tr>
+				<td class="tdclass_view">名称：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="type_name" name="type_name" value="" validatorrules="Require,username" msg0="名称不能为空"  maxlength="50" />	
+				</td>
+				<td class="tdclass_view">有图片：</td>
+				<td class="tdclass_edit">
+					<input id="has_image_0" type="radio" value="0" name="has_image" checked="checked">否</input>  
+					<input id="has_image_1" type="radio" value="1" name="has_image">是</input>  
+
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view">禁用：</td>
+				<td class="tdclass_edit">
+					<input id="is_disabled_0" type="radio" value="0" name="is_disabled" checked="checked">否</input>  
+					<input id="is_disabled_1" type="radio" value="1" name="is_disabled">是</input>  
+
+				</td>
+				<td class="tdclass_view">图片宽度：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="img_width" name="img_width" value="" maxlength="10000000" />
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view">图片高度：</td>
+				<td class="tdclass_edit">
+					<input type="text" id="img_height" name="img_height" value="" maxlength="10000000" />
+				</td>
+				<td class="tdclass_view"></td>
+				<td class="tdclass_edit">
+				</td>
+			</tr>
+			
+		</table>
+	</form>
+</body>
+</html>

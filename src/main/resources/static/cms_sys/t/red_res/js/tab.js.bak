@@ -1,0 +1,67 @@
+$(function(){
+	//导航菜单
+	$("#navlist").slide({type:"menu",titCell:".nli", targetCell:".sub", effect:"slideDown", delayTime:0 ,triggerTime:0,returnDefault:false,titOnClassName:"cli"});
+	//焦点图
+	$(".focusBox").slide({ titCell:".num li", mainCell:".pic",effect:"fold", autoPlay:true,trigger:"click",
+	startFun:function(i){
+	jQuery(".focusBox .txt li").eq(i).animate({"bottom":0}).siblings().animate({"bottom":-36});
+	}
+	});
+	//首页推荐新闻
+	$(".con").slide({ mainCell:".tabcontent",titCell:".tab_menu dt", targetCell:".more a",trigger:"mouseover", effect:"fold",titOnClassName:"cli"});
+	//首页人事信息——规章制度
+	$(".rsxx_gzzd").slide({ mainCell:".tabcontent1",titCell:".tab_menu dt", targetCell:".more a",trigger:"mouseover", effect:"fold",titOnClassName:"cli"});
+	//首页税收收入——税收法规
+	$(".sssr_ssfg").slide({ mainCell:".tabcontent1",titCell:".tab_menu dt", targetCell:".more a",trigger:"mouseover", effect:"fold",titOnClassName:"cli"});
+	//信息公开页--机构设置 tab
+	$(".jgzs_box").slide({ mainCell:".jgsz_content",titCell:".tab_menu dt", targetCell:".more a",trigger:"mouseover", effect:"fold",titOnClassName:"cli"});
+	//信息公开页--新闻列表tab
+	$(".gzzd_shfg").slide({ mainCell:".gzzd_shfg_con",titCell:".tab_menu dt", targetCell:".more a",trigger:"mouseover", effect:"fold",titOnClassName:"cli"});
+	//国税动态页--国税简报_工作通报
+	$(".gsjb_gztb").slide({ mainCell:".gsjb_gztb_con",titCell:".tab_menu dt", targetCell:".more a",trigger:"mouseover", effect:"fold",titOnClassName:"cli"});
+	
+	
+	//视频播报放上效果
+	$(".vedio_list_page").find("a").mouseover(function(){
+		$(this).find(".pos_bf").show();
+		}).mouseout(function(){
+			$(this).find(".pos_bf").hide();
+			});
+	
+	$(".txl_bg a").click(function(){
+			$(".txl_box").layerModel({
+							locked :true,
+							drag : false,
+							blurClose : false,
+							bgColor:'#000000',
+							staySame:true
+							});
+			});
+
+	$(".email_bg a").click(function(){
+			$("#txl_box").layerModel({
+							locked :true,
+							drag : false,
+							blurClose : false,
+							bgColor:'#000000',
+							staySame:true
+							});
+			});
+			
+	$(".bangong_bg a").click(function(){
+			$(".zygn_box").layerModel({
+							locked :true,
+							drag : false,
+							blurClose : false,
+							bgColor:'#000000',
+							staySame:true
+							});
+			});
+			
+	$(".layerModel_closeBtn").click(function(){
+		$(this).close();
+		});
+	
+	
+	
+	});

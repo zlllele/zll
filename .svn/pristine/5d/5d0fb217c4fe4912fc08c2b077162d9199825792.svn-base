@@ -1,0 +1,17 @@
+package net.htjs.pt4.cms.dao;
+
+import java.util.List;
+import java.util.Map;
+
+
+public interface ChannelMapper {
+	List selectChannelTree(Map map);
+	List selectLowerChannels(String id);
+	void selectLowerChannelsForDelete(Map map);
+	int insertChannel(Map map);
+	Map selectChannelById(String id);
+	int updateChannelById(Map map);
+	int deleteById(String id);
+//	Map selectQYXXGLByMc(String xsf_mc);
+//	int deleteKprById(String id);
+}

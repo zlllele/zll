@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上传</title>
+<script type="text/javascript" src="../../../../commons/js/include_ui.js?dm=102127"></script>
+<script type="text/javascript" src="../../../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	template.onLoad();
+});
+var template = (function() {
+	// 私有属性
+	var curSeg, formSave = "formSave", formSave_, winObj, winParam, anum=2,cc=0,psnum=4;
+	var isCzryDmEditAble = false;
+	// 是否是添加
+	var bAdd = true;
+	// 私有方法
+	var setVal = function(tagID, val) {
+		baseTools.byId(formSave_ + tagID).value = val;
+	};
+
+	var initLayout = function() {
+		// 初始化页面UI
+		formSave_ = formSave + "_";
+		baseTools.setIdByName([ formSave ]);
+		winObj = frameElement.api;
+		winParam = winObj.data;
+		bAdd = winParam.other.msg == '添加';
+		$("#" + formSave_ + "channel_id").append('<option value ="'+winParam.other.upperchannel+'">'+winParam.other.upperchannelname+'</option>')
+		if(winParam.other.leaf=="false"||(!winParam.other.leaf)){
+			winObj.button({
+				name : '保存',
+				focus : true,
+				callback : function() {
+					curSeg.onSave();
+					return false;
+				}
+			}, {
+				name : '关闭'
+			});
+		}
+	};
+	// 公有方法
+	return {
+		onLoad : function() {
+			curSeg = template;
+			initLayout();
+			// 删除组件释放内存
+			$(window).unload(function() {
+			});
+		},
+		// 关闭窗口
+		checkMedia : function(mname) {
+			alert(cc+"  "+mname);
+			cc+=1;
+		},
+		// 保存数据
+		onSave : function() {
+			//winObj.opener.siteList.loadPath(winParam.other.path);
+			winObj.opener.siteList.pageDel();
+			winObj.close();
+		},
+		onCloseWin : function() {
+			winObj.opener.siteList.loadPath(winParam.other.path);
+			setTimeout(function() {
+				winObj.close();
+			},100)
+		},
+		ajaxFileUpload : function(id) {
+            var uploadUrl = '/resource/uploadfile';
+			var of = $("#"+id);
+			//检查是否选择了图片
+			if(of.val()=="") {
+				alert("请选择附件");
+				return;
+			}
+			//将file移动至上传表单
+			$("#fileContent").empty();
+			$("#fileContent").append(of);
+			
+			var idloc = id+"_loc";
+			if(id=='formSave_upload'){
+				$("#"+idloc).append('<input type="file" id="formSave_upload" name="upload" />')
+			}
+			if(id.substring(0,1)=='a'){
+				$("#"+idloc).append('<input type="file" id="'+id+'" name="upload" />')
+			}
+			if(id.substring(0,2)=='ps'){
+				$("#"+idloc).append('<input type="file" id="'+id+'" name="upload" style="width:175px;"/>')
+			}
+			if(id=='formSave_mupload'){
+				$("#"+idloc).append('<input type="file" id="formSave_mupload" name="mupload" />')
+			}
+			if(id=='tupload'){
+				$("#"+idloc).append('<input type="file" id="tupload" name="tupload" />')
+			}
+			$("#fileContent").append($('<input type="hidden" name="path"/>').val(winParam.other.path));
+			$("#fileContent").append($('<input type="hidden" name="type"/>').val(winParam.other.type));
+			$("#uploadTempForm").attr("action", uploadUrl);
+			$("#uploadTempForm").submit();
+			alert("上传成功！");
+		}
+	};
+})();
+</script>
+</head>
+<body>
+	<form action="" name="formSave" id="formSave">
+		<table id="tbSave" class="table_add" cellpadding="0" cellspacing="0">
+			<caption>附件</caption>
+			<tr>
+				<td class="tdclass_view">附件：</td>
+				<td class="tdclass_edit" colspan="3">
+					<table id="attachment">
+					<tr>
+						<td>注意：上传文件20M以内</td>
+					</tr>
+					<tr id="trformSave_upload">
+						<td><span id="upload_loc"><input  type="file" id="upload" name="upload" /></span><input  type="button"  value="上传" onclick="return template.ajaxFileUpload('formSave_upload','formSave_aName1','formSave_aPath1');"/> </td>
+					</tr>
+					</table>			
+				</td>
+			</tr>
+		</table>
+	</form>
+	<form id="uploadTempForm" action="" method="post" enctype="multipart/form-data" target="hiddenIframe" style="display:none;width:0px;height:0px;">
+		<span id="fileContent"></span>
+	</form>
+	<iframe name="hiddenIframe" frameborder="0" border="0" style="display:none;width:0px;height:0px;"></iframe>	
+</body>
+</html>

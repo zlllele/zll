@@ -1,0 +1,61 @@
+package net.htjs.pt4.cms.service;
+
+import java.util.List;
+import java.util.Map;
+
+import net.htjs.pt4.cms.entity.Content;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.core.entity.SaveException;
+
+/**
+ * Description: author wangpengqi date 2017/09/14
+ */
+public interface IContentService {
+
+	Datagrid selectContentsByChannel(Map map, int pageNum, int pageSize) throws Exception;
+	 int insertContent(Map map,List aList, List pcsList) throws SaveException;
+	// Map findById(String id) throws Exception;
+	// int updateChannelById(Map map) throws SaveException;
+	// int deleteById(String id) throws Exception;
+	// List findQyxxglByZZJG(Map map) throws Exception;
+	// Map findByMc(String xsf_mc) throws Exception;
+
+	/**
+	 * 以栏目ID查询其下内容
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelId(String channelId) throws Exception;
+
+	/**
+	 * 以栏目ID查询内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelId(String channelId) throws Exception;
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容列表
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public List<Content> getContentsByChannelParentId(String channelId) throws Exception;
+
+	/**
+	 * 以父栏目ID查询其下所有子栏目的内容数量
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Integer getCountByChannelParentId(String channelId) throws Exception;
+
+	/**
+	 * 以内容ID更新附件下载次数
+	 * 
+	 * @param contentId
+	 */
+	public void downloadCount(String contentId) throws Exception;
+}

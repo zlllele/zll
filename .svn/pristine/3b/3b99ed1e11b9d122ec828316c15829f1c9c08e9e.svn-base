@@ -1,0 +1,40 @@
+package net.htjs.pt4;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+
+/*
+ * by lizhi
+ * 扫描entity,dao
+ * */
+
+@SpringBootApplication
+@EnableRedisHttpSession
+public class AppStart {
+
+	private static String port;
+
+	/**
+	 * 自定义端口
+	 *
+	 */
+	public void customize(ConfigurableEmbeddedServletContainer container) {
+		if (AppStart.port != null) {
+			container.setPort(Integer.parseInt(AppStart.port));
+		}
+	}
+
+	public static void setPort(String port) {
+		AppStart.port = port;
+	}
+
+	public static void main(String[] args) {
+		if (args.length > 0) {
+			AppStart.port = args[0];
+		}
+		SpringApplication.run(AppStart.class, args);
+
+	}
+}

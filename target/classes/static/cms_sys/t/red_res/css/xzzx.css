@@ -1,0 +1,24 @@
+.xzzx_dh {width:100%;height:66px;color: #ffffff;margin: 0 auto;background:url('../images/xzzx_r1_c1.png') no-repeat center top;}
+
+
+/*导航文字*/
+#wenzi_xzzx {float: left;font-size: 36px;padding-left: 10%;padding-top: 5px;}
+#wenzi_qbrj {float: left;font-size: 20px;padding-left: 19%;padding-top: 20px;cursor:pointer;}
+#wenzi_kprj {float: left;font-size: 20px;padding-left: 8%;padding-top: 20px;cursor:pointer;}
+#wenzi_yjqd {float: left;font-size: 20px;padding-left: 8%;padding-top: 20px;cursor:pointer;}
+#wenzi_rjjc {float: left;font-size: 20px;padding-left: 8%;padding-top: 20px;cursor:pointer;}
+
+/*hover*/
+#wenzi_qbrj p:hover{font-weight: bold;}
+#wenzi_kprj p:hover{font-weight: bold;}
+#wenzi_yjqd p:hover{font-weight: bold;}
+#wenzi_rjjc p:hover{font-weight: bold;}
+
+#nr_bt_1 {font-size: 18px;color: #1157b7;}
+#nr_qqxz {float: left;padding-left: 128px;color: #1157b7;}
+
+/*下载内容*/
+.xznr {height: 160px;width:1008px;border-bottom-color: #cccccc;border-bottom-style: solid;padding-top: 15px;margin: 0 auto;}
+.nr_tp {float:left}
+.nr_bt {float:left;height:130px;width: 350px;padding-top: 20px;padding-left: 100px; }
+.nr_qqxz {float:right;font-size: 18px;padding-top: 65px;}

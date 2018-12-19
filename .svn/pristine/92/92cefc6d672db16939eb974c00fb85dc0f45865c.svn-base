@@ -1,0 +1,184 @@
+package net.htjs.pt4.cms.controller;
+
+
+import net.htjs.pt4.cms.service.IChannelService;
+import net.htjs.pt4.cms.service.IContentService;
+import net.htjs.pt4.cms.service.IContentTypeService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.utils.FileUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@Controller
+@RequestMapping("/contentupload")
+public class ContentUploadController extends BaseController {
+	
+
+private final Logger logger = LoggerFactory.getLogger(ContentUploadController.class);
+private static final String MSG_SUCCESS = "操作成功！";
+
+@Resource  
+private IContentService contentService;
+
+@Resource  
+private ISiteService siteService;
+
+private String attachmentSavePath;
+
+@RequestMapping(value = "/uploadfile.do")
+public Object uploadfile(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer pageSize,String callback, 
+		@RequestParam Map<String, String> contentTypeMap,HttpServletRequest request,@RequestParam(value = "upload") MultipartFile file,
+		ModelMap model) {
+	
+  int code;
+  String msg = MSG_SUCCESS;
+  String filename;
+  String filepath;
+  
+  try {
+	  attachmentSavePath = siteService.findById("1").getStaticPath()+siteService.findById("1").getStaticDir()+"/u/"+new SimpleDateFormat("yyyyMM").format(new Date())+"/";
+	  if(!new SimpleDateFormat("yyyyMM/").format(new Date()).equals(attachmentSavePath.substring(attachmentSavePath.length()-7, attachmentSavePath.length()-1)))
+		  attachmentSavePath = attachmentSavePath.substring(0,attachmentSavePath.length()-7)+new SimpleDateFormat("yyyyMM").format(new Date())+"/";
+	  File f = new File(attachmentSavePath);
+      if(!f.exists())
+    	  f.mkdirs();
+      filename = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("\\")+1);
+	  filepath = attachmentSavePath+UUIDUtils.getUUID()+filename.substring(filename.lastIndexOf("."));
+      byte[] bytes = file.getBytes();
+	  BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+	  stream.write(bytes);
+	  stream.close(); 
+	  model.put("filename", filename);
+	  model.put("filepath", filepath);
+	  model.put("name", (String) contentTypeMap.get("name"));
+	  model.put("path", (String) contentTypeMap.get("path"));
+	  model.put("code", 1);
+      
+  } catch (Exception e) {
+      msg = e.getMessage();
+      e.printStackTrace();
+      System.out.println(e);
+      logger.error(msg);
+      model.put("code", -1);
+  } 
+
+  return "iframe_aupload";
+
+}
+
+@RequestMapping(value = "/uploadfile2.do")
+public Object uploadfile2(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer pageSize,String callback, 
+		@RequestParam Map<String, String> contentTypeMap,HttpServletRequest request,@RequestParam(value = "mupload") MultipartFile file,
+		ModelMap model) {
+	
+  int code;
+  String msg = MSG_SUCCESS;
+  String filename;
+  String filepath;
+  
+  try {
+	  attachmentSavePath = siteService.findById("1").getStaticPath()+siteService.findById("1").getStaticDir()+"/u/"+new SimpleDateFormat("yyyyMM").format(new Date())+"/";
+	  if(!new SimpleDateFormat("yyyyMM/").format(new Date()).equals(attachmentSavePath.substring(attachmentSavePath.length()-7, attachmentSavePath.length()-1)))
+		  attachmentSavePath = attachmentSavePath.substring(0,attachmentSavePath.length()-7)+new SimpleDateFormat("yyyyMM").format(new Date())+"/";
+	  File f = new File(attachmentSavePath);
+      if(!f.exists())
+    	  f.mkdirs();
+      filename = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("\\")+1);
+	  filepath = attachmentSavePath+UUIDUtils.getUUID()+filename.substring(filename.lastIndexOf("."));
+      byte[] bytes = file.getBytes();
+	  BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+	  stream.write(bytes);
+	  stream.close(); 
+	  model.put("filename", filename);
+	  model.put("filepath", filepath);
+	  model.put("name", (String) contentTypeMap.get("name"));
+	  model.put("path", (String) contentTypeMap.get("path"));
+	  model.put("code", 1);
+      
+  } catch (Exception e) {
+      msg = e.getMessage();
+      e.printStackTrace();
+      System.out.println(e);
+      logger.error(msg);
+      model.put("code", -1);
+  } 
+
+  return "iframe_aupload";
+
+}
+
+@RequestMapping(value = "/uploadfile3.do")
+public Object uploadfile3(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer pageSize,String callback, 
+		@RequestParam Map<String, String> contentTypeMap,HttpServletRequest request,@RequestParam(value = "tupload") MultipartFile file,
+		ModelMap model) {
+	
+  int code;
+  String msg = MSG_SUCCESS;
+  String filename;
+  String filepath;
+  
+  try {
+	  attachmentSavePath = siteService.findById("1").getStaticPath()+siteService.findById("1").getStaticDir()+"/u/"+new SimpleDateFormat("yyyyMM").format(new Date())+"/";
+	  if(!new SimpleDateFormat("yyyyMM/").format(new Date()).equals(attachmentSavePath.substring(attachmentSavePath.length()-7, attachmentSavePath.length()-1)))
+		  attachmentSavePath = attachmentSavePath.substring(0,attachmentSavePath.length()-7)+new SimpleDateFormat("yyyyMM").format(new Date())+"/";
+	  File f = new File(attachmentSavePath);
+      if(!f.exists())
+    	  f.mkdirs();
+      filename = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("\\")+1);
+	  filepath = attachmentSavePath+UUIDUtils.getUUID()+filename.substring(filename.lastIndexOf("."));
+      byte[] bytes = file.getBytes();
+	  BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+	  stream.write(bytes);
+	  stream.close(); 
+	  model.put("filename", filename);
+	  model.put("filepath", filepath);
+	  model.put("name", (String) contentTypeMap.get("name"));
+	  model.put("path", (String) contentTypeMap.get("path"));
+	  model.put("code", 1);
+      
+  } catch (Exception e) {
+      msg = e.getMessage();
+      e.printStackTrace();
+      System.out.println(e);
+      logger.error(msg);
+      model.put("code", -1);
+  } 
+
+  return "iframe_aupload";
+
+}
+
+}

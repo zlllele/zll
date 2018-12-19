@@ -1,0 +1,99 @@
+﻿/**
+ * Date:2011-11-7<br>
+ * splitter组件的样式
+ * @author <a href="mailto:12719889@qq.com">YangHongJian</a>
+ * @version 1.0
+ */
+@charset
+"utf-8"
+;
+
+/*分割条组件样式*/
+.divSplitter {
+    border: 0px solid #fff;
+    min-width: 800px; /* Splitter can't be too thin ... */
+    min-height: 400px; /* ... or too flat */
+    height: 20%;
+}
+
+.splitter div {
+    /*overflow: auto;*/
+}
+
+.vsplitbar {
+    width: 5px;
+    /*background: #f00;*/
+    background: #e6eef0;
+}
+
+/*左面区域*/
+.leftPane {
+    width: 200px;
+    min-width: 200px;
+    max-width: 800px;
+    background: #fff;
+}
+
+/*右面区域*/
+.rightPane {
+}
+
+/* Splitbar styles; these are the default class names */
+.ui-state-default {
+	border-left:#b8d0d6 1px solid;
+	border-right:#b8d0d6 1px solid;
+    background-color: #e5edef
+}
+
+.ui-state-hover {
+    background-color: #e5edef
+}
+
+.ui-state-highlight {
+    background-color: #e5edef
+}
+
+.ui-state-error {
+    background-color: #e5edef
+}
+
+.splitter-pane {
+    overflow: auto;
+    background-color:#fff;
+}
+
+.splitter-bar-vertical {
+    width: 5px;
+   /* background-image: url(images/vgrabber.gif);*/
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.splitter-bar-vertical-docked {
+    width: 5px;
+   /* background-image: url(images/vdockbar-trans.gif);*/
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.splitter-bar-horizontal {
+    height: 5px;
+   /* background-image: url(images/hgrabber.gif);*/
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.splitter-bar-horizontal-docked {
+    height: 5px;
+   /* background-image: url(images/hdockbar-trans.gif);*/
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.splitter-bar.ui-state-highlight {
+    opacity: 0.7;
+}
+
+.splitter-iframe-hide {
+    visibility: hidden;
+}

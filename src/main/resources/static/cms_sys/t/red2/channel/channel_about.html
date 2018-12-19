@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${channel.channelName}</title>
+<link rel="stylesheet" href="${base}/css/reset.css">
+</head>
+
+<body>
+	<div class="g_logo_nav cb">
+		<div class="m_logo">
+			<a href="#" class="logo_link">
+				<img src="${base}/img/login.png" alt="">
+			</a>
+			<div class="area_sel">
+				<i class="icon-dingwei1"></i><span>河南</span>
+				<div class="m_province_list cb">
+					<ul>
+						<li><a href="#">北京</a></li>
+						<li><a href="#">上海</a></li>
+						<li><a href="#">天津</a></li>
+						<li><a href="#">重庆</a></li>
+						<li><a href="#">河北</a></li>
+						<li><a href="#">山西</a></li>
+						<li><a href="#">河南</a></li>
+						<li><a href="#">辽宁</a></li>
+						<li><a href="#">吉林</a></li>
+						<li><a href="#">黑龙江</a></li>
+						<li><a href="#">内蒙古</a></li>
+						<li><a href="#">江苏</a></li>
+						<li><a href="#">山东</a></li>
+						<li><a href="#">安徽</a></li>
+						<li><a href="#">浙江</a></li>
+						<li><a href="#">福建</a></li>
+						<li><a href="#">湖北</a></li>
+						<li><a href="#">湖南</a></li>
+						<li><a href="#">广东</a></li>
+						<li><a href="#">广西</a></li>
+						<li><a href="#">江西</a></li>
+						<li><a href="#">四川</a></li>
+						<li><a href="#">海南</a></li>
+						<li><a href="#">贵州</a></li>
+						<li><a href="#">云南</a></li>
+						<li><a href="#">西藏</a></li>
+						<li><a href="#">陕西</a></li>
+						<li><a href="#">甘肃</a></li>
+						<li><a href="#">青海</a></li>
+						<li><a href="#">宁夏</a></li>
+						<li><a href="#">新疆</a></li>
+						<li><a href="#">香港</a></li>
+						<li><a href="#">澳门</a></li>
+						<li><a href="#">台湾</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="m_nav">
+			<ul>
+				<li><a href="${base}/index.html">首页</a></li>
+				[@cms_channel_list]
+					[#list tag_list as c]
+						<li><a href="${c.url}" [#if c.blank ]target="_blank"[/#if] >${c.name}</a></li>
+					[/#list]
+				[/@cms_channel_list]
+			</ul>
+		</div>
+	</div>
+	<div class="g_banner">
+		<div class="fullSlide">
+			<div class="bd">
+				<ul>
+					[@cms_content_list channelId='13a7a891e6bf443994fd3150ab75f5e2' count='5' typeId='e00f1fe0449f4cf58e716e7d2d18ba57' ]
+						[#list tag_list as c]
+							<li><a target="_blank" href="${c.url}"><img src="${c.typeImg}" /></a></li>
+						[/#list]
+					[/@cms_content_list]
+				</ul>
+			</div>
+			<div class="hd"><ul></ul></div>
+			<a class="prev icon icon-fy_z" href="javascript:void(0)"></a> 
+			<a class="next icon icon-fy_y" href="javascript:void(0)"></a>
+		</div>
+	</div>
+	<div class="g_content cb">
+		[@cms_content_list channelId=channel.channelId count='1' typeId='e00f1fe0449f4cf58e716e7d2d18ba57' ]
+			[#list tag_list as c]
+				<h2 class="u_h2">${c.title}</h2>
+				<div class="m_date">
+					<span>— ${c.releaseDateY} —</span><span>${c.releaseDateM}/${c.releaseDateD}</span><span>${c.releaseDateT}</span>
+				</div>
+				<div class="m_con">
+					<div class="z_con">
+						${c.txt}
+					</div>
+				</div>
+			[/#list]
+		[/@cms_content_list]
+	</div>
+	<div class="g_footer cb">
+		<div class="m_foot_con">
+			<p>
+				版权所有：河南航天金穗电子有限公司 <span>电话：0371-66368023</span>
+			</p>
+			<p>地址：郑州市金水东路与东风南路绿地原盛国际1号楼C座（卫华大厦）20层</p>
+			<div class="m_ewm_box">
+				<img src="${base}/img/ewm.png" alt=""> 开票吧
+			</div>
+		</div>
+	</div>
+	<script src="${base}/js/jquery.js"></script>
+	<script src="${base}/js/jquery.SuperSlide.js"></script>
+	<script src="${base}/js/effect.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+package net.htjs.pt4.cms.controller;
+
+import net.htjs.pt4.cms.service.IContentRecycleService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * 回收站控制类
+ * @author caojian
+ */
+@Controller
+@RequestMapping("/contentRecycle")
+public class ContentRecycleController extends BaseController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContentRecycleController.class);
+
+	@Autowired
+	private IContentRecycleService contentRecycleService;
+	@Autowired
+	private ISiteService siteService;
+
+	/**
+	 * 查询回收站列表
+	 * @param title
+	 * @param user_name
+	 * @param sequencing
+	 * @param page
+	 * @param pageNo
+	 * @param pageSize
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = "/getList.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object getList(String title, String user_name, String sequencing,Integer page, Integer pageNo, Integer pageSize, String callback,HttpServletRequest request) {
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		int code = 0;
+		String msg = "";
+		try {
+			String zzjgDm = UserUtils.getZzjgId(request);
+			if (StringUtils.isNotBlank(zzjgDm)) {
+				String site_id=siteService.findByZzjgDm(zzjgDm).getSiteId();
+				Datagrid datagrid = contentRecycleService.getList(site_id,title,user_name,sequencing,page,pageSize);
+				mapModel.put("data", datagrid.getRows());
+			} else {
+				code = -3;
+				msg = "登录信息失效 请重新登陆";
+			}
+		} catch (Exception e) {
+			LOGGER.error("回收站查询异常："+e.getMessage());
+			msg=e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+
+	/**
+	 * 删除回收站内容
+	 * @param content_id
+	 * @param media_path
+	 * @param image_path
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = "/delete.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object delete(String content_id,String media_path,String image_path, String callback) {
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		int code = 0;
+		String msg = "";
+		try {
+			contentRecycleService.deleteContent(content_id,media_path,image_path);
+		} catch (Exception e) {
+			LOGGER.error("回收站删除异常："+e.getMessage());
+			msg=e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+	
+	/**
+	 * 还原回收站内容
+	 * @param content_id
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = "/restore.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object restore(String content_id, String callback) {
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		int code = 0;
+		String msg = "";
+		try {
+			contentRecycleService.restoreContent(content_id);
+		} catch (Exception e) {
+			LOGGER.error("回收站异常："+e.getMessage());
+			msg=e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+}

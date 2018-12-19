@@ -1,0 +1,112 @@
+/*solution图片*/
+.solution_pic {width:100%;margin: 0 auto;min-width: 1200px;}
+
+.location {
+    border-radius: 5px;
+    background-color: #eaeaea;
+    height: 37px;
+    width: 100%;
+    margin: 20px auto 0;
+    font-size: 14px;
+    line-height: 1;
+    padding: 10px 21px;clear:both;display:table;}
+.location a {font-size: 14px;color: #333;}
+.list_page {
+   height: 100%;clear:both;display:inline-block;
+       
+    margin: 0px auto;
+}
+.dzfp_cd{
+    margin-top: 20px;
+    background-color: #1058b7;
+    float: left;
+  
+    width: 165px;}
+.dzfp_cd01{
+color: #fff;
+    line-height: 61px;
+    overflow: hidden;
+    text-align: center;
+    height: 61px;
+    font-size: 18px;}
+.dzfp_cd02{
+color: #fff;    cursor: pointer;
+    background-color: #1262cc;
+       line-height: 61px;
+      text-align: center;
+    height: 61px;
+    font-size: 13px;}
+.dzfp_cd03{
+color: #fff;    cursor: pointer;
+    background-color: #1262cc;
+       line-height: 61px;
+    overflow: hidden;
+    text-align: center;
+    height: 61px;
+    font-size: 13px;}
+
+.dzfp_cd04{
+color: #fff;    cursor: pointer;
+    background-color: #1262cc;
+       line-height: 31px;
+      text-align: center;
+    height: 61px;
+    font-size: 13px;}
+
+
+.dzfp_nr {
+      width: 940px;
+   float: left;
+    margin-left: 65px;    margin-bottom: 20px;margin-top: 20px;
+}
+.nr ul li { clear: both; overflow: hidden; height: 130px; border-bottom: 1px #cccccc solid; position: relative;margin-top: 20px;}
+}
+.nr01{ border-bottom-color: #eee;
+    border-bottom-style: solid;
+    height: 123px;}
+.nr_pic{float: left;}
+.nr_wz{float: left;margin-left: 30px;    height: 52px;    margin-top: 30px;}
+.wz_up{font-size: 18px;
+    color: #333;}
+.wz_low{    font-size: 12px;    padding-top: 20px;
+    color: #999;}
+.ljgd{
+    margin-top: 40px;    margin-right: 33px;
+    font-size: 18px;
+    color: #104b97;
+    float: right;}
+.ljgd p{    color: #104b97;font-size: 18px;}
+
+.zw_con {
+    padding: 20px 0;
+  
+    border: 1px #dddddd solid;
+}
+ .zw-title {
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 25px;
+    text-align: center;
+}
+.zw-title h1 {
+    font-size: 22px;
+    line-height: 50px;
+}
+.zw-fb-time {
+    font-size: 12px;
+    color: #999;
+    line-height: 35px;
+}
+.zw_con .swf_con {
+    margin: 20px;
+}
+.zw_con .swf_con p {
+    text-indent: 2em;
+    font-size: 16px;
+    margin-top: 10px;
+    color: #131313;
+    word-break: break-all;
+}
+.dzfp_cd a :hover {    background-color: #1bd2eb; }
+.pages{clear:both;display:table;margin: 20px auto;}
+
+

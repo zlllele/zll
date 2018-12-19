@@ -1,0 +1,42 @@
+/* CSS Document */
+*{margin: 0;padding: 0;list-style:none; border:none; outline:none;}
+body{ font-family:"simsun","宋体","Micosoft yahei"; font-size:14px; line-height:1.42875143; background:#ffffff; color:#333333;}
+a {text-decoration:none;cursor:pointer; color:#333333;}
+a:hover{ color:#e53305;}
+a:focus,input:focus,textarea:focus{outline:none;}  /*去掉获取焦点时有边框*/
+li{list-style:none}
+img{border:0;vertical-align:middle}
+p{word-wrap:break-word; font-size:14px; line-height:1.42875143;}
+
+.content{ background:url(../img/banner.jpg) top center no-repeat; padding-top:290px; clear:both; overflow:hidden; width:100%; border-bottom:8px #e53305 solid; padding-bottom:20px;}
+.main,.img_list,.footer{ width:1000px; margin:0px auto; padding-top:20px; clear:both; overflow:hidden;}
+
+
+.mainleft{width: 450px; padding:0 25px; float:left;}
+.mainright{width: 450px; padding:0 25px; float:right;}
+
+.contitle{ background:url(../img/line.jpg) 118px bottom no-repeat; height:30px; line-height:30px; clear:both;}
+.contitle h3{float:left; width:114px; height:30px;}
+.title_sjwj{ background:url(../img/sjwj.jpg) left bottom no-repeat;}
+.title_zyjs{ background:url(../img/zyjs.jpg) left bottom no-repeat;}
+.title_jgdt{ background:url(../img/jgdt.jpg) left bottom no-repeat;}
+.title_jcdt{ background:url(../img/jcdt.jpg) left bottom no-repeat;}
+.title_xxzl{ background:url(../img/xxzl.jpg) left bottom no-repeat;}
+.title_jltl{ background:url(../img/jltl.jpg) left bottom no-repeat;}
+.contitle a{ color:#e53305; font-size:12px; font-weight:normal; float:right; line-height:1; padding-top:16px;}
+.contitle a:hover{ color:#cd2b01}
+
+.list{ clear:both; overflow:hidden; padding-top:15px;}
+.list li{ background:url(../img/dot.jpg) left center no-repeat; clear:both; overflow:hidden; height:30px; line-height:30px; padding-left:15px;}
+.list li a{ float:left; display:block; width:80%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.list li a:hover{ color:#e53305;}
+.list li span{ float:right; display:block; color:#999999;}
+
+.img_list{}
+.img_list li{width:320px; float:left;}
+.img_list li.plr{padding:0 20px;}
+.img_list li img{ display:block; width:100%;}
+
+.footer{padding:15px 0; border-top:2px #dbe1ed solid; text-align:center; color:#666666;}
+.footer a{ color:#666666;}
+.footer a:hover{ color:#e53305;}

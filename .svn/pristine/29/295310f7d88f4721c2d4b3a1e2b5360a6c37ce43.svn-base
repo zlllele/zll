@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="${base}/css/css.css" type="text/css" rel="stylesheet" />
+<title>${channel.title!channel.name}</title>
+<meta http-equiv="keywords" content="${channel.keywords!}"/>
+<meta http-equiv="description" content="${channel.description!}"/>
+</head>
+<body>
+	<div class="main">
+		[#include "../include/top.html"/]
+		<div class="sub_mid">
+			<div class="sub_midleft">
+				<div class="sub_midleft_tittle">新闻中心</div>
+				<div class="suckerdiv">
+					<ul id="suckertree1">
+					[@cms_channel_list parentId=channel.channelId]
+						[#list tag_list as c]
+						<li><a href="${c.url}"> ${c.name}</a></li>
+						[/#list]
+					[/@cms_channel_list]
+					</ul>
+				</div>
+			</div>
+			<div class="sub_midright">
+				<div class="postiton_box">
+					<div class="postiton_name">新闻中心</div>
+					<div class="postiton">当前位置：首页 > 公司简介</div>
+				</div>
+				<div class="content">
+					<ul>
+					[@cms_content_page channelId=channel.channelId count=channel.pageSize]
+						[#list tag_pagination.list as content]
+						<li><a href="${content.url}">${content.title}</a> ${content.releaseDate}</li>
+						[/#list]
+					</ul>
+					<div class="pages">[@cms_pagination sysPage='0' /]</div>
+					[/@cms_content_page ]
+				</div>
+			</div>
+		</div>
+		[#include "../include/footer.html"/]
+	</div>
+</body>
+</html>

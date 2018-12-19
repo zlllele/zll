@@ -1,0 +1,74 @@
+package net.htjs.pt4.cms.freemarker;
+
+import static net.htjs.pt4.cms.freemarker.FrontUtils.UTF8;
+
+import java.util.Locale;
+
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import freemarker.template.Configuration;
+import net.htjs.pt4.cms.freemarker.directive.AdverDirective;
+import net.htjs.pt4.cms.freemarker.directive.ChannelDirective;
+import net.htjs.pt4.cms.freemarker.directive.ChannelListDirective;
+import net.htjs.pt4.cms.freemarker.directive.ContentListDirective;
+import net.htjs.pt4.cms.freemarker.directive.ContentPageDirective;
+import net.htjs.pt4.cms.freemarker.directive.FriendLinkDirective;
+import net.htjs.pt4.cms.freemarker.directive.PaginationDirective;
+
+/**
+ * freemarker配置类
+ * 
+ * @author xieshiyu
+ *
+ */
+@Component
+public class FreemarkerConfig {
+	private static final Logger LOGGER = LoggerFactory.getLogger(FreemarkerConfig.class);
+	@Autowired
+	private Configuration configuration;
+	@Autowired
+	private ChannelListDirective channelListDirective;
+	@Autowired
+	private ChannelDirective channelDirective;
+	@Autowired
+	private ContentListDirective contentListDirective;
+	@Autowired
+	private ContentPageDirective contentPageDirective;
+	@Autowired
+	private PaginationDirective paginationDirective;
+	@Autowired
+	private FriendLinkDirective friendLinkDirective;
+	@Autowired
+	private AdverDirective adverDirective;
+
+	@PostConstruct
+	public void setSharedVariable() {
+		try {
+			configuration.setDateFormat("yyyy-MM-dd");
+			configuration.setDateTimeFormat("yyyy-MM-dd HH:mm:ss");
+			configuration.setTimeFormat("HH:mm:ss");
+			configuration.setDefaultEncoding(UTF8);
+			configuration.setURLEscapingCharset(UTF8);
+			configuration.setTagSyntax(Configuration.AUTO_DETECT_TAG_SYNTAX);
+			configuration.setTemplateUpdateDelayMilliseconds(5000);
+			configuration.setBooleanFormat("true,false");
+			configuration.setLocale(Locale.CHINA);
+			configuration.setWhitespaceStripping(true);
+
+			configuration.setSharedVariable("cms_channel_list", channelListDirective);
+			configuration.setSharedVariable("cms_channel", channelDirective);
+			configuration.setSharedVariable("cms_content_list", contentListDirective);
+			configuration.setSharedVariable("cms_content_page", contentPageDirective);
+			configuration.setSharedVariable("cms_pagination", paginationDirective);
+			configuration.setSharedVariable("cms_friendlink_list", friendLinkDirective);
+			configuration.setSharedVariable("cms_adver", adverDirective);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+	}
+}

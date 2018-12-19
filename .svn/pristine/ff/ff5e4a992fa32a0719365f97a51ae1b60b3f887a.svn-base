@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.htjs.pt4.cms.dao.ChannelMapper"> 
+
+    <select id="selectChannelTree" parameterType="map" resultType="hashMap">
+        SELECT a.channel_id ZZJG_DM,a.channel_name ZZJG_MC,a.parent_id SJ_ZZJG_DM,
+        (SELECT COUNT(1) FROM hj_channel WHERE parent_id=a.channel_id) isParent
+        FROM hj_channel a WHERE is_display = 1
+    </select>
+    
+    <select id="selectLowerChannels" parameterType="string" resultType="hashMap">
+        SELECT * FROM hj_channel WHERE parent_id = #{id} and is_display = 1
+    </select>
+    
+   <!--  <insert id="insertContentType" parameterType="map">
+       insert into hj_content_type(type_id,type_name,img_width,img_height,has_image,is_disabled) 
+       values(#{type_id},#{type_name},#{img_width},#{img_height},#{has_image},#{is_disabled})
+    </insert> 
+    
+    <select id="selectContentTypeById" parameterType="map" resultType="hashMap">
+        SELECT * from hj_content_type where type_id = #{type_id}
+    </select>
+    
+    <update id="updateContentTypeById" parameterType="map">
+	    update hj_content_type set type_name = #{type_name},img_width = #{img_width},img_height = #{img_height},has_image = #{has_image},
+	    is_disabled = #{is_disabled} where type_id = #{type_id}
+    </update>
+    
+     <update id="deleteById" parameterType="map">
+	    update hj_content_type set is_disabled = 1 where type_id = #{type_id}
+    </update> -->
+
+</mapper>

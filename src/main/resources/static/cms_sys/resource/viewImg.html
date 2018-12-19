@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>模板管理</title>
+<script type="text/javascript" src="../../../commons/js/include_ui.js?dm=102021222425"></script>
+<script type="text/javascript" src="../../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	viewImg.onload();
+});
+var viewImg = (function () {
+	var Request;
+    var GetRequest= function() {
+	  	  var url = location.search; //获取url中"?"符后的字串
+	  	  var theRequest = new Object();
+	  	   if (url.indexOf("?") != -1) {
+	  	      var str = url.substr(1);
+	  	      strs = str.split("&");
+	  	      for(var i = 0; i < strs.length; i ++) {
+	  	         theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+	  	      }
+	  	   }
+	  	   return theRequest;
+    };
+    var initLayout = function () {
+        Request = GetRequest();
+    };
+    return{
+
+	onload : function() {
+				var imgPath = GetRequest()["path"];
+				/*
+				 * 图片的绝对路径地址 转换成base64编码 如下代码：
+				 */
+				var image = new Image();
+				image.crossOrigin = '';
+				image.src = imgPath;
+				image.onload = function() {
+					var base64 = getBase64Image(image);
+					console.log(base64);
+					/*
+					 打印信息如下：
+					 {
+					  dataURL: "data:image/png;base64,xxx"
+					  type: "image/jpg"
+					 }
+					 */
+					var img2 = convertBase64UrlToBlob(base64);
+					console.log(img2);
+					/*
+					 打印信息如下：
+					 Blob {size: 9585, type: "image/jpg"}
+					 */
+				}
+
+/* 				var reader = new FileReader();
+				//将文件以Data URL形式读入页面  
+				reader.readAsDataURL(imgPath);
+				reader.onload = function(e) {
+					//显示文件  
+					result.innerHTML = '<img src="' + imgPath +'" alt="" />';
+				} */
+			}
+		};
+	})();
+/** 
+ * 将以base64的图片url数据转换为Blob 
+ * @param urlData 
+ * 用url方式表示的base64图片数据 
+ */ 
+function convertBase64UrlToBlob(base64){
+  var urlData =  base64.dataURL;
+  var type = base64.type;
+  var bytes = window.atob(urlData.split(',')[1]); //去掉url的头，并转换为byte
+  //处理异常,将ascii码小于0的转换为大于0 
+  var ab = new ArrayBuffer(bytes.length); 
+  var ia = new Uint8Array(ab); 
+  for (var i = 0; i < bytes.length; i++) { 
+      ia[i] = bytes.charCodeAt(i); 
+  } 
+  return new Blob( [ab] , {type : type}); 
+}
+function getBase64Image(img) {
+	alert(img);
+	var canvas = document.createElement("canvas");
+	canvas.width = img.width;
+	canvas.height = img.height;
+	var ctx = canvas.getContext("2d");
+	ctx.drawImage(img, 0, 0, img.width, img.height);
+	var ext = img.src.substring(img.src.lastIndexOf(".") + 1)
+			.toLowerCase();
+	var dataURL = canvas.toDataURL("image/" + ext);
+	return {
+		dataURL : dataURL,
+		type : "image/" + ext
+	};
+}
+</script>
+</head>
+<body>
+	<div id="result"></div> 
+</body>
+</html>

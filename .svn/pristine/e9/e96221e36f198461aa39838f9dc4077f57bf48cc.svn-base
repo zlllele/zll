@@ -1,0 +1,132 @@
+package net.htjs.pt4.cms.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import net.htjs.pt4.cms.entity.Channel;
+/**
+ * 栏目持久化接口
+ * 
+ * @author wupeng
+ *
+ */
+public interface ChannelMapper {
+	/**
+	 * 查询栏目树
+	 * 
+	 * @param map
+	 * @return List
+	 */
+	List<Map<String,Object>> selectChannelTree(Map<String,Object> map);
+
+	/**
+	 * 查询下级栏目
+	 * 
+	 * @param map
+	 * @return List
+	 */
+	List<Map<String,Object>> selectLowerChannels(Map<String,Object> map);
+
+	/**
+	 * 级联删除下级栏目
+	 * 
+	 * @param map
+	 * @return 
+	 */
+	void selectLowerChannelsForDelete(Map<String,Object> map);
+
+	/**
+	 * 添加栏目
+	 * 
+	 * @param map
+	 * @return int
+	 */
+	int insertChannel(Map<String,Object> map);
+	
+	/**
+	 * 添加根栏目
+	 * 
+	 * @param map
+	 * @return int
+	 */
+	int insertRootChannel(Map<String,Object> map);
+
+	/**
+	 * 根据id查询栏目
+	 * 
+	 * @param id
+	 * @return Map
+	 */
+	Map<String,Object> selectChannelById(String id);
+
+	/**
+	 * 更新栏目
+	 * 
+	 * @param map
+	 * @return int
+	 */
+	int updateChannelById(Map<String,Object> map);
+
+	/**
+	 * 删除栏目
+	 * 
+	 * @param map
+	 * @return int
+	 */
+	int deleteById(String id);
+
+	/**
+	 * 以栏目父节点ID查询子栏目列表
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public List<Channel> getChannelByParentId(String parentId);
+
+	/**
+	 * 以站点ID查询根栏目对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Channel getRootChannelBySiteId(String siteId);
+
+	/**
+	 * 以组织机构代码查询根栏目对象
+	 * 
+	 * @param zzjgDm
+	 * @return
+	 */
+	public Channel getRootChannelByZzjgDm(String zzjgDm) throws Exception;
+
+	/**
+	 * 以栏目ID查询栏目对象
+	 * 
+	 * @param channelId
+	 * @return
+	 */
+	public Channel getChannelById(String channelId);
+
+	/**
+	 * 更新栏目左右范围
+	 * 
+	 * @param map
+	 */
+	public void updateLftRft(Map<String, Object> map);
+
+	/**
+	 * 获取子节点以rft降序排列的集合
+	 * 
+	 * @param parentId
+	 * @return
+	 */
+	public List<Channel> getChannelOrderByRft(String parentId);
+
+	/**
+	 * 获取栏目右范围值大于此值的栏目列表
+	 * 
+	 * @param rft
+	 * @return
+	 */
+	public List<Channel> getChannelByRft(int rft);
+}

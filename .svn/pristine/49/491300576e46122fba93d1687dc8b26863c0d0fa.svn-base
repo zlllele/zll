@@ -1,0 +1,214 @@
+package net.htjs.pt4.cms.controller;
+
+
+import net.htjs.pt4.cms.service.IChannelService;
+import net.htjs.pt4.cms.service.IContentTypeService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.service.IStaticPageService;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+import net.htjs.pt4.sys.util.UUIDUtils;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@RestController
+@RequestMapping("/channel")
+public class ChannelController extends BaseController {
+	
+
+private final Logger logger = LoggerFactory.getLogger(ChannelController.class);
+private static final String MSG_SUCCESS = "操作成功！";
+
+@Resource  
+private IChannelService channelService;
+@Resource 
+private ISiteService siteService;
+@Resource  
+private IStaticPageService staticPageService;
+
+/**
+ * 查询模块数
+ * return
+ */
+@GetMapping(value = "/selectZzjgTree", produces = "application/json;charset=UTF-8")
+public Object selectZzjgTree(@RequestParam Map<String, String> userMap, String callback,HttpServletRequest request) {
+    try {
+    	userMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+    	List list = channelService.selectChannelTree(userMap);
+        List ja = new ArrayList();
+        // 按ztree格式要求转换数据
+        for (int i = 0, n = list.size(); i < n; i++) {
+            Map smap = (Map) list.get(i);
+            Map jo = new HashMap();
+            jo.putAll(smap);
+            String isParent = "0".equals(String.valueOf(smap.get("ISPARENT"))) ? "false" : "true";
+            jo.put("isParent", isParent);
+            ja.add(jo);
+        }
+        return callback != null ? new JSONPObject(callback, ja) : ja;
+    } catch (Exception e) {
+
+        logger.error(e.getMessage());
+        return getResult(new HashMap(), 0, e.getMessage(), callback);
+    }
+}
+
+@GetMapping(value="/selectLowerChannels/{id}", produces = "application/json;charset=UTF-8")
+public Object selectLowerChannels(@PathVariable String id, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer pageSize, String callback, 
+		@RequestParam Map<String, String> contentTypeMap,HttpServletRequest request) {
+	
+  int code;
+  String msg = MSG_SUCCESS;
+  Map mapModel = new HashMap();
+
+  try {
+	  contentTypeMap.put("pid", id);
+	  contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+	  Datagrid datagrid = channelService.selectLowerChannels(contentTypeMap, Integer.parseInt(contentTypeMap.get("page")),
+              Integer.parseInt(contentTypeMap.get("pageSize")));
+      mapModel.put("data", datagrid.getRows());
+      code = 0;
+  } catch (Exception e) {
+      msg = e.getMessage();
+      logger.error(msg);
+      e.printStackTrace();
+      code = -1;
+  }
+
+  return getResult(mapModel, code, msg, callback);
+
+}
+
+
+//@GetMapping(value="/list", produces = "application/json;charset=UTF-8")
+//public Object list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer pageSize, String callback, 
+//		@RequestParam Map<String, String> contentTypeMap,HttpServletRequest request) {
+//	
+//    int code;
+//    String msg = MSG_SUCCESS;
+//    Map mapModel = new HashMap();
+//
+//    try {
+//        Datagrid datagrid = contentTypeService.selectContentType(contentTypeMap, Integer.parseInt(contentTypeMap.get("page")),
+//                Integer.parseInt(contentTypeMap.get("pageSize")));
+//        mapModel.put("data", datagrid.getRows());
+//        code = 0;
+//    } catch (Exception e) {
+//        msg = e.getMessage();
+//        logger.error(msg);
+//        e.printStackTrace();
+//        code = -1;
+//    }
+//
+//    return getResult(mapModel, code, msg, callback);
+//
+//}
+//
+@PostMapping
+public Object add(@RequestParam Map<String, String> contentTypeMap, String callback, HttpServletRequest request) {
+int code;
+String msg = MSG_SUCCESS;
+Map mapModel = new HashMap();
+
+try {
+	contentTypeMap.put("channel_id", UUIDUtils.getUUID());
+	contentTypeMap.put("site_id", siteService.findByZzjgDm(UserUtils.getZzjgId(request)).getSiteId());
+	if(contentTypeMap.get("is_blank") == null)
+		contentTypeMap.put("is_blank","0");
+	channelService.insertChannel(contentTypeMap);
+	staticPageService.index(UserUtils.getZzjgId(request));
+	staticPageService.channel(UserUtils.getZzjgId(request), (String) contentTypeMap.get("channel_id"), true);
+  code = 1;
+} catch (Exception e) {
+  msg = e.getMessage();
+  logger.error(msg);
+  e.printStackTrace();
+  code = -1;
+}
+
+return getResult(mapModel, code, msg, callback);
+}
+//
+@PutMapping
+public Object update(@RequestParam Map<String, String> qyxxglMap, String callback) {
+	
+	int code;
+	String msg = MSG_SUCCESS;
+	Map mapModel = new HashMap();
+
+	try {
+		if(qyxxglMap.get("is_blank") == null)
+			qyxxglMap.put("is_blank","0");
+		channelService.updateChannelById(qyxxglMap);
+	    code = 1;
+	} catch (Exception e) {
+	    msg = e.getMessage();
+	    logger.error(msg);
+	    e.printStackTrace();
+	    code = -1;
+	}
+
+	return getResult(mapModel, code, msg, callback);
+	
+}
+//
+@GetMapping("/{id}")
+public Object detail(@PathVariable String id, @RequestParam Map<String, String> qyxxglMap, String callback) {
+	
+	int code;
+  String msg = MSG_SUCCESS;
+  Map mapModel = new HashMap();
+
+  try {
+      Map datagrid = channelService.findById(id);
+      mapModel.put("data", datagrid);
+      code = 0;
+  } catch (Exception e) {
+      msg = e.getMessage();
+      logger.error(msg);
+      e.printStackTrace();
+      code = -1;
+  }
+
+  return getResult(mapModel, code, msg, callback);
+
+}
+
+@DeleteMapping("/{id}")
+public Object delete(@PathVariable String id, String callback) {
+
+int code;
+String msg = MSG_SUCCESS;
+Map mapModel = new HashMap();
+
+try {
+	channelService.deleteById(id);
+    code = 1;
+} catch (Exception e) {
+    msg = e.getMessage();
+    logger.error(msg);
+    e.printStackTrace();
+    code = -1;
+}
+
+return getResult(mapModel, code, msg, callback);
+
+}
+
+}

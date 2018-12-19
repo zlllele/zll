@@ -1,0 +1,58 @@
+package net.htjs.pt4.cms.freemarker.directive;
+
+import static net.htjs.pt4.cms.freemarker.DirectiveUtils.OUT_LIST;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Component;
+
+import freemarker.core.Environment;
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapperBuilder;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
+import net.htjs.pt4.cms.entity.Channel;
+import net.htjs.pt4.cms.entity.Site;
+import net.htjs.pt4.cms.freemarker.DirectiveUtils;
+import net.htjs.pt4.cms.freemarker.directive.abs.AbstractChannelListDirective;
+
+@Component
+public class ChannelListDirective extends AbstractChannelListDirective {
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
+			throws TemplateException, IOException {
+		String parentId = DirectiveUtils.getString(PARAM_PARENT_ID, params);
+		String siteId = DirectiveUtils.getString(PARAM_SITE_ID, params);
+		List<Channel> list = null;
+		if (StringUtils.isNotBlank(parentId)) {
+			// 查询此节点的子节点
+			list = channelSvc.getChannelByParentId(parentId);
+		} else {
+			if (StringUtils.isBlank(siteId)) {
+				Site site = DirectiveUtils.getSite(env);
+				siteId = site.getSiteId();
+			}
+			// 查询站点下的根节点
+			Channel channel = channelSvc.getRootChannelBySiteId(siteId);
+			if (channel != null) {
+				list = channelSvc.getChannelByParentId(channel.getChannelId());
+			} else {
+				list = new ArrayList<Channel>();
+			}
+		}
+		DefaultObjectWrapperBuilder builder = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(params);
+		paramWrap.put(OUT_LIST, builder.build().wrap(list));
+		Map<String, TemplateModel> origMap = DirectiveUtils.addParamsToVariable(env, paramWrap);
+		body.render(env.getOut());
+		DirectiveUtils.removeParamsFromVariable(env, paramWrap, origMap);
+	}
+
+}

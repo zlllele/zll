@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.htjs.pt4.cms.dao.ContentMapper">
+    
+    <resultMap id="contentMap" type="net.htjs.pt4.cms.entity.Content">
+		<id column="content_id" jdbcType="VARCHAR" property="contentId" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="user_name" jdbcType="VARCHAR" property="userName" />
+		<result column="type_id" jdbcType="VARCHAR" property="typeId" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+		<result column="top_level" jdbcType="INTEGER" property="topLevel" />
+		<result column="release_date" jdbcType="VARCHAR" property="releaseDate" />
+		<result column="is_recommend" jdbcType="INTEGER" property="recommend" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="tpl_content" jdbcType="VARCHAR" property="tplContent" />
+		<result column="media_path" jdbcType="VARCHAR" property="mediaPath" />
+		<result column="media_type" jdbcType="VARCHAR" property="mediaType" />
+		<result column="link" jdbcType="VARCHAR" property="link" />
+		<result column="image_path" jdbcType="VARCHAR" property="imagePath" />
+		<association property="channel" javaType="net.htjs.pt4.cms.entity.Channel">
+            <id column="channel_id" jdbcType="VARCHAR" property="channelId" />
+			<result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+			<result column="channel_path" jdbcType="VARCHAR" property="channelPath" />
+			<result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+			<result column="content_path" jdbcType="VARCHAR" property="contentPath" />
+			<result column="keywords" jdbcType="VARCHAR" property="keywords" />
+			<result column="tpl_channel" jdbcType="VARCHAR" property="tplChannel" />
+			<result column="tpl_content" jdbcType="VARCHAR" property="tplContent" />
+			<result column="priority" jdbcType="INTEGER" property="priority" />
+			<result column="is_display" jdbcType="CHAR" property="display" />
+			<result column="is_blank" jdbcType="CHAR" property="blank" />
+			<result column="page_size" jdbcType="INTEGER" property="pageSize" />
+			<result column="lft" jdbcType="INTEGER" property="lft" />
+			<result column="rft" jdbcType="INTEGER" property="rft" />
+        </association>
+        <association property="site" javaType="net.htjs.pt4.cms.entity.Site">
+	        <id column="site_id" jdbcType="VARCHAR" property="siteId" />
+			<result column="site_name" jdbcType="VARCHAR" property="siteName" />
+			<result column="short_name" jdbcType="VARCHAR" property="shortName" />
+			<result column="tpl_path" jdbcType="VARCHAR" property="tplPath" />
+			<result column="static_path" jdbcType="VARCHAR" property="staticPath" />
+			<result column="domain" jdbcType="VARCHAR" property="domain" />
+			<result column="static_dir" jdbcType="VARCHAR" property="staticDir" />
+			<result column="tpl_solution" jdbcType="VARCHAR" property="tplSolution" />
+			<result column="is_recycle_on" jdbcType="CHAR" property="recydeOn" />
+			<result column="is_root" jdbcType="CHAR" property="root" />
+	    </association>
+	    <association property="contentTxt" javaType="net.htjs.pt4.cms.entity.ContentTxt">
+			<result column="txt" jdbcType="VARCHAR" property="txt" />
+	    </association>
+	</resultMap>
+	<resultMap id="contentFilePicMap" type="net.htjs.pt4.cms.entity.Content" extends="contentMap">
+		<collection property="files" column="{contentId=content_id}" select="getContentFileById" />
+		<collection property="pics" column="{contentId=content_id}" select="getContentPicById" />
+	</resultMap>
+	<resultMap id="contentFileMap" type="net.htjs.pt4.cms.entity.ContentFile">
+		<id column="content_id" jdbcType="VARCHAR" property="contentId" />
+		<result column="site_id" jdbcType="VARCHAR" property="siteId" />
+		<result column="priority" jdbcType="INTEGER" property="priority" />
+		<result column="file_path" jdbcType="VARCHAR" property="filePath" />
+		<result column="file_name" jdbcType="VARCHAR" property="fileName" />
+		<result column="download" jdbcType="INTEGER" property="download" />
+	</resultMap>
+	<resultMap id="contentPicMap" type="net.htjs.pt4.cms.entity.ContentPic">
+		<id column="content_id" jdbcType="VARCHAR" property="contentId" />
+		<result column="site_id" jdbcType="VARCHAR" property="siteId" />
+		<result column="priority" jdbcType="INTEGER" property="priority" />
+		<result column="img_path" jdbcType="VARCHAR" property="imgPath" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+	</resultMap>
+	<!-- 以内容ID查询附件集合 -->
+	<select id="getContentFileById" resultMap="contentFileMap" parameterType="Map">
+		select * from hj_content_file where content_id=#{contentId} order by priority asc
+	</select>
+	<!-- 更新内容附件 -->
+	<update id="updateContentFile" parameterType="net.htjs.pt4.cms.entity.ContentFile">
+		update hj_content_file set download=#{download} where content_id = #{contentId}
+	</update>
+	<!-- 以内容ID查询图片集合 -->
+	<select id="getContentPicById" resultMap="contentPicMap" parameterType="Map">
+		select * from hj_content_img where content_id=#{contentId} order by priority asc
+	</select>
+    <!-- 以栏目ID查询内容列表 -->
+	<select id="getContentsByChannelId" resultMap="contentFilePicMap" parameterType="String">
+        select c.*,cc.*,s.*,ct.* from hj_content c left join hj_content_txt ct on c.content_id = ct.content_id ,hj_channel cc ,hj_site s where c.site_id=s.site_id and c.channel_id=cc.channel_id and cc.channel_id=#{channelId} and c.status=2 order by c.top_level desc,c.release_date desc
+    </select>
+    <!-- 以栏目ID查询内容数量 -->
+	<select id="getCountByChannelId" resultType="java.lang.Integer" parameterType="String">
+        select count(1) from hj_content c ,hj_channel cc where c.channel_id=cc.channel_id and cc.channel_id=#{channelId} and c.status=2
+    </select>
+    <!-- 以父栏目ID查询其下所有子栏目的内容列表 -->
+	<select id="getContentsByChannelParentId" resultMap="contentFilePicMap" parameterType="hashMap">
+        select c.*,cc.*,s.*,ct.* from hj_content c left join hj_content_txt ct on c.content_id = ct.content_id ,hj_channel cc ,hj_channel p ,hj_site s where c.site_id=s.site_id <if test="typeId!=null and typeId!=''">and c.type_id=#{typeId}</if> and c.channel_id=cc.channel_id and cc.lft between p.lft and p.rft and p.channel_id=#{channelId} and c.status=2 order by c.top_level desc,c.release_date desc
+    </select>
+    <!-- 以父栏目ID查询其下所有子栏目的内容数量 -->
+	<select id="getCountByChannelParentId" resultType="java.lang.Integer" parameterType="String">
+        select count(1) from hj_content c ,hj_channel cc ,hj_channel p where c.channel_id=cc.channel_id and cc.lft between p.lft and p.rft and p.channel_id=#{channelId} and c.status=2
+    </select>
+    <!-- 以栏目ID查询其下内容 -->
+    <select id="selectContentsByChannel" parameterType="hashMap" resultType="hashMap">
+		SELECT c.content_id content_id,c.title title,t.type_name
+		type_name,c.user_name user_name,cc.views views,
+		c.release_date release_date,c.status c_status
+		FROM hj_content c INNER JOIN hj_content_type t ON c.type_id=t.type_id INNER
+		JOIN hj_content_count cc ON c.content_id = cc.content_id 
+		INNER JOIN hj_channel ch ON ch.channel_id = c.channel_id,hj_channel p 	
+		<where>
+            <if test="1==1">
+                and c.status = 2 and c.site_id = #{site_id}
+            </if>
+            <if test="pid!=null and pid!=''">
+                and p.channel_id = #{pid} AND ch.lft BETWEEN p.lft AND p.rft 
+            </if>
+             <if test="channel_id!=null and channel_id!=''">
+                and p.channel_id = #{channel_id} AND ch.lft BETWEEN p.lft AND p.rft
+            </if>
+            <if test="title!=null and title!=''">
+                and c.title like concat("%",#{title},"%") 
+            </if>
+            <if test="user_name!=null and user_name!=''">
+                and c.user_name like concat("%",#{user_name},"%")  
+            </if>
+            <if test="top_level!=null and top_level=='1'.toString()">
+                and c.top_level != 0 
+            </if>
+            <if test="is_recommend!=null and is_recommend=='1'.toString()">
+                and c.is_recommend != 0 
+            </if>
+            <if test="type_id!=null and type_id!=''">
+                and t.type_id = #{type_id} 
+            </if>
+        </where>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='0'.toString()">
+                 order by c.content_id desc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='1'.toString()">
+                 order by c.content_id asc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='2'.toString()">
+                 order by c.release_date desc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='3'.toString()">
+                 order by c.release_date asc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='4'.toString()">
+                 order by cc.views desc
+            </if>
+            <if test="orderCond!=null and orderCond!='' and orderCond=='5'.toString()">
+                 order by cc.views asc
+            </if>		
+    </select>
+    <!-- 插入内容记录 -->
+    <insert id="insertContent" parameterType="map">
+    insert into hj_content(content_id,channel_id,user_id,user_name,type_id,site_id,title,description,top_level,release_date,
+    is_recommend,status,tpl_content,media_path,media_type,link,image_path) values(#{content_id},#{channel_id},#{user_id},#{user_name},
+    #{type_id},#{site_id},#{title},#{description},#{top_level},#{release_date},#{is_recommend},#{status},#{tpl_content},#{media_path},
+    #{media_type},#{link},#{tPath})
+    </insert> 
+    <!-- 插入内容浏览量记录 -->
+    <insert id="insertContentCount" parameterType="map">
+    insert into hj_content_count(content_id,site_id) values(#{content_id},#{site_id})
+    </insert>
+    <!-- 插入内容文本附件记录 -->
+    <insert id="insertContentFiles" parameterType="java.util.Map">
+        insert into hj_content_file(content_id,site_id,priority,file_path,file_name,download) values
+        <foreach collection="contentFileList" item="item" index="index" separator=",">
+            (#{content_id},#{site_id},#{index},#{item.file_path},#{item.file_name},0)
+        </foreach>
+    </insert>
+    <!-- 插入内容文本图片集记录 -->
+    <insert id="insertContentPics" parameterType="java.util.Map">
+        insert into hj_content_img(content_id,site_id,priority,img_path,description) values
+        <foreach collection="contentPicsList" item="item" index="index" separator=",">
+            (#{content_id},#{site_id},#{index},#{item.img_path},#{item.description})
+        </foreach>
+    </insert>
+    <!-- 插入内容文本记录 -->
+    <insert id="insertContentTxt" parameterType="map">
+        insert into hj_content_txt(content_id,txt) values(#{content_id},#{txt})
+    </insert>
+    <!-- 以栏目ID查询其下内容 -->
+    <select id="selectContentById" parameterType="string" resultType="hashMap">
+        SELECT c.*,t.txt,ct.type_name FROM hj_content c INNER JOIN hj_content_txt t ON c.content_id=t.content_id  
+		INNER JOIN hj_content_type ct ON ct.type_id=c.type_id WHERE c.content_id = #{id}
+    </select>
+
+    <!-- 以栏目ID查询其下内容附件 -->
+    <select id="selectContentAttachmentsById" parameterType="string" resultType="hashMap">
+        SELECT * from hj_content_file where content_id = #{id}
+    </select>
+    <!-- 以栏目ID查询其下内容图片集 -->
+    <select id="selectContentPcsById" parameterType="string" resultType="hashMap">
+        SELECT * from hj_content_img where content_id = #{id}
+    </select>
+    <!-- 更新内容记录 -->
+    <update id="updateContentById" parameterType="map">
+	    update hj_content set user_id=#{user_id},user_name=#{user_name},type_id=#{type_id},site_id=#{site_id},
+	    title=#{title},description=#{description},top_level=#{top_level},release_date=#{release_date},is_recommend=#{is_recommend},
+	    status=#{status},tpl_content=#{tpl_content},media_path=#{media_path},media_type=#{media_type},link=#{link},image_path=#{tPath} 
+	     where content_id = #{content_id}
+    </update>
+    <!-- 更新内容文本记录 -->
+     <update id="updateContentTxtById" parameterType="map">
+	    update hj_content_txt set txt=#{txt} where content_id = #{content_id}
+    </update>
+    <!-- 删除内容附件 -->
+    <delete id="deleteFilesById" parameterType="string">
+	    delete from hj_content_file where content_id = #{content_id}
+    </delete>
+    <!-- 删除内容图片集 -->
+    <delete id="deletePicsById" parameterType="string">
+	    delete from hj_content_img where content_id = #{content_id}
+    </delete>
+    <!-- 删除内容 -->
+    <update id="deleteById" parameterType="string">
+	    update hj_content set status=3 where content_id = #{content_id}
+    </update>
+    <!-- 以内容ID查询内容 -->
+	<select id="getContentById" resultMap="contentMap" parameterType="String">
+		select a.*,b.txt,c.*,s.* from hj_content a left join hj_content_txt b on a.content_id=b.content_id,hj_channel c ,hj_site s where a.channel_id=c.channel_id and a.site_id=s.site_id and a.content_id=#{contentId}
+	</select>
+</mapper>

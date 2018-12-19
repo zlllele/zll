@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上传</title>
+<script type="text/javascript" src="../../../../commons/js/include_ui.js?dm=102127"></script>
+<script type="text/javascript" src="../../../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	template.onLoad();
+});
+var template = (function() {
+	// 私有属性
+	var curSeg, formSave = "formSave", formSave_, winObj, winParam, anum=2,cc=0,psnum=4;
+	var isCzryDmEditAble = false;
+	// 是否是添加
+	var bAdd = true;
+	// 私有方法
+	var setVal = function(tagID, val) {
+		baseTools.byId(formSave_ + tagID).value = val;
+	};
+
+	var initLayout = function() {
+		// 初始化页面UI
+		winObj = frameElement.api;
+		winParam = winObj.data;
+		bAdd = winParam.other.msg == '添加';
+		$("#path").val(winParam.other.path);
+		$("#type").val(winParam.other.type);
+		if(winParam.other.leaf=="false"||(!winParam.other.leaf)){
+			winObj.button({
+				name : '保存',
+				focus : true,
+				callback : function() {
+					curSeg.onSave();
+					return false;
+				}
+			}, {
+				name : '关闭'
+			});
+		}
+	};
+	// 公有方法
+	return {
+		onLoad : function() {
+			curSeg = template;
+			initLayout();
+			// 删除组件释放内存
+			$(window).unload(function() {
+			});
+		},
+		// 关闭窗口
+		checkMedia : function(mname) {
+			alert(cc+"  "+mname);
+			cc+=1;
+		},
+		// 保存数据
+		onSave : function() {
+			var url = "/resource/addDir";
+			var params = {};
+			baseTools.xhrAjax({
+				url : url,
+				forms : [ formSave ],
+				params : {},
+				callback : [ curSeg.onCloseWin ]
+			});
+		},
+		pageFlowControl : function(jsonObj, xhrArgs) {
+			switch (parseInt(jsonObj.code)) {
+			// 查询操作返回标志
+			case 1:
+				curSeg.onBindData(jsonObj, xhrArgs);
+				break;
+			// 添加、更新以及状态更新操作返回标志
+			case 0:
+				alert(jsonObj.msg);
+				curSeg.onCloseWin();
+				break;
+			// 删除操作返回标志
+			case 2:
+				alert(jsonObj.msg);
+				break;
+			case -2:// 其它错误返回标志
+				alert(jsonObj.msg);
+				break;
+			case 99:// 其它错误返回标志
+				alert(jsonObj.msg);
+				baseTools.hideMash();
+				break;
+			case -3:// cookie 失效请重新登录
+				alert(jsonObj.msg);
+				baseTools.gotoLogin();
+				break;
+			default:
+			}
+		},
+		onCloseWin : function() {
+			winObj.opener.siteList.loadPath(winParam.other.path);
+			setTimeout(function() {
+				winObj.close();
+			},100)
+		}
+	};
+})();
+</script>
+</head>
+<body>
+	<form action="" name="formSave" id="formSave">
+		<input type="hidden" id="path" name="path" value="">
+		<input type="hidden" id="type" name="type" value="">
+		<table id="tbSave" class="table_add" cellpadding="0" cellspacing="0">
+			<caption>新增文件夹</caption>
+			<tr>
+				<td class="tdclass_view">文件夹名称：</td>
+				<td class="tdclass_edit" colspan="3">
+					<input type="text" id="dirName" name="dirName" value="" maxlength="30"/> 
+				</td>
+			</tr>
+		</table>
+	</form>
+	<form id="uploadTempForm" action="" method="post" enctype="multipart/form-data" target="hiddenIframe" style="display:none;width:0px;height:0px;">
+		<span id="fileContent"></span>
+	</form>
+	<iframe name="iframe_aupload" frameborder="0" border="0" style="display:none;width:0px;height:0px;"></iframe>	
+</body>
+</html>

@@ -1,0 +1,57 @@
+
+/*banner的字体样式----------------------------------*/
+.font_banner1{
+font-size:12px; color:#E2FFFD;
+}
+.font_banner2{
+font-size:12px; color:#666666;
+}
+.font_banner3{
+font-size:9pt; color:#FEFB03;
+}
+.font_banner3 a:hover{
+BACKGROUND－COLOR: ＃ffffff; COLOR: ＃ffffff;TEXT－DECORATION: underline;
+}
+.font_banner3 a:link{
+color:＃B8E1F5;TEXT－DECORATION: none;
+}
+.font_banner3 a:visited{
+color:#B8E1F5;TEXT－DECORATION: none;
+}
+.font_banner3 a:active{
+color:#F9FAC0;text－decoration: none;
+}
+
+.font_banner4{
+font-size:9pt; color:#D8FCE4;
+}
+
+/*左菜单的menu样式---------------------------------*/
+.menu {
+	font-size: 12px; color:#333333;
+}
+.menu a:link { text-decoration:none;}
+.menu a:hover{ text-decoration:none;}
+.menu a:visited { text-decoration:none;}
+.menu a:active { text-decoration:none;}
+
+body{
+   padding: 0;
+	margin: 0;
+	SCROLLBAR-FACE-COLOR: #f7f7f7;
+	SCROLLBAR-HIGHLIGHT-COLOR: #ffffff;
+	SCROLLBAR-SHADOW-COLOR: #224D26;
+	SCROLLBAR-3DLIGHT-COLOR:#f7f7f7;
+	SCROLLBAR-TRACK-COLOR: #f7f7f7;
+	SCROLLBAR-ARROW-COLOR: #224D26;
+	SCROLLBAR-DARKSHADOW-COLOR: #f7f7f7;
+}
+
+/*字体的样式--------------------------------*/
+.unnamed1 {
+	font-size: 9pt;color: #003366;
+}
+.unnamed1 a:link { color: #B8E1F5; text-decoration: none}
+.unnamed1 a:visited {color: #003366; text-decoration: none}
+.unnamed1 a:hover {color:#FEFB03;text-decoration:underline} 
+input {font-size:9pt;}

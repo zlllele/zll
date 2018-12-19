@@ -1,0 +1,192 @@
+/**
+ * Date:2012-3-1<br>
+ * 工具样组件样式
+ * @author <a href="mailto:12719889@qq.com">YangHongJian</a>
+ * @version 1.0
+ */
+@charset
+"utf-8"
+;
+
+#ulToolbar {
+    width: 100%;
+    background: #e3e2e2;
+    border: 1px solid #c3c3c3;
+    padding: 0;
+    margin: 0;
+    float: left;
+    list-style: none;
+    font: normal 12px 'Trebuchet MS', 'Arial';
+    clear: both;
+}
+
+#ulToolbar li {
+    margin: 2px 0 2px 0;
+    padding: 0;
+    display: inline;
+    float: left;
+    border: 1px solid #e3e2e2;
+    text-align: center;
+}
+
+#ulToolbar li:hover {
+    cursor: pointer;
+    border: 1px solid #a9a9a9;
+    background: #ffebcd;
+    display: block;
+}
+
+.btnQuery {
+    background: url("toolbar.png") no-repeat 0 0;
+    padding-left: 18px;
+}
+
+.toolbarBtnQuery {
+    background: url("toolbar.png") no-repeat 0 0;
+    padding-left: 18px;
+    border: 0;
+}
+
+.btnQuery1 {
+    background: url("toolbar.png") no-repeat 0 -150px;
+    padding-left: 18px;
+}
+
+.toolbarBtnQuery1 {
+    background: url("toolbar.png") no-repeat 0 -150px;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*在线帮助*/
+.toolbarBtnHelp {
+    background: url("toolbar.png") no-repeat -280px 0;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*添加样式*/
+.toolbarBtnAdd {
+    background: url("toolbar.png") no-repeat 0 -30px;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*修改样式*/
+.toolbarBtnEdit {
+    background: url("toolbar.png") no-repeat -150px -30px;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*删除样式*/
+.toolbarBtnDelete {
+    background: url("toolbar.png") no-repeat -280px -30px;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*更新状态*/
+.btnChangeState {
+    background: url("toolbar.png") no-repeat -60px 0;
+    padding-left: 18px;
+}
+
+.toolbarBtnChangeState {
+    background: url("toolbar.png") no-repeat -60px 0;
+    padding-left: 18px;
+    border: 0;
+}
+
+.btnPrint {
+    background: url("toolbar.png") no-repeat -60px -150px;
+    padding-left: 18px;
+}
+
+.toolbarBtnPrint {
+    background: url("toolbar.png") no-repeat -60px -150px;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*禁用样式*/
+.toolbarBtnDisable {
+    background: url("toolbar.png") no-repeat -280px -60px;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*启用样式*/
+.toolbarBtnEnable {
+    background: url("toolbar.png") no-repeat -280px -90px;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*取消、关闭样式*/
+.btnNo {
+    background: url("toolbar.png") no-repeat -90px 0;
+    padding-left: 18px;
+}
+
+.toolbarBtnNo {
+    background: url("toolbar.png") no-repeat -90px 0;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*确定、确认样式*/
+.btnYes {
+    background: url("toolbar.png") no-repeat -90px -150px;
+    padding-left: 18px;
+}
+
+.toolbarBtnYes {
+    background: url("toolbar.png") no-repeat -90px -150px;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*首界样式*/
+.btnHome {
+    background: url("toolbar.png") no-repeat -120px 0;
+    padding-left: 18px;
+}
+
+.toolbarBtnYes {
+    background: url("toolbar.png") no-repeat -120px 0;
+    padding-left: 18px;
+    border: 0;
+}
+
+/*退出样式*/
+.btnExit {
+    background: url("toolbar.png") no-repeat -120px -150px;
+    padding-left: 18px;
+}
+
+.toolbarBtnExit {
+    background: url("toolbar.png") no-repeat -120px -150px;
+    padding-left: 18px;
+    border: 0;
+}
+/*---------------其它样式-----------------*/
+/*禁用样式*/
+.iconDisable {
+    background: url("toolbar.png") no-repeat -280px -60px;   
+    border: 0;
+	display:block;width:16px;height:16px;
+}
+
+/*启用样式*/
+.iconEnable {
+    background: url("toolbar.png") no-repeat -280px -90px;    
+    border: 0;
+	display:block;width:16px;height:16px;
+}
+
+.iconTest {
+    background: url("toolbar.png") no-repeat -280px -60px;   
+    border: 0;
+	display:block;width:16px;height:16px;
+}

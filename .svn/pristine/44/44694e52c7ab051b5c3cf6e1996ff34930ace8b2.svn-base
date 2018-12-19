@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.htjs.pt4.cms.dao.AdvertisingMapper">
+
+	<!-- 获取广告列表 -->
+	<select id="getList" parameterType="map" resultType="hashMap">
+		select 
+			*
+		from
+			hj_advertising
+		where 1=1 
+		<if test="site_id!=null and site_id!=''">
+        	and site_id=#{site_id} 
+        </if>
+		order by ad_weight asc
+	</select>
+	
+	<!-- 增加广告 -->
+	<insert id="addAdvertising" parameterType="map">
+		insert into hj_advertising (
+			advertising_id,
+			site_id,
+			name,
+			category,
+			adspace_id,
+			ad_img_url,
+			ad_img_width,
+			ad_img_height,
+			ad_url,
+			ad_info,
+			ad_blank,
+			ad_color,
+			ad_font,
+			click_count,
+			ad_weight,
+			is_enabled
+		) values (
+			#{advertising_id},
+			#{site_id},
+			#{name},
+			#{category},
+			#{adspace_id},
+			#{ad_img_url},
+			#{ad_img_width},
+			#{ad_img_height},
+			#{ad_url},
+			#{ad_info},
+			#{ad_blank},
+			#{ad_color},
+			#{ad_font},
+			#{click_count},
+			#{ad_weight},
+			#{is_enabled}
+		)
+	</insert>
+	
+	<!-- 修改广告 -->
+	<update id="updateAdvertising" parameterType="map">
+		update hj_advertising set 
+			name=#{name},
+			category=#{category},
+			adspace_id=#{adspace_id},
+			ad_img_url=#{ad_img_url},
+			ad_img_width=#{ad_img_width},
+			ad_img_height=#{ad_img_height},
+			ad_url=#{ad_url},
+			ad_info=#{ad_info},
+			ad_blank=#{ad_blank},
+			ad_color=#{ad_color},
+			ad_font=#{ad_font},
+			click_count=#{click_count},
+			ad_weight=#{ad_weight},
+			is_enabled=#{is_enabled}
+		where advertising_id=#{advertising_id}
+	</update>
+	
+	<!-- 删除广告 -->
+	<delete id="deleteAdvertising" parameterType="map">
+		delete from hj_advertising where advertising_id=#{advertising_id}
+	</delete>
+</mapper>

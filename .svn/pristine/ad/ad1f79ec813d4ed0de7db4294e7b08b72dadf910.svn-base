@@ -1,0 +1,105 @@
+/**
+ * <ol>
+ * date:12-3-5 editor:yanghongjian
+ * <li>创建文档</li>
+ * <li>基础表格的样式</li>
+ * </ol>
+ */
+@charset
+"utf-8"
+;
+/*列表表格单元格样式*/
+.tbClass {
+    width: 100%;
+    font: normal 12px 'Trebuchet MS', 'Arial';
+    border-collapse: collapse;
+    border: #cccccc 1px solid;
+    vertical-align:middle;
+}
+
+.tbClass thead th {
+    height: 24px;
+    background: #B7DBF2;
+    white-space: nowrap;
+
+    border-top-color: #FFFFFF;
+    border-left: 1px solid #cccccc;
+    border-bottom: 1px solid #999999;
+
+}
+
+.tbClass tbody td {
+    height: 22px;
+    border: 1px solid #cccccc; /*background: #f3f6ff; 不能够使用背景色，否则不能够使用交叉色*/
+    white-space: nowrap;
+}
+
+.tbClass tfoot {
+    height: 18px;
+    border: 1px solid #cccccc;
+    background: #f3f6ff;
+    white-space: nowrap;
+}
+
+/*2011.12.9 yanghongjian 自定义grid交叉样式*/
+.alternation {
+    background: #D7F0D7;
+}
+
+.mouseOver {
+    background-color: #ffcccc;
+}
+
+.selected {
+    background: #66ccff;
+}
+
+/*2012.3.5 分页组件样式*/
+#pageNav {
+    font: normal 13px 'Trebuchet MS', 'Arial';
+}
+
+#pageNav a:hover {
+    text-decoration: none;
+    background: #fff4d8;
+}
+
+/* custom css style: pageNum,cPageNum */
+.pageNum {
+}
+
+.cPageNum {
+    font-weight: bold;
+    padding: 2px 2px;
+}
+
+/*查询条件样式*/
+.divQuery {
+    overflow:auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.tbQuery {
+    width: 98%;
+    font: normal 12px 'Trebuchet MS', 'Arial';
+    border-collapse: collapse;
+    border: #cccccc 1px solid;
+
+    /*padding-top:2px;*/
+    /*padding-bottom:2px;*/
+}
+
+.tbQuery .tdTitle {
+    background: #cccccc;
+    text-align: right;
+    padding-right: 5px;
+    white-space:nowrap;
+    vertical-align:middle;
+}
+.divQueryList{
+    height:100%;
+    background:#cca;
+    overflow:auto;
+}
+

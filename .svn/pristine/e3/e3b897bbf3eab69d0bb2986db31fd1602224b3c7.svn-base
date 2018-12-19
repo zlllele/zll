@@ -1,0 +1,32 @@
+[#--
+栏目翻页样式
+--]
+[#assign p=tag_pagination/]
+[#if p.pages gt 1]
+	<div>
+		共${p.total}条记录 ${p.pageNum}/${p.pages}页
+		[#if p.isFirstPage]
+			[首页][上一页]
+		[#else]
+			<a href="${1}">[首页]</a><a href="${p.prePage}">[上一页]</a>
+		[/#if]
+		
+		[#assign pageStart=((p.pageNum-5)/10)*10+1/]
+		[#if pageStart lt 1]
+			[#assign pageStart=1/]
+		[/#if]
+		[#assign pageEnd=pageStart+9/]
+		[#if pageEnd gt p.pages]
+			[#assign pageEnd=p.pages/]
+		[/#if]
+		[#list pageStart..pageEnd as i]
+			<a href="${i}">[[#if p.pageNum == i]<font color="red">${i}</font>[#else]${i}[/#if]]</a>
+		[/#list]
+		
+		[#if p.isLastPage]
+			[下一页][末页]
+		[#else]
+			<a href="${p.nextPage}">[下一页]</a><a href="${p.pages}">[末页]</a>
+		[/#if]
+	</div>
+[/#if]

@@ -1,0 +1,19 @@
+package net.htjs.pt4.cms.entity;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@ConfigurationProperties(prefix = "system.template")
+@Component
+public class CmsConfig {
+	String filePath;
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	
+}

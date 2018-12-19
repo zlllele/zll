@@ -1,0 +1,46 @@
+/* 拼音头五笔头的js*/
+.attainfoy {
+    FONT-SIZE: 12px;
+    TEXT-DECORATION: line-through
+}
+
+.attainfon {
+    FONT-SIZE: 12px
+}
+
+.attainfot {
+    COLOR: blue;
+    TEXT-DECORATION: underline
+}
+
+.autofinish {
+    BORDER-RIGHT: #000000 1px solid;
+    PADDING-RIGHT: 2px;
+    BORDER-TOP: #000000 1px solid;
+    PADDING-LEFT: 2px;
+    FONT-SIZE: 12px;
+    BACKGROUND: #eeeeee;
+    PADDING-BOTTOM: 2px;
+    BORDER-LEFT: #000000 1px solid;
+    COLOR: #0000cc;
+    PADDING-TOP: 2px;
+    BORDER-BOTTOM: #000000 1px solid;
+    FONT-FAMILY: arial
+}
+
+.autofinish_over {
+    FONT-SIZE: 12px;
+    BACKGROUND: #c4e4ff;
+    MARGIN: 5px;
+    COLOR: #0000cc
+}
+
+.autofinish TD {
+    FONT-SIZE: 12px
+}
+.spellCode{
+	BEHAVIOR: url('/inc/platform/htc/SpellCode.htc');
+	IME-MODE:disabled;
+}
+
+

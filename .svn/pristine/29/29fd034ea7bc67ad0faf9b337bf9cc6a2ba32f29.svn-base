@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- <meta name=”viewport” content=”width=device-width, initial-scale=1″ /> -->
+<title>${channel.title!channel.name}-${site.siteName}</title>
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${base}/css/reset.css">
+
+<link rel="stylesheet" type="text/css" href="${base}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${base}/css/dzfp.css">
+<script type="text/javascript" src="${base}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${base}/js/jquery.super.js"></script>
+<script type="text/javascript" src="${base}/js/tab.js"></script>
+<link rel="stylesheet" href="${base}/css/style_shouye.css">
+<link rel="stylesheet" href="${base}/css/style_denglu.css">
+<script type="text/javascript" src="${base}/js/denglu.js"></script>
+<!--解决IE6 png不透明的问题-->
+
+<!--[if IE 6]> 
+<script type="text/javascript" src="${base}/js/dd_png.js"></script> 
+<script type="text/javascript"> 
+        DD_belatedPNG.fix('a,div,img,*'); 
+</script> 
+
+<![endif]-->
+</head>
+<body>
+
+	[#include "../include/header.html"/]
+
+	<div class="solution_pic">
+		<img style="width: 100%;" src="${base}/images/gywm_banner.png"
+			alt="gywm_banner">
+	</div>
+	<div style="margin: 0 auto; width: 1170px;">
+		<div class="location">
+			您所在的位置：<a>首页</a><a target="_self"> &gt;公司简介</a> 
+		</div>
+		<div class="list_page">
+			<div class="dzfp_cd">
+				<div class="dzfp_cd01">
+					<p>关于我们</p>
+				</div>
+				<div class="dzfp_cd02">
+					<a href="${base}/gongsijianjie/index.html" title="公司简介" target="_self"
+						style="color: #fff;"><p>公司简介</p>
+						<a />
+				</div>
+				<div class="dzfp_cd03">
+					<a href="${base}/wnagdianditu/index.html" title="公司地图"
+						target="_self" style="color: #fff;"><p>公司地图</p></a>
+				</div>
+			</div>
+
+			<div class="dzfp_nr">
+				<div class="nr">
+					<div class="zw_con">
+						<div class="zw-title">
+							<h1 style="text-align: center;">公司简介</h1>
+
+							<div class="zw-fb-time" style="text-align: center;">发布日期：2017-06-28 11:05:45  消息来源：广东百望九赋电子有限公司</div>
+						</div>
+
+						<div class="swf_con">
+							<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">广东百望九赋电子有限公司成立于2012年9月14日 ，主要负责广东省增值税发票开票系统硬件和软件产品的销售和维护。公司目前除广州市总部以外，还有佛山，东莞，汕头，湛江，珠海，韶关等20个地市分公司。</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">&nbsp; &nbsp;广东百望九赋电子有限公司是以技术开发、技术服务为主营业务的公司。公司自成立以来，一直专注于信息安全类产品的开发、销售和技术服务。公司主要致力于提供面向政府、税务的信息安全产品和技术服务。目前，公司已经纳入了快速、稳定、健康、科学的发展轨道而且公司具有比较健全的营销和服务网络，以信心服务的理念服务客户，产生了较大的社会和经济效益。</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">&nbsp; &nbsp;百望九赋始终秉承&ldquo;用户的满意就是我们最大的成功&rdquo;，&ldquo;用户的赞誉就是我们最大的信心&rdquo;的经营理念和品牌承诺，树立了良好的企业形象与口碑。与社会各界朋友真诚合作，作为您最值得信赖的合作伙伴，随时准备为您提供最优质的服务。</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">百望九赋以人为本、励精图治，管理水平不断跃上新的台阶。公司对人才十分重视，并把人才的吸引、培养和使用看成公司健康稳定发展的根本。公司建立了一支以高学历、高素质、年富力强的多方面人才为骨干的专业技术服务团队，队伍稳定且工作高效。我们将坚持同用户、合作伙伴及公司员工一同成长、共同进步！</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">经营理念：</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">1 、我们的使命: &nbsp;用先进的管理理念和信息技术帮助客户成长。</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">2 、我们的价值观: &nbsp;为员工创造发展空间，提升员工价值，提高生活质量</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">3 、我们企业文化的核心: &nbsp;客户价值至上客户是我们的上帝，客户的来访和对我们提出的任何要求都是我们的荣幸，让客户满意是我们全体员工的毕生追求，我们要求自己所提供的超出客户所期望的。</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">单位名称：广东百望九赋电子有限公司<br />
+税号：91440101054505434W</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">账号：4400 1380 0410 5250 2261<br />
+收款单位开户行：中国建设银行广州市直属支行</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">地址：广州市番禺区东环街番禺大道北537号番山创业中心一号楼3区603房&nbsp;&nbsp;</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">传真：020-38211560</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">本地服务电话：4008339666</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">全国技术支持热线：400-611-2366</p>
+<p style="padding: 0px; margin: 0px; color: rgb(90, 82, 77); line-height: 36px; font-size: 16px; font-family: &quot;Microsoft Yahei&quot;, Lucida, Verdana, Helvetica, sans-serif;">全省客户服务QQ：800123668</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	[#include "../include/footer.html"/]
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0064)http://www.bwfapiao.com/server3/dzfp/forget/forget_gr_email.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+<meta name=”viewport” content=”width=device-width, initial-scale=1″ />
+<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+<title>电子发票平台</title> 
+<link rel="stylesheet" href="${base}/css/style_shouye.css">
+     <link rel="stylesheet" href="${base}/css/style_denglu.css">  
+<!-- cdn -->
+ <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> 
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+ <script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+
+<link href="${base}/images/logo.ico" type="image/x-icon" rel="shortcut icon"/>
+
+<script type="text/javascript" src="${base}/js/jquery.min.js"></script> 
+
+<script type="text/javascript" src="${base}/js/jquery.super.js"></script>
+<script type="text/javascript" src="${base}/js/jquery.layerModel.js"></script>
+<script type="text/javascript" src="${base}/js/tab.js"></script>
+
+ <link rel="stylesheet" href="${base}/css/style_denglu.css"> 
+<link rel="stylesheet" type="text/css" href="${base}/css/css_fp.css" />
+<script type="text/javascript"
+	src="${base}/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="${base}/js/jqueryslide.js"></script>
+<script type="text/javascript" src="${base}/js/dzfp.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${base}/css/css_fp.css">
+<script type="text/javascript" src="${base}/js/forget_gr_email.js"></script>
+</head>
+
+<body>
+[#include "../include/header.html"/]
+
+	<!--主体-->
+	<div class="phone_reg_bz">
+		<ul>
+			<li class="bzx">
+                            <div style="height: 70px;"><span class="span_bzbg firstNum" id="firstNum"> </span>
+                                    <div class="hangxian"></div></div>
+                                    <span class="span_bz_text">填写账户名</span></li>
+			<li class="bzx">
+                             <div style="height: 70px;"><span class="span_bzbg currurt02" id="secondNum"></span>
+                                   <div class="hangxian"></div></div>
+                                   <span class="span_bz_text">身份验证</span></li>
+			<li><span class="span_bzbg thirdNum" id="thirdNum"></span><span
+				class="span_bz_text" style="width: 90px;">设置新密码</span></li>
+		</ul>
+	</div>
+	<div class="title bod_btom w1000">
+		<h5>
+			您正在使用<span class="color_orange">"电子邮箱"</span>进行校验，请完成以下操作。
+		</h5>
+	</div>
+	<div class="qy_reg pb40 pt40">
+		<div class="forget_email_ui">
+			<p style="text-align: center;">邮件正发送到您的<span class="color_orange" id="account_txt"></span>邮箱,请点立即查收邮件按钮进行发送。</p>
+			<div class="qy_xgphone_btn"><a href="javascript:void(0);" id="sendEmail">立即查收邮件</a></div>
+			<div class="span_email_con" style="display: none;" id="email_div">
+				<input type="text" placeholder="请输入邮件中的验证码" id="email_txt" class="input_sjjym ml80 mt20" style="margin: 10px auto; width: 180px; height: 44px;">
+				<div class="qy_xgphone_btn"><a href="javascript:void(0);" id="nextTwo">下一步</a></div>
+			</div>
+		</div>
+	</div>
+	<!--主体结束-->
+	
+
+</body></html>

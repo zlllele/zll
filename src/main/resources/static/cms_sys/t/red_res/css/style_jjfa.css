@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+/*solution图片*/
+.solution_pic {width:100%;}
+
+/*侧栏导航*//
+.neirong {width:1300px;height:500px;border: 1px solid #0f0f0f; }
+.nav_side{float:left;width:192px;height:448px;margin-top: 49px;background-color: #1262cc;}
+.side_list{width:192px;height:448px;}
+.side_tizi{height: 56px;}
+.side_list a { display: block; color: #ffffff; font-size: 17px; font-family: "Microsoft Yahei";padding:12.8px;text-align: center; }
+.side_list a:hover{color: #ffd700;background:#1058b7;} 
+
+.side_ziti:hover{color: #ffd700;background:#1058b7;}
+
+/*主要内容*/
+.main_content{margin:109px 0 0 48px;float:left;height:100%;width:960px;background:url(../images/shangchao.png) no-repeat center top;}
+.main_content.celan_weizhi {padding-top:62px;padding-buttom:23px;color: #333; font-size: 24px; font-family: "Microsoft Yahei"}
+.jiejue01{color:#333;font-family:"微软雅黑";font-size:24px;}

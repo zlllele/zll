@@ -1,0 +1,116 @@
+@charset "utf-8";
+
+/*solution图片*/
+.solution_pic {width:100%;}
+
+/*侧栏导航*/
+/*
+.neirong {width:1300px;height:500px;border: 1px solid #0f0f0f; }
+nav_side{float:left;width:192px;height:448px;margin-left: 126px;margin-top: 49px;background-color: #1262cc;}
+.side_list{width:192px;height:448px;}
+.side_tizi{height: 56px;}
+.side_list a { display: block; color: #ffffff; font-size: 17px; font-family: "Microsoft Yahei";padding:10px;text-align: center; }
+.side_list a:hover{color: #ffd700;background:#1058b7;} 
+
+.side_ziti:hover{color: #ffd700;background:#1058b7;}
+*/
+/*主要内容*/
+.main_content{margin:109px 0 0 48px;float:left;height:100%;width:960px;}
+.neirong_weizhi {color: #333; font-size: 24px; font-family: "Microsoft Yahei"}
+
+.solution_pic.xfzms {}
+
+
+.nr_cpjs {    width: 1200px; margin: 0 auto;}
+/*产品介绍*/
+.cpld{
+    margin: 74px auto 50px;
+    width: 980px;
+   
+    float: right;}
+.cpld_wz {height:35px}
+.cpld_wz span {color: #333333; font-size: 24px; font-family: "Microsoft Yahei";text-align: center;font-weight: bold; }
+
+
+.cpld_fz_l {float: left; margin-top: 31px;width: 100%;}
+.cpld_fz_l_tp {float:left; margin-top:13px;}
+.cpld_fz_l_wz {float:left;margin-left: 40px;line-height:56px}
+.cpld_fz_l_wz_u {color: #333333;font-size: 18px;}
+.cpld_fz_l_wz_l {color: #666666;font-size: 16px;float: left;}
+
+.cpld_fz_r {float:right;padding-top: 31px;width: 100%;line-height:35px}
+.cpld_fz_r_tp {float:right; margin-top:0px }
+.cpld_fz_r_wz {float:right ;text-align: right;}
+.cpld_fz_r_wz_u {color: #333333;font-size: 18px;padding-right: 40px;}
+.cpld_fz_r_wz_l {color: #666666;font-size: 16px; padding-right: 40px; margin-top: 19px;}
+
+.cpld_fz_r_tp02 {float:right; margin-top:19px }
+
+/*操作说明*/
+.cz{background-color: #f3f4f6;
+    clear: both;
+    width: 100%;}
+.czsm {width:1200px;height:1250px;background-color: #f3f4f6;margin: 0px auto; min-width: 1200px;}
+.button_moshi {margin-left: 220px;;height:106px;color: #333333;
+    font-size: 24px;
+    font-family: "Microsoft Yahei";
+    text-align: center;
+    font-weight: bold;}
+.button_moshi2{ margin-left: 220px;height:106px; color: #333333;
+    font-size: 24px;
+    font-family: "Microsoft Yahei";
+    text-align: center;
+    font-weight: bold;}
+.button_ms_l{float:left;width:50%;}
+.button_ms_r{float:left;width:50%;}
+.ms_xz{;cursor: pointer;
+    border-bottom-style: solid;
+    border-bottom-color: #1058b7;
+    margin-top: 20px;}
+.ms_xz02{;cursor: pointer;
+    margin-top: 20px;}
+
+.img_ms_l {    padding: 10px; color: #1058b7;}
+.img_ms_l02 {    padding: 10px;}
+
+.img_ms_r {    padding: 10px;}
+.img_ms_r02 {    padding: 10px;color: #1058b7;}
+
+.czsm_wz {height:35px;width: 300px; margin-left: 220px;   }
+.czsm_wz span {color: #333333; font-size: 24px; font-family: "Microsoft Yahei";text-align: center;font-weight: bold; }
+
+.xfzms {margin-top: 28px;margin-left: 220px;}
+.xfzms_1 {float: left;height: 206px;background-color: #ffffff;margin-top: 50px;width: 100%;}
+.shuzi {float: left;}
+.wenzi{float: left;padding-left: 59px;float:left;width:500px;}
+.tupian{float: right;}
+
+.sjms {display:none;margin-top: 28px; margin-left: 220px;}
+
+/*优势服务*/
+.ysfw {width:1200px;height:670px;margin: 0 auto;}
+/*.ysfw_wkp{background:url('../images/cp-wkp_r3_c1.png') no-repeat center; width:100% ;height:100%; } */
+
+.ysfw_wz {padding-top: 35px; width: 300px;    margin-left: 220px;}
+.ysfw_wz span {color: #333333; font-size: 24px; font-family: "Microsoft Yahei";text-align: center;font-weight: bold; }
+#ysfw_wz_s {padding-left: 18px;}
+.ysfw_nr{ padding-top: 35px;margin-left: 220px;}
+.ysfw_nr img {width:980px;}
+
+
+.jptd { padding-top: 32px;padding-left: 229px;height: 210px;width: 670px;float:left}
+.jptd_tm{}
+.jptd_tm_wz {padding-left: 11px;font-size: 24px;}
+.jptd_nr { padding-top: 50px;color: #666;font-size: 18px;}
+   
+/*品质保障*/
+.pzbz {padding-top: 32px;padding-left: 60px;height: 210px;width: 570px;float:left}
+.pzbz_nr { padding-top: 50px;color: #666;font-size: 18px;}  
+
+/*免费服务*/
+.mffw { padding-top: 182px;padding-left: 229px;height: 210px;width: 670px;float:left}
+.mffw_nr { padding-top: 50px;color: #666;font-size: 18px;}  
+
+/*行业覆盖*/
+.hyfg { padding-top: 182px;padding-left: 60px;height: 210px;width: 570px;float:left}
+.hyfg_nr { padding-top: 50px;color: #666;font-size: 18px;}  

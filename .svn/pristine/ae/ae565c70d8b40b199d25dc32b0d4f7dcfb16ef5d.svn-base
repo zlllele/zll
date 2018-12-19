@@ -1,0 +1,22 @@
+package net.htjs.pt4.cms.freemarker.directive.abs;
+
+import javax.annotation.Resource;
+
+import freemarker.template.TemplateDirectiveModel;
+import net.htjs.pt4.cms.service.IUserService;
+
+public abstract class AbstractUserDirective implements TemplateDirectiveModel {
+
+	/**
+	 * 输入参数，站点ID
+	 */
+	public static final String PARAM_SITE_ID = "siteId";
+
+	/**
+	 * 输入参数，用户ID。
+	 */
+	public static final String PARAM_ID = "id";
+
+	@Resource
+	protected IUserService userService;
+}

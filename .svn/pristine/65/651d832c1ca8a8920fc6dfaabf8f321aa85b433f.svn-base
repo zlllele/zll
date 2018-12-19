@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name=”viewport” content=”width=device-width, initial-scale=1″ />
+<title>${channel.title!channel.name}-${site.siteName}</title>
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="${base}/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${base}/css/style.css">
+<!-- <link rel="stylesheet" type="text/css" href="${base}/css/style_jjfa.css">  -->
+<link rel="stylesheet" type="text/css"
+	href="${base}/css/style_dianshang.css">
+<script type="text/javascript" src="${base}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${base}/js/jquery.super.js"></script>
+<script type="text/javascript" src="${base}/js/tab.js"></script>
+<link rel="stylesheet" href="${base}/css/style_shouye.css">
+<link rel="stylesheet" href="${base}/css/style_denglu.css">
+<link rel="stylesheet" href="${base}/css/xz.css">
+<script type="text/javascript" src="${base}/js/denglu.js"></script>
+
+<!--解决IE6 png不透明的问题-->
+
+<!--[if IE 6]> 
+<script type="text/javascript" src="${base}/js/dd_png.js"></script> 
+<script type="text/javascript"> 
+        DD_belatedPNG.fix('a,div,img,*'); 
+</script> 
+<![endif]-->
+</head>
+
+<body style="background-color: #f7f7f7;">
+	[#include "../include/header.html"/]
+
+
+	<div
+		style="background-color: #fff; margin: 0 auto 50px; padding-top: 30px; font-size: 19px; width: 1170px; border-bottom-color: #cccccc; border-bottom-style: solid;">
+
+
+		<div
+			style="padding-left: 3%; padding-bottom: 30px; border-bottom-color: #cccccc; border-bottom-style: solid;">
+			<p>下载中心</p>
+		</div>
+		<!--下载内容 -->
+		<div style="width: 100%; margin: 0 auto; height: 300px;">
+			<div class="xznr" id="rjjc01" style="margin-top: 32px;">
+				<div class="nr_bt">
+					<p style="font-size: 18px; color: #333;">
+						<a
+							href="${base}/u/201804/8b7e67659f824a31978d72f00a874f07.zip"
+							style="color: #1157b7;">e财税 v1.6</a>
+					</p>
+				</div>
+				<div class="nr_qqxz">
+					<span><p style="float: left; color: #999999;">11.4M</p>
+						<p style="float: left; padding-left: 128px; color: #1157b7">2018-02-07</p></span>
+				</div>
+			</div>
+			<!-- 2 -->
+			<div class="xznr" id="kprj01">
+
+				<div class="nr_bt">
+					<p style="font-size: 18px; color: #333;">
+						<a
+							href="${base}/u/201804/skfwqkpkhd20170216GD.zip"
+							style="color: #1157b7;">税控服务器开票客户端</a>
+					</p>
+				</div>
+				<div class="nr_qqxz">
+					<span><p style="float: left; color: #999999;">25.2M</p>
+						<p style="float: left; padding-left: 128px; color: #1157b7;">2017-08-18</p>
+					</span>
+				</div>
+			</div>
+
+			<!-- 4 -->
+			<div class="xznr" id="kprj02">
+
+				<div class="nr_bt">
+					<p style="font-size: 18px; color: #333;">
+						<a href="${base}/u/201804/kprjV2.0.13.zip"
+							style="color: #1157b7;">税控开票软件（税控盘版）</a>
+					</p>
+				</div>
+				<div class="nr_qqxz">
+					<span><p style="float: left; color: #999999;">52.1M</p>
+						<p style="float: left; padding-left: 128px; color: #1157b7;">2018-08-18</p>
+					</span>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	[#include "../include/footer.html"/]
+
+</body>
+</html>

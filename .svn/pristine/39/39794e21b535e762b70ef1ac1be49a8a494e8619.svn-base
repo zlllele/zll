@@ -1,0 +1,12 @@
+package net.htjs.pt4.cms.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import net.htjs.pt4.core.BaseController;
+
+@RestController
+@RequestMapping("/resource")
+public class ResourceController extends BaseController{
+
+}

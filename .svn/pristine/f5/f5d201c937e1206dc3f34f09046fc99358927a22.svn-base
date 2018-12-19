@@ -1,0 +1,4 @@
+body {background:url(/images/login/oa_02.jpg) repeat-x top; background-color:#024bb2; font-family:"Î¢ÈíÑÅºÚ","ËÎÌå"; margin:0px; padding:0px;} 
+.land_bg{height:630px; background:url(/images/login/oa_03.jpg) no-repeat center;}
+.land_input_ta {padding-top:378px; padding-left:410px;}
+.land_input { border:1px solid #808080; width:160px; height:20px; line-height:22px;}

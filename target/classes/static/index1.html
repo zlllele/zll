@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>客户端管理</title>
+<script type="text/javascript" src="/commons/js/include_ui.js?dm=102021222425"></script>
+<script type="text/javascript" src="/jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript">
+//上传图片
+function upload(n) {
+	var of = $("#uploadFile"+n);
+	//检查是否选择了图片
+	if(of.val()=="") {
+		alert("请选择附件");
+		return;
+	}
+	//将file移动至上传表单
+	$("#fileContent").empty();
+	$("#fileContent").append(of);
+	//复制一个file放至原处
+	$("#ufc"+n).append(of.clone().attr("value",""));
+	//修改属性
+	of.attr("id","");
+	of.attr("name","uploadFile");
+	//先清除
+	$("#uploadNum").val(n);
+	$("#uploadForm").submit();
+}
+</script>
+
+</head>
+<body>
+	<form id="uploadForm" action="/user/list.do" method="post" enctype="multipart/form-data" target="hiddenIframe" style="display:none;width:0px;height:0px;">
+		<span id="fileContent"></span>
+		<input id="uploadNum" type="hidden" name="uploadNum"/>
+	</form>
+	<iframe name="hiddenIframe" frameborder="0" border="0" style="display:none;width:0px;height:0px;"></iframe>
+	
+	<table width="90%" border="1">
+		<tr>
+			<td>附件地址：</td>
+			<td><input type="text" id="uploadImgPath1" name="uploadImgPath" /></td>
+		</tr>
+		<tr>
+			<td>附件：</td>
+			<td>
+				<span id="ufc1"><input type="file" id="uploadFile1" name="uploadFile" /></span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<img id="preImg1" />
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2">
+				<button onclick="upload(1)" >上传</button>
+			</td>
+		</tr>
+	</table>
+</body>

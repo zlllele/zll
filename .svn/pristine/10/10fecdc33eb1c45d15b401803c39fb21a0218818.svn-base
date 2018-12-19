@@ -1,0 +1,59 @@
+package net.htjs.pt4.cms.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import net.htjs.pt4.cms.dao.MarkMapper;
+import net.htjs.pt4.cms.entity.Mark;
+import net.htjs.pt4.cms.service.IMarkService;
+
+/**
+ * 水印管理实现类
+ * @author caojian
+ *
+ */
+@Service
+public class MarkService extends BaseService<Mark> implements IMarkService {
+
+	@Resource
+	private MarkMapper markMapper;
+
+	/**
+	 * 根据站点查询水印信息
+	 */
+	@Override
+	public List<Map<String, Object>> queryMark(String site_id) {
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("site_id", site_id);
+		List<Map<String, Object>> list = markMapper.queryMark(map);
+		return list;
+	}
+
+	/**
+	 * 保存水印信息
+	 */
+	@Override
+	public void saveMark(Mark mark) {
+		Map<String ,Object> map=new HashMap<String,Object>();
+		map.put("mark_alpha", mark.getMark_alpha());
+		map.put("mark_color", mark.getMark_color());
+		map.put("mark_content", mark.getMark_content());
+		map.put("mark_offset_x", mark.getMark_offset_x());
+		map.put("mark_offset_y", mark.getMark_offset_y());
+		map.put("mark_on", mark.getMark_on());
+		map.put("mark_position", mark.getMark_position());
+		map.put("mark_size",mark.getMark_size());
+		map.put("site_id", mark.getSite_id());
+		List<Map<String, Object>> list = markMapper.queryMark(map);
+		if(list!=null&&list.size()>0){
+			markMapper.updateMark(map);
+		}else{
+			markMapper.saveMark(map);	
+		}
+	}
+}

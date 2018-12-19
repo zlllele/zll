@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>客户端管理</title>
+<script src="/commons/fckeditor/fckeditor.js" type="text/javascript"></script>
+</head>
+<body>
+	<table width="90%" border="1">
+		<tr>
+			<td width="100%">
+<script type="text/javascript">
+var editorBasePath = "/commons/fckeditor/";
+var filemanager = editorBasePath + "editor/filemanager/browser/default/browser.html"
+var txt = new FCKeditor("txt");
+txt.BasePath = editorBasePath;
+txt.Config["CustomConfigurationsPath"] = editorBasePath + "myconfig.js";
+
+txt.Config["LinkBrowser"] = false ;
+txt.Config["ImageBrowser"] = false ;
+txt.Config["FlashBrowser"] = false ;
+txt.Config["MediaBrowser"] = false ;
+
+txt.Config["LinkBrowserURL"] = filemanager + "?Connector=/fck/connector.do" ;
+txt.Config["ImageBrowserURL"] = filemanager + "?Type=Image&Connector=/fck/connector.do" ;
+txt.Config["FlashBrowserURL"] = filemanager + "?Type=Flash&Connector=/fck/connector.do" ;
+txt.Config["MediaBrowserURL"] = filemanager + "?Type=Media&Connector=/fck/connector.do" ;
+
+txt.Config["LinkUpload"] = true ;
+txt.Config["ImageUpload"] = true ;
+txt.Config["FlashUpload"] = true ;
+txt.Config["MediaUpload"] = true ;
+
+txt.Config["LinkUploadURL"] = "/fck/upload.do" ;
+txt.Config["ImageUploadURL"] = "/fck/upload.do?Type=Image" ;
+txt.Config["FlashUploadURL"] = "/fck/upload.do?Type=Flash" ;
+txt.Config["MediaUploadURL"] = "/fck/upload.do?Type=Media" ;
+
+txt.ToolbarSet="My";
+txt.Height=230;
+txt.Value="";
+txt.Create();
+</script>
+			</td>
+		</tr>
+	</table>
+</body>

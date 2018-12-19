@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.htjs.pt4.cms.dao.LogMapper">
+	<resultMap id="BaseLogMap" type="net.htjs.pt4.cms.entity.Log">
+		<id column="log_id" jdbcType="VARCHAR" property="log_id" />
+		<result column="site_id" jdbcType="VARCHAR" property="site_id" />
+		<result column="user_id" jdbcType="VARCHAR" property="user_id" />
+		<result column="user_name" jdbcType="VARCHAR" property="user_name" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="content" jdbcType="VARCHAR" property="content" />
+		<result column="ip" jdbcType="VARCHAR" property="ip" />
+		<result column="create_time" jdbcType="VARCHAR" property="create_time" />
+	</resultMap>
+	
+	<insert id="addLog" parameterType="map">
+		insert into hj_log (
+	        log_id,
+			site_id,
+			user_id,
+			user_name,
+			title,
+			content,
+			ip,
+			create_time
+		) values (
+			#{log_id},
+			#{site_id},
+			#{user_id},
+			#{user_name},
+			#{title},
+			#{content},
+			#{ip},
+			#{create_time}	
+		)
+    </insert>
+   
+    <select id="getLogs" parameterType="map" resultType="hashMap">
+        select a.*,b.site_name from hj_log a,hj_site b where a.site_id=b.site_id 
+        <if test="user_name!=null and user_name!=''">
+        	and a.user_name like concat('%',#{user_name},'%') 
+        </if>
+        <if test="title!=null and title!=''">
+        	and a.title like concat('%',#{title},'%') 
+        </if>
+        <if test="ip!=null and ip!=''">
+        	and a.ip like concat('%',#{ip},'%') 
+        </if>
+        order by create_time desc
+	</select>
+	
+	<delete id="deleteLog" parameterType="map">
+        delete from hj_log where log_id=#{log_id}
+    </delete>
+	
+	<delete id="deleteBatch" parameterType="map">
+        delete from hj_log where 1=1 
+        <if test="deleteType=='year'">
+        	<![CDATA[ and str_to_date(create_time,'%Y-%m-%d %H:%i:%S') < DATE_ADD(now(), INTERVAL -1 YEAR) ]]>    
+        </if>
+        <if test="deleteType=='quarter'">
+        	<![CDATA[ and str_to_date(create_time,'%Y-%m-%d %H:%i:%S') < DATE_ADD(now(), INTERVAL -3 MONTH) ]]>   
+        </if>
+        <if test="deleteType=='month'">
+        	<![CDATA[ and str_to_date(create_time,'%Y-%m-%d %H:%i:%S') < DATE_ADD(now(), INTERVAL -1 MONTH) ]]>   
+        </if>
+        <if test="deleteType=='week'">
+        	<![CDATA[ and str_to_date(create_time,'%Y-%m-%d %H:%i:%S') < DATE_ADD(now(), INTERVAL -7 DAY) ]]>   
+        </if>
+    </delete>
+</mapper>

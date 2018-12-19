@@ -1,0 +1,158 @@
+package net.htjs.pt4.cms.controller;
+
+import net.htjs.pt4.cms.service.IAttachmentService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+import net.htjs.pt4.core.Datagrid;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * 附件管理类
+ * @author caojian
+ */
+@Controller
+@RequestMapping("/attachment")
+public class AttachmentController extends BaseController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AttachmentController.class);
+
+	@Autowired
+	private IAttachmentService attachmentService;
+	@Autowired
+	private ISiteService siteService;
+
+	/**
+	 * 获取站点文件夹列表
+	 * @param page
+	 * @param pageNo
+	 * @param pageSize
+	 * @param callback
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/listSite.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object listSite(Integer page, Integer pageNo, Integer pageSize, String callback,HttpServletRequest request) {
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		int code = 0;
+		String msg = "";
+		try {
+			Datagrid datagrid = attachmentService.getListSite(page,pageSize);
+			mapModel.put("data", datagrid.getRows());
+		} catch (Exception e) {
+			LOGGER.error("日志记录查询异常："+e.getMessage());
+			msg=e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+	
+	/**
+	 * 获取时间文件夹列表
+	 * @param site_id
+	 * @param page
+	 * @param pageNo
+	 * @param pageSize
+	 * @param callback
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/listTime.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object listTime(Integer page, Integer pageNo, Integer pageSize, String callback,HttpServletRequest request) {
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		int code = 0;
+		String msg = "";
+		try {
+			String zzjgDm = UserUtils.getZzjgId(request);
+			if (StringUtils.isNotBlank(zzjgDm)) {
+				String site_id=siteService.findByZzjgDm(zzjgDm).getSiteId();
+				Datagrid datagrid = attachmentService.getListTime(page,pageSize,site_id);
+				mapModel.put("data", datagrid.getRows());
+			} else {
+				code = -3;
+				msg = "登录信息失效 请重新登陆";
+			}
+		} catch (Exception e) {
+			LOGGER.error("日志记录查询异常："+e.getMessage());
+			msg=e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+	
+	/**
+	 * 获取文件列表
+	 * @param site_id
+	 * @param file_time
+	 * @param page
+	 * @param pageNo
+	 * @param pageSize
+	 * @param callback
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/listFile.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object listFile(String file_time,Integer page, Integer pageNo, Integer pageSize, String callback,HttpServletRequest request) {
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		int code = 0;
+		String msg = "";
+		try {
+			String zzjgDm = UserUtils.getZzjgId(request);
+			if (StringUtils.isNotBlank(zzjgDm)) {
+				String site_id=siteService.findByZzjgDm(zzjgDm).getSiteId();
+				Datagrid datagrid = attachmentService.getListFile(page,pageSize,site_id,file_time);
+				mapModel.put("data", datagrid.getRows());
+			} else {
+				code = -3;
+				msg = "登录信息失效 请重新登陆";
+			}
+		} catch (Exception e) {
+			LOGGER.error("日志记录查询异常："+e.getMessage());
+			msg=e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+	
+	/**
+	 * 删除附件
+	 * @param log_id
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = "/delete.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object delete(String content_id,String file_name,String file_path,String file_time,String site_id, String callback) {
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		int code = 0;
+		String msg = "";
+		try {
+			String condition=attachmentService.deleteAttachment(content_id,file_name,file_path,file_time,site_id);
+			mapModel.put("condition", condition);
+			mapModel.put("file_time", file_time);
+			mapModel.put("site_id", site_id);
+		} catch (Exception e) {
+			LOGGER.error("日志记录删除异常："+e.getMessage());
+			msg=e.getMessage();
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+}

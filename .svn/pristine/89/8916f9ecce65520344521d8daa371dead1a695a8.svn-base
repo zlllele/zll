@@ -1,0 +1,120 @@
+package net.htjs.pt4.cms.controller;
+
+import net.htjs.pt4.cms.entity.Mark;
+import net.htjs.pt4.cms.service.IMarkService;
+import net.htjs.pt4.cms.service.ISiteService;
+import net.htjs.pt4.cms.utils.UserUtils;
+import net.htjs.pt4.core.BaseController;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 水印管理类
+ * @author caojian
+ */
+@Controller
+@RequestMapping("/mark")
+public class MarkController extends BaseController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(MarkController.class);
+
+	@Resource
+	private IMarkService markService;
+	@Resource
+	private ISiteService siteService;
+	
+	/**
+	 * 查询站点的水印信息
+	 * @param site_id
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = "/list.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object list(String callback,HttpServletRequest request) {
+		int code=0;
+		String msg="";
+		Map<String, Object> mapModel=new HashMap<String, Object>();
+		try {
+			String zzjgDm = UserUtils.getZzjgId(request);
+			if (StringUtils.isNotBlank(zzjgDm)) {
+				String site_id=siteService.findByZzjgDm(zzjgDm).getSiteId();
+				List<Map<String, Object>> list=markService.queryMark(site_id);
+				if(list==null||list.size()==0){
+					code=-2;
+				}else{
+					mapModel.put("data", list.get(0));
+				}
+			} else {
+				code = -3;
+				msg = "登录信息失效 请重新登陆";
+			}
+		} catch (Exception e) {
+			msg="获取水印信息异常："+e.getMessage();
+			LOGGER.error(msg);
+			code=-1;
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		return obj;
+	}
+	
+	/**
+	 * 保存和修改水印，因为参数都一样，所以合并成一个方法
+	 * @param site_id
+	 * @param mark_on
+	 * @param mark_content
+	 * @param mark_size
+	 * @param mark_color
+	 * @param mark_alpha
+	 * @param mark_position
+	 * @param mark_offset_x
+	 * @param mark_offset_y
+	 * @param callback
+	 * @return
+	 */
+	@RequestMapping(value = "/add.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object add(Integer mark_on,String mark_content,Integer mark_size,String mark_color,Integer mark_alpha,Integer mark_position,Integer mark_offset_x,Integer mark_offset_y,String callback,HttpServletRequest request) {
+		int code=0;
+		String msg="";
+		Map<String, Object> mapModel=new HashMap<String, Object>();
+		try {
+			String zzjgDm = UserUtils.getZzjgId(request);
+			if (StringUtils.isNotBlank(zzjgDm)) {
+				String site_id=siteService.findByZzjgDm(zzjgDm).getSiteId();
+				Mark mark=new Mark();
+				mark.setSite_id(site_id);
+				mark.setMark_on(mark_on);
+				mark.setMark_content(mark_content);
+				mark.setMark_size(mark_size);
+				mark.setMark_color(mark_color);
+				mark.setMark_alpha(mark_alpha);
+				mark.setMark_position(mark_position);
+				mark.setMark_offset_x(mark_offset_x);
+				mark.setMark_offset_y(mark_offset_y);
+				markService.saveMark(mark);
+			} else {
+				code = -3;
+				msg = "登录信息失效 请重新登陆";
+			}
+		} catch (Exception e) {
+			msg="水印保存或修改异常："+e.getMessage();
+			LOGGER.error(msg);
+			code = -1;
+		}
+		Object obj = getResult(mapModel, code, msg,callback);
+		return obj;
+	}
+	
+}

@@ -1,0 +1,41 @@
+html,body {
+	font: normal 12px verdana;
+	margin: 0px;
+	padding: 0px;
+	border: 0 none;
+	overflow: hidden;
+	height: 100%;
+	text-align:center;
+}
+p {
+	margin: 5px;
+}
+
+a {font-size:12px; color:#3394D3; text-decoration:none;}
+a:visited {font-size:12px; color:#3394D3; text-decoration:none;}
+a:hover {font-size:12px; color:#3394D3; top: 1px; position: relative;}
+a:link {font-size:12px; color:#3394D3; text-decoration:none;}
+
+.div_title{
+FONT-WEIGHT: bold;border:1px solid #52D7F8; FONT-SIZE: 13px; BACKGROUND: url(/images/chat/chat_bg1.gif); OVERFLOW: hidden; WIDTH: 177px; LINE-HEIGHT: 26px; HEIGHT: 26px; TEXT-ALIGN: center
+}
+.div_content{
+	FONT-SIZE: 12px; MARGIN: 3px; OVERFLOW: hidden; LINE-HEIGHT: 20px;
+	width:170px;
+	overflow:hidden;text-overflow:ellipsis;
+}
+.treeTable{
+	padding:0px;
+	margin:0px;
+}
+
+.ico{
+	cursor:hand;
+	margin-left:10px;
+}
+.ico_on{
+	cursor:hand;
+	margin-left:10px;
+	background:url(/images/chat/img_on_bg.gif);
+}
+	

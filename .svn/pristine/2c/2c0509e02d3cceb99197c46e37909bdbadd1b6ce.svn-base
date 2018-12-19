@@ -1,0 +1,78 @@
+package net.htjs.pt4.cms.service;
+
+import java.util.Map;
+
+import net.htjs.pt4.cms.entity.Site;
+import net.htjs.pt4.core.Datagrid;
+
+/**
+ * 站点业务处理接口
+ * 
+ * @author xieshiyu
+ *
+ */
+public interface ISiteService {
+
+	/**
+	 * 以站点ID查询站点对象
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findById(String siteId) throws Exception;
+	
+	/**
+	 * 查询站点列表
+	 * @param map
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 * @throws Exception
+	 */
+	Datagrid selectSite(Map<String, String> map, int pageNum, int pageSize) throws Exception;
+
+	/**
+	 * 站点流量统计
+	 * 
+	 * @param siteId
+	 */
+	public Integer flow(String siteId) throws Exception;
+
+	/**
+	 * 以组织机构查询站点信息
+	 * 
+	 * @param siteId
+	 * @return
+	 */
+	public Site findByZzjgDm(String zzjgDm) throws Exception;
+	
+	/**
+	 * 检查站点是否重复
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean checkSiteIsExist(Map<String,Object> map) throws Exception;
+	
+	/**
+	 * 站点新增
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	public void addSite(Map<String,Object> map) throws Exception;
+	
+	/**
+	 * 站点修改
+	 * @param map
+	 * @throws Exception
+	 */
+	public void editSite(Map<String,Object> map) throws Exception;
+	
+	/**
+	 * 站点删除
+	 * @param map
+	 * @throws Exception
+	 */
+	public void delSite(String id) throws Exception;
+}

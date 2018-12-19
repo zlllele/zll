@@ -1,0 +1,21 @@
+package net.htjs.pt4.cms.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import net.htjs.pt4.cms.dao.FriendLinkTypeMapper;
+import net.htjs.pt4.cms.service.IFriendLinkTypeService;
+
+/**
+ * 友情链接类别业务类
+ * 
+ * @author xieshiyu
+ *
+ */
+@Service
+public class FriendLinkTypeService implements IFriendLinkTypeService {
+
+	@Autowired
+	private FriendLinkTypeMapper fLTMapper;
+
+}

@@ -1,0 +1,69 @@
+.top_but_div {
+	display: block;
+	width: 230px;
+	float: right;
+	margin: 15px 0 0 0;
+}
+
+a.top_but_xgmm,a.top_but_tcdl {
+	background: url(images/cms_login/top_but.gif) no-repeat;
+	display: block;
+	float: left;
+	margin-right: 10px;
+	width: 91px;
+	height: 18px;
+	_height: 17px;
+	font-size: 13px;
+	text-indent: 22px;
+	text-align: center;
+	padding: 4px 0 0 0px;
+	_padding: 5px 0 0 0px;
+	text-decoration: none;
+	color: #333;
+	border: 0px solid #f00;
+}
+
+a.top_but_xgmm:hover {
+	background-position: 0px -30px;
+	color: #6D571D;
+}
+
+a.top_but_tcdl {
+	background-position: 0px -60px;
+}
+
+a.top_but_tcdl:hover {
+	background-position: 0px -90px;
+	color: #6D571D;
+}
+
+.top_ctrl_div {
+	margin: 0 0 0 0;
+	width: 70px;
+	display: block;
+	float: right;
+}
+
+a.top_ctrl_min {
+	background: url(./images/ctrl_min1.jpg) no-repeat;
+	width: 32px;
+	height: 24px;
+	display: block;
+	float: right;
+}
+
+a.top_ctrl_min:hover {
+	background: url(./images/ctrl_min2.jpg) no-repeat;
+}
+
+a.top_ctrl_close {
+	background: url(./images/ctrl_close1.jpg) no-repeat;
+	width: 36px;
+	height: 24px;
+	display: block;
+	float: right;
+}
+
+a.top_ctrl_close:hover {
+	background: url(./images/ctrl_close2.jpg) no-repeat;
+}

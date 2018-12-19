@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.htjs.pt4.cms.dao.SiteMapper">
+	<resultMap id="siteMap" type="net.htjs.pt4.cms.entity.Site">
+		<id column="site_id" jdbcType="VARCHAR" property="siteId" />
+		<result column="site_name" jdbcType="VARCHAR" property="siteName" />
+		<result column="short_name" jdbcType="VARCHAR" property="shortName" />
+		<result column="tpl_path" jdbcType="VARCHAR" property="tplPath" />
+		<result column="static_path" jdbcType="VARCHAR" property="staticPath" />
+		<result column="domain" jdbcType="VARCHAR" property="domain" />
+		<result column="static_dir" jdbcType="VARCHAR" property="staticDir" />
+		<result column="tpl_solution" jdbcType="VARCHAR" property="tplSolution" />
+		<result column="is_recycle_on" jdbcType="CHAR" property="recydeOn" />
+		<result column="is_root" jdbcType="CHAR" property="root" />
+	</resultMap>
+
+	<!-- 以站点ID查询站点对象 -->
+	<select id="findById" resultMap="siteMap" parameterType="String">
+		select
+		site_id,site_name,short_name,tpl_path,static_path,domain,static_dir,tpl_solution,is_recycle_on,is_root
+		from hj_site where site_id=#{siteId}
+	</select>
+</mapper>

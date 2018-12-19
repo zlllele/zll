@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>栏目管理</title>
+<script type="text/javascript" src="../../../commons/js/include_ui.js?dm=102021222425"></script>
+<script type="text/javascript" src="../../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript" src="channel.js"></script>
+</head>
+<body>
+	<!-- 分割开始-->
+	<div id="divSplitter" class="divSplitter">
+		<div id="leftPane" class="leftPane">
+			<div class="treeTitle">栏目管理</div>
+			<ul id="treeModule" class="ztree"></ul>
+		</div>
+		<div id="rigthPane" class="rigthPane">
+			<div class="panelBar">
+				<ul class="toolBar">
+					<li class="">
+						<a class="add">
+							<span>
+								<input type="button" onclick="zzjggl.onAdd();" accesskey="a" onmouseout="this.style.color='#000'" onmousemove="this.style.color='#f00'"
+									value="新建下级栏目(A)">
+							</span>
+						</a>
+					</li>
+					<!-- <li class="">
+						<a class="edit">
+							<span>
+								<input type="button" onclick="zzjggl.onEdit();" accesskey="e" onmouseout="this.style.color='#000'" onmousemove="this.style.color='#f00'"
+									value="编辑(E)">
+							</span>
+						</a>
+					</li>
+					<li class="">
+						<a class="able">
+							<span>
+								<input type="button" onclick="zzjggl.onUpdateISDELETE('0');" accesskey="" onmouseout="this.style.color='#000'"
+									onmousemove="this.style.color='#f00'" value="启用">
+							</span>
+						</a>
+					</li>
+					<li class="">
+						<a class="disable">
+							<span>
+								<input type="button" onclick="zzjggl.onUpdateISDELETE('1');" accesskey="" onmouseout="this.style.color='#000'"
+									onmousemove="this.style.color='#f00'" value="禁用">
+							</span>
+						</a>
+					</li> -->
+				</ul>
+			</div>
+			<table id="tbList" class="tbClass"></table>
+	<div id="tbListPg" style="text-align: center;"></div>
+		</div>
+	</div>
+</body>
+</html>

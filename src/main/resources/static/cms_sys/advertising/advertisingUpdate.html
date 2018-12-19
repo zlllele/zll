@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>友情链接类别添加</title>
+<script type="text/javascript" src="../../commons/js/include_ui.js?dm=10212527"></script>
+<script type="text/javascript" src="../../jdgl/commons/js/include_ui_jdgl.js?dm=60"></script>
+<script type="text/javascript" src="advertisingUpdate.js?'+Math.random();+'"></script>
+</head>
+<body>
+	<form action="" name="formSave" id="formSave">
+		<table id="tbSave" class="table_add" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="tdclass_view" nowrap>名称：</td>
+				<td class="tdclass_edit">
+					<input type="hidden" id="advertising_id" name="update_advertising_id">
+					<input type="text" class="textInput" id="name" name="update_name" validatorrules="Require" msg0="请填写名称">
+				</td>
+				<td class="tdclass_view" nowrap>版位：</td>
+				<td class="tdclass_edit">
+					<select id="category" name="update_category" validatorrules="Require" msg0="请选择版位">
+						<option value="0">页头banner</option>
+						<option value="1">通栏</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view" nowrap>类型：</td>
+				<td class="tdclass_edit">
+					<input type="radio" name="update_adspace_id" flag="update_adspace_id0" value="0" onclick="advertisingUpdate.changeAdspace_id('0');">图片
+					<input type="radio" name="update_adspace_id" flag="update_adspace_id1" value="1" onclick="advertisingUpdate.changeAdspace_id('1');">文字
+				</td>
+				<td class="tdclass_view" nowrap>权重：</td>
+				<td class="tdclass_edit">
+					<input type="text" class="textInput" id="ad_weight" name="update_ad_weight" validatorrules="Require" msg0="请填写权重">（值越小越靠前）
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view" nowrap>广告内容：</td>
+				<td class="tdclass_edit" colspan="3">
+					<label name="content_pic">
+						<div style="height: 47px;">
+							<span>图片上传：</span>
+							<input type="text" class="textInput" id="fileName" name="update_fileName" size="14" readonly="readonly" style="display:block;" validatorrules="Require" msg0="请上传图片">  
+							<span id="ufc1" name="ufc1" style="position:relative">
+								<input type="hidden" name="update_fileUrl_old" id="fileUrl_old">
+								<input type="hidden" name="update_fileUrl" id="fileUrl">
+								<input type="hidden" name="update_fileUrl_bak" id="fileUrl_bak">
+								<input onchange="$('input[name=uploadFileText1]').val(this.value)" size="14" type="file" id="uploadFile1" name="uploadFile1" class="file-button" style="display:none;">
+								<input type="text" class="textInput" id="uploadFileText1" name="uploadFileText1" size="14" readonly="readonly" style="float:left;">  
+								<a class="button" id="search_dg" onclick="advertisingUpdate.clickFile();"> 
+									<span> 
+										<input accesskey="q" type="button" value="浏览" class="searchbtn"></input>
+									</span>
+								</a>
+							</span>
+							<a class="button" id="search_dg" onclick="advertisingUpdate.upload(1);"> 
+								<span> 
+									<input accesskey="q" type="button" value="上传" class="searchbtn"></input>
+								</span>
+							</a>
+						</div>
+						<br/>
+						<span>图片尺寸：</span>
+						<span>
+							<input type="text" class="textInput" id="ad_img_width" name="update_ad_img_width" validatorrules="Require" msg0="请填写图片宽度">
+							*
+							<input type="text" class="textInput" id="ad_img_height" name="update_ad_img_height" validatorrules="Require" msg0="请填写图片高度">（宽*高）
+						</span>
+						<br/>
+						<span>链接地址：</span>
+						<span>
+							<input type="text" class="textInput" id="ad_url_pic" name="update_ad_url_pic" validatorrules="Require" msg0="请填写链接地址">
+						</span>
+						<br/>
+						<span>链接提示：</span>
+						<span>
+							<input type="text" class="textInput" id="ad_info_pic" name="update_ad_info_pic" validatorrules="Require" msg0="请填写链接提示">
+						</span>
+					</label>
+					<label name="content_text" style="display:none;">
+						<span>文字内容：</span>
+						<span>
+							<input type="text" class="textInput" id="ad_info_text" name="update_ad_info_text" validatorrules="Require" msg0="请填写文字内容">
+						</span>
+						<br/>
+						<span>文字链接：</span>
+						<span>
+							<input type="text" class="textInput" id="ad_url_text" name="update_ad_url_text" validatorrules="Require" msg0="请填写文字链接">
+						</span>
+						<br/>
+						<span>文字颜色：</span>
+						<span>
+							<input type="text" class="textInput" id="ad_color" name="update_ad_color" validatorrules="Require" msg0="请填写文字颜色">如：#000000
+						</span>
+						<br/>
+						<span>文字大小：</span>
+						<span>
+							<input type="text" class="textInput" id="ad_font" name="update_ad_font" validatorrules="Require" msg0="请填写文字大小">如：12px
+						</span>
+					</label>
+					<br/>
+					<span>链接目标：</span>
+					<span>
+						<input type="radio" name="update_ad_blank" flag="update_ad_blank0" value="0">新窗口
+						<input type="radio" name="update_ad_blank" flag="update_ad_blank1" value="1">原窗口
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdclass_view" nowrap>点击次数：</td>
+				<td class="tdclass_edit">
+					<input type="text" class="textInput" id="click_count" name="update_click_count" validatorrules="Require,Number" msg0="点击次数请填写合适的数字">
+				</td>
+				<td class="tdclass_view" nowrap>启用：</td>
+				<td class="tdclass_edit">
+					<input type="radio" name="update_is_enabled" flag="update_is_enabled1" value="1">是
+					<input type="radio" name="update_is_enabled" flag="update_is_enabled0" value="0">否
+				</td>
+			</tr>
+		</table>
+	</form>
+	
+	<form id="uploadForm" name="uploadForm" action="/friendLink/uploadFriendLinkLOGO.do" method="post" enctype="multipart/form-data" target="hiddenIframe" style="display:none;width:0px;height:0px;">
+		<span id="fileContent"></span>
+		<input type="hidden" id="uploadfileUrl_bak" name="uploadfileUrl_bak">
+	</form>
+	<iframe name="hiddenIframe" frameborder="0" border="0" style="display:none;width:0px;height:0px;"></iframe>
+</body>
+</html>

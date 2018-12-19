@@ -1,0 +1,49 @@
+package net.htjs.pt4.cms.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import net.htjs.pt4.cms.service.IStaticPageService;
+import net.htjs.pt4.core.BaseController;
+
+/**
+ * 首页、栏目、内容静态化控制类
+ * 
+ * @author xieshiyu
+ *
+ */
+@Controller
+@RequestMapping("/static")
+public class StaticController extends BaseController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(StaticController.class);
+
+	@RequestMapping(value = "/o_index.do", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object indexSubmit(String callback) {
+		int code = 0;
+		String msg = "";
+		Map<String, Object> mapModel = new HashMap<String, Object>();
+		try {
+			String siteId = "1";
+			staticPageSvc.index(siteId);
+			code = 0;
+			msg = "操作正常";
+		} catch (Exception e) {
+			code = -1;
+			msg = "操作异常" + e.getMessage();
+		}
+		Object obj = getResult(mapModel, code, msg, callback);
+		LOGGER.error(msg);
+		return obj;
+	}
+
+	@Autowired
+	private IStaticPageService staticPageSvc;
+}

@@ -1,0 +1,102 @@
+package net.htjs.pt4.cms.controller;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import net.htjs.pt4.cms.service.IContentCountService;
+import net.htjs.pt4.cms.service.IContentService;
+import net.htjs.pt4.cms.service.ISiteService;
+
+/**
+ * 浏览量统计
+ * 
+ * @author xieshiyu
+ *
+ */
+@Controller
+@RequestMapping("/view")
+public class CountController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CountController.class);
+
+	@RequestMapping(value = "/content_view.do", method = RequestMethod.GET)
+	public void contentView(String contentId, String siteId, HttpServletResponse response) {
+		if (StringUtils.isBlank(contentId) || StringUtils.isBlank(siteId)) {
+			renderJson(response, "[]");
+			return;
+		}
+		int count = 0;
+		try {
+			count = countSvc.viewAndGet(contentId, siteId);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+		LOGGER.info("统计内容{}流量次数{}", contentId, count);
+		renderJson(response, "[" + count + "]");
+	}
+
+	@RequestMapping(value = "/site_view.do", method = RequestMethod.GET)
+	public void sitetView(String siteId, HttpServletResponse response) {
+		if (StringUtils.isBlank(siteId)) {
+			renderJson(response, "[]");
+			return;
+		}
+		int count = 0;
+		try {
+			count = siteSvc.flow(siteId);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+		LOGGER.info("统计站点{}流量次数{}", siteId, count);
+		renderJson(response, "[" + count + "]");
+	}
+
+	@RequestMapping(value = "/file_download.do", method = RequestMethod.GET)
+	public void fileDownload(String contentId, HttpServletResponse response) {
+		if (StringUtils.isBlank(contentId)) {
+			renderJson(response, "[]");
+			return;
+		}
+		try {
+			contentSvc.downloadCount(contentId);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+		LOGGER.info("内容ID:{}附件下载", contentId);
+	}
+
+	/**
+	 * 发送内容。使用UTF-8编码。
+	 * 
+	 * @param response
+	 * @param contentType
+	 * @param text
+	 */
+	private void renderJson(HttpServletResponse response, String text) {
+		response.setContentType("application/json;charset=UTF-8");
+		response.setHeader("Pragma", "No-cache");
+		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setDateHeader("Expires", 0);
+		try {
+			response.getWriter().write(text);
+		} catch (IOException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+	}
+
+	@Autowired
+	private IContentCountService countSvc;
+	@Autowired
+	private ISiteService siteSvc;
+	@Autowired
+	private IContentService contentSvc;
+}
